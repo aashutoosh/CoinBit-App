@@ -568,6 +568,7 @@ header {
       -ms-flex-align: center;
           align-items: center;
   width: var(--left-width);
+  border-right: 1px solid var(--dark-300);
 }
 .nav__logo {
   display: -webkit-box;
@@ -577,7 +578,6 @@ header {
       -ms-flex-align: center;
           align-items: center;
   padding-left: 1rem;
-  border-right: 1px solid var(--dark-300);
 }
 .nav__logo--icon {
   margin-right: 0.5rem;
