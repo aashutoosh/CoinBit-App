@@ -698,6 +698,8 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   z-index: var(--z-watchlist);
+  -webkit-box-shadow: 1px 0 5px 0 #0d0d0d;
+          box-shadow: 1px 0 5px 0 #0d0d0d;
 }
 .watchlist__item {
   display: -webkit-box;
@@ -815,6 +817,8 @@ body {
   height: 200vh;
   z-index: 1;
   width: calc(var(--container-width) - var(--left-width));
+  -webkit-box-shadow: 1px 0 5px 0 #0d0d0d;
+          box-shadow: 1px 0 5px 0 #0d0d0d;
 }
 .alerts__title {
   height: var(--header-height);

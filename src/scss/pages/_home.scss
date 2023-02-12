@@ -15,6 +15,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     z-index: var(--z-watchlist);
+    box-shadow: 1px 0 5px 0 #0d0d0d;
 
     &__items {}
 
@@ -113,6 +114,7 @@
     height: 200vh;
     z-index: 1;
     width: calc(var(--container-width) - var(--left-width));
+    box-shadow: 1px 0 5px 0 #0d0d0d;
 
     &__title {
         height: var(--header-height);
