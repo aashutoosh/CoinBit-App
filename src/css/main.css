@@ -710,7 +710,7 @@ body {
           align-items: center;
   padding: 1rem;
   list-style: none;
-  height: calc(var(--header-height) + 1rem);
+  height: calc(var(--header-height));
   border-bottom: 1px solid var(--dark-300);
   color: var(--grey-500);
 }
@@ -727,6 +727,7 @@ body {
   padding: 1rem;
   height: var(--header-height);
   border-bottom: 1px solid var(--dark-300);
+  z-index: inherit;
 }
 .watchlist__search span {
   display: -webkit-box;
@@ -773,7 +774,7 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  height: 2.8rem;
+  height: 2.5rem;
 }
 .watchlist .symbol__price--24change {
   display: -webkit-box;
