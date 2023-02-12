@@ -286,11 +286,12 @@ body {
 
 :root {
   /*========== Colors ==========*/
-  --green-100: #528852;
-  --red-100: #ce5551;
+  --green-100: rgb(14, 203, 129);
+  --red-100: rgb(246, 70, 93);
   --blue-100: #0257C7;
   --yellow-100: #f0ba09;
-  --light-100: #BBBBBB;
+  --light-100: #EAECEF;
+  --light-300: #BBBBBB;
   --light-500: #B2B2B2;
   --light-900: #A2A2A2;
   --grey-100: #A7B0B6;
@@ -707,7 +708,7 @@ body {
           align-items: center;
   padding: 1rem;
   list-style: none;
-  height: var(--header-height);
+  height: calc(var(--header-height) + 1rem);
   border-bottom: 1px solid var(--dark-300);
   color: var(--grey-500);
 }
@@ -745,6 +746,65 @@ body {
 }
 .watchlist__search--input:active, .watchlist__search--input:focus {
   outline: none;
+}
+.watchlist .symbol {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.watchlist .symbol__name {
+  color: var(--light-100);
+  font-size: 1.2rem;
+}
+.watchlist .symbol__price {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 2.8rem;
+}
+.watchlist .symbol__price--24change {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  font-size: 0.8rem;
+}
+.watchlist .symbol__price--latest {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  font-size: 1.2rem;
+  width: 6rem;
+}
+.watchlist .symbol__price--direction {
+  position: absolute;
+  bottom: -0.4rem;
+  left: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.green {
+  color: var(--green-100);
+}
+
+.red {
+  color: var(--red-100);
 }
 
 .alerts {

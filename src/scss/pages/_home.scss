@@ -4,8 +4,6 @@
     background-color: var(--dark-500);
 }
 
-
-
 .watchlist {
     display: flex;
     position: sticky;
@@ -25,7 +23,7 @@
         align-items: center;
         padding: 1rem;
         list-style: none;
-        height: var(--header-height);
+        height: calc(var(--header-height) + 1rem);
         border-bottom: 1px solid var(--dark-300);
         color: var(--grey-500);
     }
@@ -61,6 +59,52 @@
             }
         }
     }
+
+    .symbol {
+        display: flex;
+        justify-content: space-between;
+
+        &__name {
+            color: var(--light-100);
+            font-size: 1.2rem;
+        }
+
+        &__price {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 2.8rem;
+
+            &--24change {
+                display: flex;
+                justify-content: flex-end;
+                font-size: 0.8rem;
+            }
+
+            &--latest {
+                display: flex;
+                justify-content: flex-end;
+                font-size: 1.2rem;
+                width: 6rem;
+            }
+
+            &--direction {
+                position: absolute;
+                bottom: -0.4rem;
+                left: 0.4rem;
+                font-size: 1.2rem;
+            }
+        }
+    }
+}
+
+.green {
+    color: var(--green-100);
+}
+
+.red {
+    color: var(--red-100);
 }
 
 .alerts {
