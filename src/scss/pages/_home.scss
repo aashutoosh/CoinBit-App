@@ -1,3 +1,92 @@
-h1 {
-    color: $primary-color;
+.main {
+    display: flex;
+    align-items: flex-start;
+    background-color: var(--dark-500);
+}
+
+
+
+.watchlist {
+    display: flex;
+    position: sticky;
+    top: var(--header-height);
+    flex-direction: column;
+    height: calc(100vh - var(--header-height));
+    width: var(--left-width);
+    background-color: var(--dark-500);
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: var(--z-watchlist);
+
+    &__items {}
+
+    &__item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        list-style: none;
+        height: var(--header-height);
+        border-bottom: 1px solid var(--dark-300);
+        color: var(--grey-500);
+    }
+
+    &__search {
+        position: sticky;
+        top: 0;
+        background-color: inherit;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        height: var(--header-height);
+        border-bottom: 1px solid var(--dark-300);
+
+        span {
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+
+        &--input {
+            height: var(--header-height);
+            width: 100%;
+            background-color: inherit;
+            color: inherit;
+            font-size: var(--small-font-size);
+            border: none;
+            border-bottom: inherit;
+
+            &:active,
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+.alerts {
+    justify-content: flex-end;
+    padding: 0 1rem;
+    height: 200vh;
+    z-index: 1;
+    width: calc(var(--container-width) - var(--left-width));
+
+    &__title {
+        height: var(--header-height);
+        display: flex;
+        align-items: center;
+        font-size: 1.25rem;
+        font-weight: 500;
+        border-bottom: 1px solid var(--dark-300);
+
+        span {
+            margin-left: 0.5rem;
+        }
+    }
+
+    &__description {
+        padding: 1rem 0;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--dark-300);
+    }
 }

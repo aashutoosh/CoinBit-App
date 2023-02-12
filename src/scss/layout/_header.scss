@@ -1,0 +1,100 @@
+header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    background-color: var(--dark-500);
+    box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.4);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    height: var(--header-height);
+
+    &__left {
+        display: flex;
+        align-items: center;
+        width: var(--left-width);
+    }
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        padding-left: 1rem;
+        border-right: 1px solid var(--dark-300);
+
+        &--icon {
+            margin-right: 0.5rem;
+        }
+
+        &--title {
+            font-size: var(--h3-font-size);
+            font-weight: 700;
+        }
+    }
+
+
+    &__links {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: calc(var(--container-width) - var(--left-width));
+        padding-right: 1rem;
+        gap: 1rem;
+    }
+
+    &__link {
+        font-size: var(--small-font-size);
+        transition: all 0.3s;
+
+        &:hover {
+            color: var(--yellow-100);
+        }
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+
+    &__link {
+        padding-right: 1rem;
+        border-right: 1px solid var(--dark-300);
+    }
+
+    &__notification {
+        position: relative;
+        fill: var(--light-100);
+        padding: 1rem 0;
+        cursor: pointer;
+
+        // Animate just svg when hover or when tapped on phone
+        &:hover svg,
+        &:active svg {
+            fill: var(--yellow-100);
+            animation: ring 4s .2s ease-in-out;
+            transform-origin: 50% 4px;
+        }
+
+        &--light {
+            position: absolute;
+            top: 0.7rem;
+            right: -0.3rem;
+            content: '';
+            width: 0.4rem;
+            height: 0.4rem;
+            background-color: red;
+            border-radius: 50%;
+            box-sizing: content-box;
+            border: 3px solid var(--dark-500);
+            display: none;
+        }
+
+        .active {
+            display: initial;
+        }
+    }
+
+    .active {
+        color: var(--yellow-100);
+    }
+}
