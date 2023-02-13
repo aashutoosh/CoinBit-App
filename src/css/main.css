@@ -289,7 +289,7 @@ body {
   --green-100: rgb(14, 203, 129);
   --green-300: rgb(0, 126, 48);
   --red-100: rgb(246, 70, 93);
-  --red-300: rgb(192, 54, 73);
+  --red-300: rgb(192, 16, 39);
   --blue-100: #0257C7;
   --blue-300: #0a4592;
   --yellow-100: #f0ba09;
@@ -550,15 +550,17 @@ body {
 .button__item {
   padding: 0.1rem 0.5rem;
   border-radius: 4px;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-}
-.button__item--green {
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
   border: 1px solid var(--dark-100);
 }
 .button__item--green:hover {
   border: 1px solid var(--green-300);
   background-color: var(--green-300);
+}
+.button__item--red:hover {
+  border: 1px solid var(--red-300);
+  background-color: var(--red-300);
 }
 
 /*=============== SCROLL BAR ===============*/
@@ -740,10 +742,17 @@ body {
   padding: 1rem;
   height: calc(var(--header-height));
   border-bottom: 1px solid var(--dark-300);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
   color: var(--grey-500);
 }
 .watchlist__item:hover {
   background-color: var(--dark-300);
+}
+.watchlist__item:hover .symbol__action {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 .watchlist__search {
   position: sticky;
@@ -788,6 +797,7 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  position: relative;
 }
 .watchlist .symbol__name {
   color: var(--light-300);
@@ -832,6 +842,25 @@ body {
   bottom: -0.4rem;
   left: 0.4rem;
   font-size: 1.2rem;
+}
+.watchlist .symbol__action {
+  position: absolute;
+  background-color: inherit;
+  right: 0;
+  display: none;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.watchlist .symbol__action .button__item {
+  margin: 0.8rem 0;
+  margin-right: 1rem;
+  color: var(--light-100);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.9rem;
 }
 
 .searchresults {

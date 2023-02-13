@@ -50,15 +50,19 @@ function addCoins(params) {
     }
 }
 
-function addToWatchlist(coinName, event) {
+function addToWatchlist(coin, event) {
     const watchlistItem = `<li class="watchlist__item symbol ">
-        <span class="symbol__name">${coinName}</span>
+        <span class="symbol__name">${coin}</span>
         <div class="symbol__price">
             <span class="symbol__price--latest">0.00</span>
             <div>
                 <span class="symbol__price--24change">(+0.00%)</span>
                 <i class="symbol__price--direction ri-arrow-up-s-fill"></i>
             </div>
+        </div>
+        <div class="symbol__action">
+            <i class="alert button__item button__item--green ri-alarm-line"></i>
+            <i class="delete button__item button__item--red ri-delete-bin-6-line"></i>
         </div>
     </li>`
 
@@ -70,15 +74,26 @@ function addToWatchlist(coinName, event) {
     const initialWatchlist = getFromLocalStorage('watchlist')
 
     if (!initialWatchlist) {
-        addToLocalStorage('watchlist', [coinName])
+        addToLocalStorage('watchlist', [coin])
         activateButton()
         watchlistItems.innerHTML = watchlistItem
     }
-    else if (!initialWatchlist.includes(coinName)) {
-        addToLocalStorage('watchlist', [...initialWatchlist, coinName])
+    else if (!initialWatchlist.includes(coin)) {
+        addToLocalStorage('watchlist', [...initialWatchlist, coin])
         activateButton()
         watchlistItems.innerHTML += watchlistItem
     }
+}
+
+function removeFromWatchlist(coin, element) {
+    const initialWatchlist = getFromLocalStorage('watchlist');
+    const modifiedWatchlist = initialWatchlist.filter(s => s !== coin)
+    updateLocalStorage('watchlist', modifiedWatchlist)
+
+    const listElement = element.target.parentElement.parentElement
+    const parentElement = listElement.parentElement
+
+    parentElement.removeChild(listElement)
 }
 
 function initializeWatchlist() {
@@ -97,6 +112,10 @@ function initializeWatchlist() {
                     <span class="symbol__price--24change">(+0.00%)</span>
                     <i class="symbol__price--direction ri-arrow-up-s-fill"></i>
                 </div>
+            </div>
+            <div class="symbol__action">
+                <i class="alert button__item button__item--green ri-alarm-line"></i>
+                <i class="delete button__item button__item--red ri-delete-bin-6-line"></i>
             </div>
         </li>`
         }).join('')
@@ -117,6 +136,8 @@ searchInput.addEventListener('input', () => addCoins(searchInput.value))
 document.addEventListener('mousedown', (event) => {
     if (!searchResults.contains(event.target) && !searchInput.contains(event.target)) {
         searchResults.style.display = 'none';
+        searchInput.value = ''
+        addCoins('')
     }
 });
 
@@ -129,6 +150,15 @@ searchResults.addEventListener('click', (event) => {
         const coinName = event.target.parentElement.querySelector('.coinname').textContent;
 
         addToWatchlist(coinName, event)
+    }
+})
+
+// Used event delegation here
+watchlistItems.addEventListener('click', (event) => {
+    if (event.target.classList.contains('delete')) {
+        const coinName = event.target.parentElement.parentElement.querySelector('.symbol__name').textContent;
+
+        removeFromWatchlist(coinName, event)
     }
 })
 

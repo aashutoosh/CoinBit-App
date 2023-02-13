@@ -2,14 +2,22 @@
     &__item {
         padding: 0.1rem 0.5rem;
         border-radius: 4px;
-        transition: all 0.3s;
+        transition: all 0.2s;
+        border: 1px solid var(--dark-100);
 
         &--green {
-            border: 1px solid var(--dark-100);
 
             &:hover {
                 border: 1px solid var(--green-300);
                 background-color: var(--green-300);
+            }
+        }
+
+        &--red {
+
+            &:hover {
+                border: 1px solid var(--red-300);
+                background-color: var(--red-300);
             }
         }
     }
