@@ -287,9 +287,13 @@ body {
 :root {
   /*========== Colors ==========*/
   --green-100: rgb(14, 203, 129);
+  --green-300: rgb(0, 126, 48);
   --red-100: rgb(246, 70, 93);
+  --red-300: rgb(192, 54, 73);
   --blue-100: #0257C7;
+  --blue-300: #0a4592;
   --yellow-100: #f0ba09;
+  --yellow-300: #b48d0c;
   --light-100: #EAECEF;
   --light-300: #BBBBBB;
   --light-500: #B2B2B2;
@@ -543,6 +547,20 @@ body {
             transform: rotate(0);
   }
 }
+.button__item {
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.button__item--green {
+  border: 1px solid var(--dark-100);
+}
+.button__item--green:hover {
+  border: 1px solid var(--green-300);
+  background-color: var(--green-300);
+}
+
 /*=============== SCROLL BAR ===============*/
 ::-webkit-scrollbar {
   width: 0.4rem;
@@ -581,7 +599,6 @@ header {
       -ms-flex-align: center;
           align-items: center;
   width: var(--left-width);
-  border-right: 1px solid var(--dark-300);
 }
 .nav__logo {
   display: -webkit-box;
@@ -721,10 +738,12 @@ body {
       -ms-flex-align: center;
           align-items: center;
   padding: 1rem;
-  list-style: none;
   height: calc(var(--header-height));
   border-bottom: 1px solid var(--dark-300);
   color: var(--grey-500);
+}
+.watchlist__item:hover {
+  background-color: var(--dark-300);
 }
 .watchlist__search {
   position: sticky;
@@ -771,8 +790,9 @@ body {
           justify-content: space-between;
 }
 .watchlist .symbol__name {
-  color: var(--light-100);
-  font-size: 1.2rem;
+  color: var(--light-300);
+  font-size: 1rem;
+  font-weight: 500;
 }
 .watchlist .symbol__price {
   position: relative;
@@ -804,7 +824,7 @@ body {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  font-size: 1.2rem;
+  font-size: 1rem;
   width: 6rem;
 }
 .watchlist .symbol__price--direction {
@@ -812,6 +832,49 @@ body {
   bottom: -0.4rem;
   left: 0.4rem;
   font-size: 1.2rem;
+}
+
+.searchresults {
+  position: sticky;
+  background-color: inherit;
+  top: var(--header-height);
+  z-index: inherit;
+}
+.searchresults__item {
+  padding: 0 1rem;
+  font-size: var(--small-font-size);
+  border-bottom: 1px solid var(--dark-300);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.searchresults__item:last-child {
+  border-bottom: 4px solid var(--dark-300);
+}
+.searchresults__item .coinname {
+  padding: 0.6rem 0;
+}
+.searchresults__item:hover {
+  background-color: var(--dark-300);
+}
+.searchresults__item .button__item {
+  display: none;
+}
+.searchresults__item .active {
+  display: initial;
+  border: 1px solid var(--green-300);
+  background-color: var(--green-300);
+}
+.searchresults__item:hover .button__item {
+  display: initial;
 }
 
 .green {
