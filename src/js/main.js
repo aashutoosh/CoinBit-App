@@ -3,6 +3,7 @@ const searchResults = document.querySelector('.searchresults')
 const watchlistItems = document.querySelector('.watchlist__items')
 
 let allSymbols;
+let ws;
 
 function addToLocalStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value))
@@ -83,6 +84,10 @@ function addToWatchlist(coin, event) {
         activateButton()
         watchlistItems.innerHTML += watchlistItem
     }
+
+    // If websocket is connected then subscribe to stream otherwise initiate connection
+    if (ws) subscribeStream(coin)
+    else wsConnect([coin])
 }
 
 function removeFromWatchlist(coin, element) {
@@ -94,6 +99,8 @@ function removeFromWatchlist(coin, element) {
     const parentElement = listElement.parentElement
 
     parentElement.removeChild(listElement)
+
+    unsubscribeStream(coin)
 }
 
 function initializeWatchlist() {
@@ -102,7 +109,7 @@ function initializeWatchlist() {
     if (!initialWatchlist) {
         watchlistItems.innerHTML = ''
     }
-    else {
+    else if (initialWatchlist.length > 0) {
         const watchlistItem = initialWatchlist.map((coin) => {
             return `<li class="watchlist__item symbol ">
             <span class="symbol__name">${coin}</span>
@@ -120,6 +127,96 @@ function initializeWatchlist() {
         </li>`
         }).join('')
         watchlistItems.innerHTML = watchlistItem
+
+        // Start websocket connection
+        wsConnect(initialWatchlist);
+    }
+}
+
+function wsConnect(watchlist) {
+    const wsUrl = "wss://stream.binance.com:443/stream?streams=";
+    const allStreams = watchlist.map(coin => coin.toLowerCase() + '@ticker').join('/')
+
+    ws = new WebSocket(wsUrl + allStreams);
+
+    ws.onopen = (event) => console.log("WebSocket connection opened!")
+
+    ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if ('stream' in data) {
+            updateWatchlistData(data)
+        }
+        else {
+            console.log(data)
+        }
+    };
+
+    ws.onerror = (event) => console.error("WebSocket error: ", event)
+
+    ws.onclose = (event) => {
+        console.log("WebSocket connection closed: ", event);
+        // Reconnect to the WebSocket after 10 seconds
+        setTimeout(function () {
+            wsConnect(watchlist);
+        }, 10000);
+    };
+}
+
+function subscribeStream(coin) {
+    ws.send(JSON.stringify({
+        id: Date.now(),
+        method: "SUBSCRIBE",
+        params: [coin.toLowerCase() + '@ticker']
+    }));
+}
+
+function unsubscribeStream(coin) {
+    ws.send(JSON.stringify({
+        id: Date.now(),
+        method: "UNSUBSCRIBE",
+        params: [coin.toLowerCase() + '@ticker']
+    }));
+}
+
+function updateWatchlistData(data) {
+    const coin = data.data.s;
+    const price = Number(data.data.c);
+    const priceChange = Number(data.data.P);
+
+    // Find the list item with a matching coin symbol and update its price and price change.
+    const listItems = watchlistItems.querySelectorAll('li.symbol');
+    for (let i = 0; i < listItems.length; i++) {
+        const listItem = listItems[i];
+        if (listItem.querySelector('span.symbol__name').textContent === coin) {
+            const priceElem = listItem.querySelector('.symbol__price--latest');
+            const changeElem = listItem.querySelector('.symbol__price--24change');
+            const directionElem = listItem.querySelector('.symbol__price--direction');
+
+            const prevPrice = Number(priceElem.textContent)
+
+            // Update the price and price change.
+            priceElem.textContent = price;
+            changeElem.textContent = `(${priceChange}%)`;
+
+            // Add the green or red class to the price element.
+            priceElem.classList.remove('green', 'red');
+            if (price > prevPrice) priceElem.classList.add('green');
+            else priceElem.classList.add('red');
+
+            // Add the green or red class and arrow class to the direction element.
+            directionElem.classList.remove('green', 'red');
+            directionElem.classList.remove('ri-arrow-up-s-fill', 'ri-arrow-down-s-fill');
+            if (priceChange > 0) {
+                changeElem.classList.add('green');
+                directionElem.classList.add('ri-arrow-up-s-fill', 'green');
+            }
+            else {
+                changeElem.classList.add('red');
+                directionElem.classList.add('ri-arrow-down-s-fill', 'red');
+            }
+
+            break;
+        }
     }
 }
 
