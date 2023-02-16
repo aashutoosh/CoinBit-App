@@ -302,7 +302,7 @@ body {
   --grey-500: #7A7A7A;
   --grey-900: #595959;
   --dark-100: #4D4D4D;
-  --dark-300: #272727;
+  --dark-300: #333333;
   --dark-500: #181818;
   --dark-900: #111111;
   --body: var(--dark-500);
@@ -711,6 +711,56 @@ body {
       -ms-flex-align: start;
           align-items: flex-start;
   background-color: var(--dark-500);
+}
+
+.notification {
+  position: absolute;
+  background-color: var(--dark-300);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  bottom: 5rem;
+  right: 10rem;
+  width: 20rem;
+  border-radius: 0.5rem;
+  z-index: var(--z-watchlist);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  -webkit-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
+          box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
+}
+.notification__icon {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  background-color: rgb(101, 101, 101);
+  border-radius: 0.5rem;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
+.notification__text {
+  margin-right: 1rem;
+}
+.notification__text--title {
+  padding-bottom: 0.5rem;
+}
+.notification__text--description {
+  font-size: 0.8rem;
+  color: var(--light-300);
+}
+.notification__close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  padding: 2px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.notification__close:hover {
+  background-color: rgb(101, 101, 101);
 }
 
 .watchlist {

@@ -1,6 +1,8 @@
+const body = document.querySelector('body')
 const searchInput = document.querySelector('.watchlist__search--input')
 const searchResults = document.querySelector('.searchresults')
 const watchlistItems = document.querySelector('.watchlist__items')
+
 
 let allSymbols;
 let ws;
@@ -259,4 +261,70 @@ watchlistItems.addEventListener('click', (event) => {
     }
 })
 
+
+class Notification {
+    constructor({ title, description, icon = 'ri-timer-flash-line' }) {
+        this.title = title;
+        this.description = description;
+        this.icon = icon;
+        this.duration = 4000;
+
+        this.container = document.createElement('div');
+        this.container.classList.add('notification');
+
+        this.iconElement = document.createElement('i');
+        this.iconElement.classList.add('notification__icon', icon);
+
+        this.textContainer = document.createElement('div');
+        this.textContainer.classList.add('notification__text');
+
+        this.titleElement = document.createElement('p');
+        this.titleElement.classList.add('notification__text--title');
+        this.titleElement.innerText = title;
+
+        this.descriptionElement = document.createElement('p');
+        this.descriptionElement.classList.add('notification__text--description');
+        this.descriptionElement.innerText = description;
+
+        this.closeElement = document.createElement('i');
+        this.closeElement.classList.add('notification__close', 'ri-close-line');
+
+        this.textContainer.appendChild(this.titleElement);
+        this.textContainer.appendChild(this.descriptionElement);
+
+        this.container.appendChild(this.iconElement);
+        this.container.appendChild(this.textContainer);
+        this.container.appendChild(this.closeElement);
+    }
+
+    show() {
+        document.getElementById('notifications-container').appendChild(this.container);
+
+        setTimeout(() => {
+            this.hide();
+        }, this.duration);
+
+        this.closeElement.addEventListener('click', () => {
+            this.hide();
+        });
+    }
+
+    hide() {
+        this.container.remove();
+    }
+}
+
+// main.js
+function showAlertNotification(title, desc = '', icon = 'ri-timer-flash-line') {
+    const notification = new Notification({
+        title,
+        description: desc,
+        icon,
+    });
+
+    notification.show();
+}
+
+
 initializeWatchlist()
+showAlertNotification('Bitcoin Breakout', 'Important breakout above 12345.67 levels.')

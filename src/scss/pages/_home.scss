@@ -4,6 +4,56 @@
     background-color: var(--dark-500);
 }
 
+.notification {
+    position: absolute;
+    background-color: var(--dark-300);
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    bottom: 5rem;
+    right: 10rem;
+    width: 20rem;
+    border-radius: 0.5rem;
+    z-index: var(--z-watchlist);
+    transition: all 0.2s;
+    box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
+
+    &__icon {
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        background-color: rgb(101, 101, 101);
+        border-radius: 0.5rem;
+        align-self: flex-start;
+    }
+
+    &__text {
+        margin-right: 1rem;
+
+        &--title {
+            padding-bottom: 0.5rem;
+        }
+
+        &--description {
+            font-size: 0.8rem;
+            color: var(--light-300);
+        }
+    }
+
+    &__close {
+        position: absolute;
+        top: 0.6rem;
+        right: 0.6rem;
+        transition: all 0.2s;
+        padding: 2px;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgb(101, 101, 101);
+        }
+    }
+}
+
 .watchlist {
     display: flex;
     position: sticky;
