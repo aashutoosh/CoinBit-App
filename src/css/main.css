@@ -713,17 +713,28 @@ body {
   background-color: var(--dark-500);
 }
 
-.notification {
+#notifications-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
   position: absolute;
+  gap: 1rem;
+  bottom: 5rem;
+  right: 10rem;
+  width: 20rem;
+}
+
+.notification {
   background-color: var(--dark-300);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  bottom: 5rem;
-  right: 10rem;
-  width: 20rem;
   border-radius: 0.5rem;
   z-index: var(--z-watchlist);
   -webkit-transition: all 0.2s;

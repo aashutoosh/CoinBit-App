@@ -4,15 +4,22 @@
     background-color: var(--dark-500);
 }
 
-.notification {
+#notifications-container {
+    display: flex;
+    flex-direction: column-reverse;
     position: absolute;
+    gap: 1rem;
+    bottom: 5rem;
+    right: 10rem;
+    width: 20rem;
+}
+
+.notification {
+
     background-color: var(--dark-300);
     display: flex;
     gap: 1rem;
     padding: 1rem;
-    bottom: 5rem;
-    right: 10rem;
-    width: 20rem;
     border-radius: 0.5rem;
     z-index: var(--z-watchlist);
     transition: all 0.2s;
