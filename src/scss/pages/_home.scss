@@ -78,7 +78,7 @@
     top: -0.5rem;
     right: 1rem;
     width: 25rem;
-    color: var(--light-300);
+    color: var(--light-100);
     z-index: var(--z-modal);
     background-color: var(--dark-300);
     border-radius: 0.5rem;
@@ -111,7 +111,7 @@
     &__container {
         margin-top: 1rem;
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         align-items: flex-start;
         max-height: 20rem;
         overflow-y: scroll;
@@ -121,7 +121,7 @@
             align-items: flex-start;
             width: 100%;
             padding: 1rem 0;
-            border-bottom: 1px solid var(--dark-100);
+            border-top: 1px solid var(--dark-100);
 
             &__time {
                 font-size: 0.8rem;
@@ -130,7 +130,7 @@
             }
 
             &:last-child {
-                border-bottom: none;
+                border-top: none;
             }
 
             &__container {
@@ -142,13 +142,13 @@
 
             &__title {
                 font-size: 1rem;
-                color: var(--light-500);
+                color: var(--light-100);
                 font-weight: 500;
             }
 
             &__desc {
                 font-size: 0.8rem;
-                color: var(--light-500);
+                color: var(--light-300);
                 line-height: 1.5;
             }
         }

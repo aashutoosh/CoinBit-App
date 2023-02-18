@@ -793,7 +793,7 @@ body {
   top: -0.5rem;
   right: 1rem;
   width: 25rem;
-  color: var(--light-300);
+  color: var(--light-100);
   z-index: var(--z-modal);
   background-color: var(--dark-300);
   border-radius: 0.5rem;
@@ -832,9 +832,9 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
@@ -850,7 +850,7 @@ body {
           align-items: flex-start;
   width: 100%;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--dark-100);
+  border-top: 1px solid var(--dark-100);
 }
 .bellwindow__container .notification__time {
   font-size: 0.8rem;
@@ -860,7 +860,7 @@ body {
           flex: 1;
 }
 .bellwindow__container .notification:last-child {
-  border-bottom: none;
+  border-top: none;
 }
 .bellwindow__container .notification__container {
   display: -webkit-box;
@@ -877,12 +877,12 @@ body {
 }
 .bellwindow__container .notification__title {
   font-size: 1rem;
-  color: var(--light-500);
+  color: var(--light-100);
   font-weight: 500;
 }
 .bellwindow__container .notification__desc {
   font-size: 0.8rem;
-  color: var(--light-500);
+  color: var(--light-300);
   line-height: 1.5;
 }
 
