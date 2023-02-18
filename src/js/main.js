@@ -2,7 +2,10 @@ const body = document.querySelector('body')
 const searchInput = document.querySelector('.watchlist__search--input')
 const searchResults = document.querySelector('.searchresults')
 const watchlistItems = document.querySelector('.watchlist__items')
-
+const bellwindowClearall = document.querySelector('.bellwindow__clearall')
+const bellwindow = document.querySelector('.bellwindow')
+const alertBell = document.querySelector('.nav__notification')
+const notificationLight = document.querySelector('.nav__notification--light')
 
 let allSymbols;
 let ws;
@@ -261,6 +264,22 @@ watchlistItems.addEventListener('click', (event) => {
     }
 })
 
+bellwindowClearall.addEventListener('click', () => {
+    const bellWindowCont = document.querySelector('.bellwindow__container')
+    bellWindowCont.innerHTML = ''
+})
+
+alertBell.addEventListener('click', () => {
+    bellwindow.classList.toggle('showBellWindow')
+    notificationLight.classList.remove('active')
+})
+
+document.addEventListener('click', (event) => {
+    if (!bellwindow.contains(event.target) && !alertBell.contains(event.target)) {
+        bellwindow.classList.remove('showBellWindow')
+    }
+})
+
 
 class Notification {
     constructor({ title, description, icon = 'ri-timer-flash-line' }) {
@@ -315,6 +334,9 @@ function showAlertNotification(title, desc = '', icon = 'ri-timer-flash-line') {
     });
 
     notification.show();
+
+    notificationLight.classList.remove('active')
+    notificationLight.classList.add('active')
 }
 
 
