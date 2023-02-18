@@ -267,54 +267,46 @@ class Notification {
         this.title = title;
         this.description = description;
         this.icon = icon;
-        this.duration = 4000;
-
+        this.duration = 5000;
         this.container = document.createElement('div');
+        this.container.innerHTML = `
+        <i class="notification__icon ${icon}"></i>
+        <div class="notification__text">
+          <p class="notification__text--title">${title}</p>
+          <p class="notification__text--description">${description}</p>
+        </div>
+        <i class="notification__close ri-close-line"></i>
+      `;
         this.container.classList.add('notification');
-
-        this.iconElement = document.createElement('i');
-        this.iconElement.classList.add('notification__icon', icon);
-
-        this.textContainer = document.createElement('div');
-        this.textContainer.classList.add('notification__text');
-
-        this.titleElement = document.createElement('p');
-        this.titleElement.classList.add('notification__text--title');
-        this.titleElement.innerText = title;
-
-        this.descriptionElement = document.createElement('p');
-        this.descriptionElement.classList.add('notification__text--description');
-        this.descriptionElement.innerText = description;
-
-        this.closeElement = document.createElement('i');
-        this.closeElement.classList.add('notification__close', 'ri-close-line');
-
-        this.textContainer.appendChild(this.titleElement);
-        this.textContainer.appendChild(this.descriptionElement);
-
-        this.container.appendChild(this.iconElement);
-        this.container.appendChild(this.textContainer);
-        this.container.appendChild(this.closeElement);
     }
 
     show() {
-        document.getElementById('notifications-container').appendChild(this.container);
+        document.getElementById('notifications').appendChild(this.container);
 
         setTimeout(() => {
             this.hide();
         }, this.duration);
 
+        // Small delay so element can be added properly to dom before showing
+        setTimeout(() => {
+            this.container.classList.add('show');
+        }, 100);
+
+        this.closeElement = this.container.querySelector('.notification__close');
         this.closeElement.addEventListener('click', () => {
             this.hide();
         });
     }
 
     hide() {
-        this.container.remove();
+        this.container.classList.add('hide');
+
+        setTimeout(() => {
+            this.container.remove();
+        }, 300);
     }
 }
 
-// main.js
 function showAlertNotification(title, desc = '', icon = 'ri-timer-flash-line') {
     const notification = new Notification({
         title,
