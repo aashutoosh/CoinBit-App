@@ -1,14 +1,20 @@
 const body = document.querySelector('body');
+
 const searchInput = document.querySelector('.watchlist__search--input');
-const searchResults = document.querySelector('.searchresults');
 const watchlistItems = document.querySelector('.watchlist__items');
+
+const searchResults = document.querySelector('.searchresults');
+
 const bellwindow = document.querySelector('.bellwindow');
 const bellwindowClearall = document.querySelector('.bellwindow__clearall');
 const bellwindowContainer = document.querySelector('.bellwindow__container');
+const bellwindowEmpty = document.querySelector('.bellwindow__empty');
+
 const createalert = document.querySelector('.createalert');
 const formSubmit = document.querySelector('.createalert__form');
 const createalertClose = document.querySelector('.createalert__close');
 const createalertOption = document.querySelector('.createalert__form--symbol');
+
 const alertBell = document.querySelector('.nav__notification');
 const notificationLight = document.querySelector('.nav__notification--light');
 
@@ -152,7 +158,9 @@ function initializeNotifications() {
     const allNotifications = getFromLocalStorage('notifications')
 
     if (!allNotifications) {
-        bellwindowContainer.innerHTML = ''
+        bellwindowContainer.innerHTML = '';
+        bellwindowEmpty.classList.remove('show');
+        bellwindowEmpty.classList.add('show');
     }
     else if (allNotifications.length > 0) {
         const notfItems = allNotifications.map((notf) => {
@@ -162,10 +170,15 @@ function initializeNotifications() {
                 <span class="notification__title">${notf.title}</span>
                 <span class="notification__desc">${notf.description}</span>
             </div>
-        </li>`
+        </li>`;
         }).join('')
-        bellwindowContainer.innerHTML = notfItems
+
+        bellwindowContainer.innerHTML = notfItems;
+        bellwindowEmpty.classList.remove('show');
     }
+
+    // Always scroll to top to show latest notification
+    bellwindowContainer.scrollTop = 0;
 }
 
 function wsConnect(watchlist) {
@@ -352,8 +365,11 @@ createalertClose.addEventListener('click', () => {
 });
 
 bellwindowClearall.addEventListener('click', () => {
-    const bellWindowCont = document.querySelector('.bellwindow__container')
-    bellWindowCont.innerHTML = '';
+    bellwindowContainer.innerHTML = '';
+
+    // Shows empty text
+    bellwindowEmpty.classList.remove('show');
+    bellwindowEmpty.classList.add('show');
 
     // Clear alerts from local storage
     removeFromLocalStorage('notifications');
@@ -440,7 +456,7 @@ class Notification {
             addToLocalStorage('notifications', [this.notfObject])
         }
         else {
-            updateLocalStorage('notifications', [...allNotifications, this.notfObject])
+            updateLocalStorage('notifications', [this.notfObject, ...allNotifications])
         }
     }
 
