@@ -280,6 +280,18 @@ summary {
   display: list-item;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 body {
   color: var(--text-light);
 }
@@ -293,7 +305,7 @@ body {
   --blue-100: #0257C7;
   --blue-300: #0a4592;
   --yellow-100: #f0ba09;
-  --yellow-300: #b48d0c;
+  --yellow-300: #daa700;
   --light-100: #EAECEF;
   --light-300: #BBBBBB;
   --light-500: #B2B2B2;
@@ -788,6 +800,152 @@ body {
   background-color: rgb(101, 101, 101);
 }
 
+.createalert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 40rem;
+  background-color: var(--dark-300);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
+          box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
+  z-index: var(--z-modal);
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+  scale: 0;
+}
+.createalert.showCreateAlert {
+  opacity: 1;
+  pointer-events: initial;
+  scale: 1;
+}
+.createalert__title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding-bottom: 2rem;
+}
+.createalert__close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  padding: 4px;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.createalert__close:hover {
+  background-color: rgb(101, 101, 101);
+}
+.createalert__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-top: 3rem;
+  gap: 1.5rem;
+}
+.createalert__form--fields {
+  position: relative;
+}
+.createalert__form--fields .label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 0.9rem;
+  color: var(--light-300);
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+.createalert__form .fields {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  gap: 2rem;
+}
+.createalert__form .fields .createalert__form--fields {
+  height: 100%;
+  width: 100%;
+}
+.createalert__form .fields .createalert__form--fields .label {
+  font-size: 0.8rem;
+  top: -0.5rem;
+  left: 0;
+  color: var(--yellow-100);
+  background-color: var(--dark-300);
+  padding-right: 0.5rem;
+  padding-bottom: 0.25rem;
+  font-weight: 500;
+}
+.createalert__form--submit {
+  padding: 0.75rem 1.5rem;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  border-radius: 4px;
+  border: none;
+  background-color: var(--yellow-300);
+  font-weight: 500;
+  color: var(--dark-500);
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.createalert__form--submit:hover {
+  background-color: var(--yellow-100);
+  -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75);
+          box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75);
+}
+.createalert__form .input {
+  padding: 0.75rem 1rem;
+  background-color: inherit;
+  color: inherit;
+  height: 100%;
+  border: 1px solid var(--dark-100);
+  width: 100%;
+  border-radius: 4px;
+}
+.createalert__form .input:active, .createalert__form .input:focus {
+  outline: none;
+}
+.createalert__form .input:valid ~ .label, .createalert__form .input:focus ~ .label {
+  font-size: 0.8rem;
+  top: -0.5rem;
+  left: 0;
+  color: var(--yellow-100);
+  background-color: var(--dark-300);
+  padding-right: 0.5rem;
+  padding-bottom: 0.25rem;
+  font-weight: 500;
+}
+.createalert__form .select {
+  padding: 0.75rem 0.8rem;
+  background-color: inherit;
+  color: var(--light-300);
+  width: 100%;
+  border: 1px solid var(--dark-100);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.createalert__form .select option {
+  background-color: var(--dark-100);
+}
+.createalert__form .select:active, .createalert__form .select:focus {
+  outline: none;
+}
+
 .bellwindow {
   position: absolute;
   top: -0.5rem;
@@ -818,11 +976,11 @@ body {
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-.bellwindow__title .bellwindow__clearall {
+.bellwindow__clearall {
   font-size: 0.8rem;
   cursor: pointer;
 }
-.bellwindow__title .bellwindow__clearall:hover {
+.bellwindow__clearall:hover {
   color: var(--red-100);
   text-decoration: underline;
 }

@@ -45,6 +45,51 @@
 
     <div class="notifications" id="notifications"></div>
 
+    <div class="createalert" id="createalert">
+        <span class="createalert__title">Create Alert</span>
+        <i class="createalert__close ri-close-line"></i>
+
+        <form class="createalert__form">
+            <div class="createalert__form--fields">
+                <input type="text" class="input createalert__form--title" name="title" required>
+                <span class="label createalert__form--title">Title</span>
+            </div>
+
+            <div class="createalert__form--fields">
+                <input type="text" class="input createalert__form--desc" name="description" required>
+                <span class="label createalert__form--desc">Description</span>
+            </div>
+
+            <div class="fields">
+                <div class="createalert__form--fields">
+                    <select name="symbol" class="select createalert__form--symbol">
+                        <option value="BTCUSDT">BTCUSDT</option>
+                        <option value="ETHUSDT" selected>ETHUSDT</option>
+                    </select>
+                    <span class="label createalert__form--symbol">Symbol</span>
+                </div>
+
+                <div class="createalert__form--fields">
+                    <select name="condition" class="select createalert__form--condition">
+                        <option value=">=">Greater than or equal to (>=)</option>
+                        <option value="<=">Less than or equal to (<=) </option>
+                        <option value="<">Less than (<) </option>
+                        <option value=">">Greater than (>)</option>
+                        <option value="==">Equal to (==)</option>
+                    </select>
+                    <span class="label createalert__form--condition">Condition</span>
+                </div>
+            </div>
+
+            <div class="createalert__form--fields">
+                <input type="number" min="0" step="any" class="input createalert__form--price" name="price" required>
+                <span class="label createalert__form--price">Alert Price</span>
+            </div>
+
+            <button class="createalert__form--submit" type="submit">Create</button>
+        </form>
+    </div>
+
     <main class="main container">
         <div class="bellwindow" id="bellwindow">
             <span class="bellwindow__title">Notification <span class="bellwindow__clearall">Clear all</span></span>
@@ -87,13 +132,8 @@
         </section>
 
         <section class="alerts" id="alerts">
-            <h2 class="alerts__title">Pending Alerts<span>(0)</span></h2>
-            <p class="alerts__description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat nisi
-                ducimus
-                doloremque molestiae
-                fugit. Quibusdam aut voluptates saepe odit blanditiis! Officia nobis mollitia ex corporis, nesciunt
-                delectus assumenda sequi doloremque!</p>
-        </section>
+            <span class="alerts__title">Pending Alerts<span>(0)</span></span>
+
     </main>
 
     <script src="src/js/main.js"></script>

@@ -1,12 +1,17 @@
-const body = document.querySelector('body')
-const searchInput = document.querySelector('.watchlist__search--input')
-const searchResults = document.querySelector('.searchresults')
-const watchlistItems = document.querySelector('.watchlist__items')
-const bellwindowClearall = document.querySelector('.bellwindow__clearall')
-const bellwindow = document.querySelector('.bellwindow')
-const bellwindowContainer = document.querySelector('.bellwindow__container')
-const alertBell = document.querySelector('.nav__notification')
-const notificationLight = document.querySelector('.nav__notification--light')
+const body = document.querySelector('body');
+const searchInput = document.querySelector('.watchlist__search--input');
+const searchResults = document.querySelector('.searchresults');
+const watchlistItems = document.querySelector('.watchlist__items');
+const bellwindow = document.querySelector('.bellwindow');
+const bellwindowClearall = document.querySelector('.bellwindow__clearall');
+const bellwindowContainer = document.querySelector('.bellwindow__container');
+const createalert = document.querySelector('.createalert');
+const formSubmit = document.querySelector('.createalert__form');
+const createalertClose = document.querySelector('.createalert__close');
+const createalertOption = document.querySelector('.createalert__form--symbol');
+const alertBell = document.querySelector('.nav__notification');
+const notificationLight = document.querySelector('.nav__notification--light');
+
 
 let allSymbols;
 let ws;
@@ -68,7 +73,7 @@ function addToWatchlist(coin, event) {
             </div>
         </div>
         <div class="symbol__action">
-            <i class="alert button__item button__item--green ri-alarm-line"></i>
+            <i class="createNewAlert button__item button__item--green ri-alarm-line"></i>
             <i class="delete button__item button__item--red ri-delete-bin-6-line"></i>
         </div>
     </li>`;
@@ -131,7 +136,7 @@ function initializeWatchlist() {
                 </div>
             </div>
             <div class="symbol__action">
-                <i class="alert button__item button__item--green ri-alarm-line"></i>
+                <i class="createNewAlert button__item button__item--green ri-alarm-line"></i>
                 <i class="delete button__item button__item--red ri-delete-bin-6-line"></i>
             </div>
         </li>`
@@ -144,22 +149,22 @@ function initializeWatchlist() {
 }
 
 function initializeNotifications() {
-    const allAlerts = getFromLocalStorage('alerts')
+    const allNotifications = getFromLocalStorage('notifications')
 
-    if (!allAlerts) {
+    if (!allNotifications) {
         bellwindowContainer.innerHTML = ''
     }
-    else if (allAlerts.length > 0) {
-        const alertItems = allAlerts.map((alert) => {
+    else if (allNotifications.length > 0) {
+        const notfItems = allNotifications.map((notf) => {
             return `<li class="notification">
-            <span class="notification__time">${alert.time}</span>
+            <span class="notification__time">${notf.time}</span>
             <div class="notification__container">
-                <span class="notification__title">${alert.title}</span>
-                <span class="notification__desc">${alert.description}</span>
+                <span class="notification__title">${notf.title}</span>
+                <span class="notification__desc">${notf.description}</span>
             </div>
         </li>`
         }).join('')
-        bellwindowContainer.innerHTML = alertItems
+        bellwindowContainer.innerHTML = notfItems
     }
 }
 
@@ -170,7 +175,6 @@ function wsConnect(watchlist) {
     ws = new WebSocket(wsUrl + allStreams);
 
     ws.onopen = (event) => {
-        console.log("WebSocket connection opened!");
         showAlertNotification('WebSocket Open', 'Binance websocket connection opened!', 'ri-link-m');
     }
 
@@ -179,15 +183,11 @@ function wsConnect(watchlist) {
         if ('stream' in data) {
             updateWatchlistData(data);
         }
-        else {
-            console.log(data);
-        }
     };
 
     ws.onerror = (event) => console.error("WebSocket error: ", event)
 
     ws.onclose = (event) => {
-        console.log("WebSocket connection closed: ", event);
         showAlertNotification('WebSocket Close', 'Binance websocket connection closed!', 'ri-link-unlink-m');
 
         // Reconnect to the WebSocket after 10 seconds
@@ -265,6 +265,31 @@ function getCurrentTime() {
     return `${formattedHours}:${formattedMinutes} ${period}`;
 }
 
+function fillCreateAlertSymbols(coin = '') {
+    const initialWatchlist = getFromLocalStorage('watchlist');
+
+    const symbolOptions = initialWatchlist.map(symbol => {
+        if (symbol === coin) return `<option value="${symbol}" selected>${symbol}</option>`;
+        else return `<option value="${symbol}">${symbol}</option>`;
+    }).join('');
+
+    createalertOption.innerHTML = symbolOptions;
+}
+
+function showAlertNotification(title, desc = '', icon = 'ri-timer-flash-line') {
+    const notification = new Notification({
+        title,
+        description: desc,
+        icon,
+    });
+
+    notification.show();
+
+    notificationLight.classList.remove('active');
+    notificationLight.classList.add('active');
+
+    initializeNotifications();
+}
 
 
 fetch("https://api.binance.com/api/v3/exchangeInfo")
@@ -273,7 +298,7 @@ fetch("https://api.binance.com/api/v3/exchangeInfo")
         allSymbols = data.symbols.map(symbol => symbol.symbol);
     });
 
-searchInput.addEventListener('input', () => addCoins(searchInput.value))
+searchInput.addEventListener('input', () => addCoins(searchInput.value));
 
 // Hides search result when clicked outside of search result and search input
 document.addEventListener('mousedown', (event) => {
@@ -282,6 +307,12 @@ document.addEventListener('mousedown', (event) => {
         searchInput.value = ''
         addCoins('')
     }
+});
+
+document.addEventListener('click', (event) => {
+    if (!bellwindow.contains(event.target) && !alertBell.contains(event.target)) {
+        bellwindow.classList.remove('showBellWindow');
+    };
 });
 
 // Shows search result again if input is in focus
@@ -294,7 +325,7 @@ searchResults.addEventListener('click', (event) => {
 
         addToWatchlist(coinName, event);
     }
-})
+});
 
 // Used event delegation here
 watchlistItems.addEventListener('click', (event) => {
@@ -303,28 +334,64 @@ watchlistItems.addEventListener('click', (event) => {
 
         removeFromWatchlist(coinName, event);
     }
-})
+
+    else if (event.target.classList.contains('createNewAlert')) {
+        const coinName = event.target.parentElement.parentElement.querySelector('.symbol__name').textContent;
+
+        // Fill Create alert window with watchlist symbols
+        fillCreateAlertSymbols(coinName);
+
+        createalert.classList.remove('showCreateAlert');
+        createalert.classList.add('showCreateAlert');
+    }
+});
+
+createalertClose.addEventListener('click', () => {
+    createalert.classList.remove('showCreateAlert');
+    formSubmit.reset();
+});
 
 bellwindowClearall.addEventListener('click', () => {
     const bellWindowCont = document.querySelector('.bellwindow__container')
     bellWindowCont.innerHTML = '';
 
     // Clear alerts from local storage
-    removeFromLocalStorage('alerts');
-})
+    removeFromLocalStorage('notifications');
+});
 
 alertBell.addEventListener('click', () => {
     bellwindow.classList.toggle('showBellWindow');
     notificationLight.classList.remove('active');
 
     initializeNotifications();
-})
+});
 
-document.addEventListener('click', (event) => {
-    if (!bellwindow.contains(event.target) && !alertBell.contains(event.target)) {
-        bellwindow.classList.remove('showBellWindow');
+formSubmit.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(formSubmit);
+
+    const alertObject = {
+        createdon: Date.now(),
+        title: formData.get('title'),
+        description: formData.get('description'),
+        symbol: formData.get('symbol'),
+        condition: formData.get('condition'),
+        price: formData.get('price'),
     };
-})
+
+    const pendingAlerts = getFromLocalStorage('pendingAlerts');
+
+    if (!pendingAlerts) addToLocalStorage('pendingAlerts', [alertObject]);
+    else {
+        addToLocalStorage('pendingAlerts', [...pendingAlerts, alertObject]);
+    }
+
+    // Close create alert window
+    createalert.classList.remove('showCreateAlert');
+    formSubmit.reset();
+
+    // Update Pending alerts view
+});
 
 
 class Notification {
@@ -334,7 +401,7 @@ class Notification {
         this.icon = icon;
         this.duration = 5000;
         this.container = document.createElement('div');
-        this.alertObject = {
+        this.notfObject = {
             time: getCurrentTime(),
             title: this.title,
             description: this.description,
@@ -368,12 +435,12 @@ class Notification {
         });
 
         // Save alerts to local storage
-        const allAlerts = getFromLocalStorage('alerts');
-        if (!allAlerts) {
-            addToLocalStorage('alerts', [this.alertObject])
+        const allNotifications = getFromLocalStorage('notifications');
+        if (!allNotifications) {
+            addToLocalStorage('notifications', [this.notfObject])
         }
         else {
-            updateLocalStorage('alerts', [...allAlerts, this.alertObject])
+            updateLocalStorage('notifications', [...allNotifications, this.notfObject])
         }
     }
 
@@ -386,21 +453,5 @@ class Notification {
     }
 }
 
-function showAlertNotification(title, desc = '', icon = 'ri-timer-flash-line') {
-    const notification = new Notification({
-        title,
-        description: desc,
-        icon,
-    });
-
-    notification.show();
-
-    notificationLight.classList.remove('active');
-    notificationLight.classList.add('active');
-
-    initializeNotifications();
-}
-
 
 initializeWatchlist();
-// showAlertNotification('Bitcoin Breakout', 'Important breakout above 12345.67 levels.')
