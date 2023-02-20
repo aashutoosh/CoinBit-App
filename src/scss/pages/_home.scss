@@ -89,7 +89,7 @@
     pointer-events: none;
     scale: 0;
 
-    &.showCreateAlert {
+    &.show {
         opacity: 1;
         pointer-events: initial;
         scale: 1;
@@ -250,7 +250,7 @@
         }
     }
 
-    &.showBellWindow {
+    &.show {
         opacity: 1;
         pointer-events: initial;
         scale: 1;
@@ -499,30 +499,182 @@
 }
 
 .alerts {
-    justify-content: flex-end;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
     height: 200vh;
     z-index: 1;
     width: calc(var(--container-width) - var(--left-width));
     box-shadow: 1px 0 5px 0 #0d0d0d;
 
+    .heading {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: baseline;
+        border-bottom: 1px solid var(--dark-300);
+
+        &__window {
+            display: flex;
+            gap: 1.5rem;
+        }
+    }
+
     &__title {
         height: var(--header-height);
         display: flex;
         align-items: center;
-        font-size: 1.25rem;
-        font-weight: 500;
-        border-bottom: 1px solid var(--dark-300);
+        font-size: 1rem;
+        font-weight: 400;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+
+        &:hover {
+            color: var(--yellow-100);
+            transition: all 0.2s;
+            border-bottom: 3px solid var(--yellow-100);
+        }
+
+        &.active {
+            color: var(--yellow-100);
+            transition: all 0.2s;
+            border-bottom: 3px solid var(--yellow-100);
+        }
 
         span {
             margin-left: 0.5rem;
         }
     }
 
-    &__description {
-        padding: 1rem 0;
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid var(--dark-300);
+    &__button {
+        background-color: var(--yellow-100);
+        color: var(--dark-500);
+        padding: 0.4rem 0.6rem;
+        border-radius: 4px;
+        font-size: .8rem;
+        font-weight: 500;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--yellow-300);
+
+        }
+    }
+
+    &__table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th {
+            font-size: 0.9rem;
+            padding: 1rem 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--dark-300);
+            color: var(--light-300);
+        }
+
+        td {
+            padding: 1.5rem 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--dark-300);
+            color: var(--light-300);
+            transition: all 0.2s;
+
+            // Checkbox
+            &:nth-child(1) {
+                .textContent {
+                    display: flex;
+                    flex-direction: column;
+
+                    .description {
+                        font-size: 0.8rem;
+                        padding-top: 0.5rem;
+                        color: var(--grey-500);
+                    }
+                }
+            }
+
+            // Control Buttons
+            &:nth-child(2) {
+                width: 4rem;
+
+                .control__buttons {
+                    display: flex;
+                    // gap: 1rem;
+                    opacity: 0;
+                    transition: all 0.2s;
+
+                    i {
+                        font-size: 1.2rem;
+                        color: var(--light-300);
+                        cursor: pointer;
+                        padding: 1rem 0;
+                        transition: all 0.3s;
+                        scale: 0;
+                    }
+
+                    &--edit {
+                        transform: translateX(0.4rem);
+
+                        &:hover {
+                            color: var(--yellow-100);
+                        }
+                    }
+
+                    &--delete {
+                        transform: translateX(-0.4rem);
+
+                        &:hover {
+                            color: var(--red-100);
+                        }
+                    }
+                }
+            }
+
+            // Condition
+            &:nth-child(4) {
+                text-align: center;
+            }
+        }
+
+        tr:hover td {
+            background-color: var(--dark-300);
+            color: var(--yellow-100);
+
+            &:nth-child(2) {
+                .control__buttons {
+                    opacity: 1;
+
+                    i {
+                        color: var(--light-300);
+                        scale: 1;
+                    }
+
+                    &--edit {
+                        transform: translateX(-0.4rem);
+
+                        &:hover {
+                            color: var(--yellow-100);
+                        }
+                    }
+
+                    &--delete {
+                        transform: translateX(0.4rem);
+
+                        &:hover {
+                            color: var(--red-100);
+                        }
+                    }
+                }
+            }
+        }
+
+        th input[type="checkbox"],
+        td input[type="checkbox"] {
+            display: block;
+            margin: 0 auto;
+            width: 14px;
+            height: 14px;
+            accent-color: var(--yellow-100);
+        }
     }
 }

@@ -120,8 +120,48 @@
         </section>
 
         <section class="alerts" id="alerts">
-            <span class="alerts__title">Pending Alerts<span>(0)</span></span>
+            <div class="container">
+                <div class="heading">
+                    <div class="heading__window">
+                        <span class="alerts__title active">Pending</span>
+                        <span class="alerts__title">Triggered</span>
+                    </div>
+                    <div class="alerts__button">Create Alert</div>
+                </div>
 
+                <table class="alerts__table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                            <th>Symbol</th>
+                            <th>Condition</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody class="alerts__table--tbody">
+                        <tr>
+                            <td>
+                                <div class="textContent">
+                                    <span class="title">Bitcoin at important level</span>
+                                    <span class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                        Voluptatibus eaque reprehenderit voluptates quidem non accusamus, vero
+                                        asperiores officiis consequuntur eos nulla quo quasi expedita?</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="control__buttons">
+                                    <i class="control__buttons--edit ri-pencil-line"></i>
+                                    <i class="control__buttons--delete ri-close-line"></i>
+                                </div>
+                            </td>
+                            <td>BTCUSDT</td>
+                            <td><span>>=</span></td>
+                            <td>14550.32</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
     </main>
 
     <script src="src/js/main.js"></script>

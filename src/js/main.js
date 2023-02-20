@@ -324,7 +324,7 @@ document.addEventListener('mousedown', (event) => {
 
 document.addEventListener('click', (event) => {
     if (!bellwindow.contains(event.target) && !alertBell.contains(event.target)) {
-        bellwindow.classList.remove('showBellWindow');
+        bellwindow.classList.remove('show');
     };
 });
 
@@ -354,13 +354,13 @@ watchlistItems.addEventListener('click', (event) => {
         // Fill Create alert window with watchlist symbols
         fillCreateAlertSymbols(coinName);
 
-        createalert.classList.remove('showCreateAlert');
-        createalert.classList.add('showCreateAlert');
+        createalert.classList.remove('show');
+        createalert.classList.add('show');
     }
 });
 
 createalertClose.addEventListener('click', () => {
-    createalert.classList.remove('showCreateAlert');
+    createalert.classList.remove('show');
     formSubmit.reset();
 });
 
@@ -376,7 +376,7 @@ bellwindowClearall.addEventListener('click', () => {
 });
 
 alertBell.addEventListener('click', () => {
-    bellwindow.classList.toggle('showBellWindow');
+    bellwindow.classList.toggle('show');
     notificationLight.classList.remove('active');
 
     initializeNotifications();
@@ -403,7 +403,7 @@ formSubmit.addEventListener('submit', (event) => {
     }
 
     // Close create alert window
-    createalert.classList.remove('showCreateAlert');
+    createalert.classList.remove('show');
     formSubmit.reset();
 
     // Update Pending alerts view
