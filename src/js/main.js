@@ -11,12 +11,24 @@ const bellwindowContainer = document.querySelector('.bellwindow__container');
 const bellwindowEmpty = document.querySelector('.bellwindow__empty');
 
 const createalert = document.querySelector('.createalert');
-const formSubmit = document.querySelector('.createalert__form');
+const createalertTitle = document.querySelector('.createalert__title');
+const createalertForm = document.querySelector('.createalert__form');
+const formInputTitle = document.querySelector('.input.title');
+const formInputDescription = document.querySelector('.input.description');
+const formSelectSymbol = document.querySelector('.select.symbol');
+const formSelectCondition = document.querySelector('.select.condition');
+const formInputPrice = document.querySelector('.input.price');
 const createalertClose = document.querySelector('.createalert__close');
-const createalertOption = document.querySelector('.createalert__form--symbol');
+const createalertSubmit = document.querySelector('.createalert__form--submit');
 
 const alertBell = document.querySelector('.nav__notification');
 const notificationLight = document.querySelector('.nav__notification--light');
+
+const createAlertButton = document.querySelector('.alerts__create--button');
+const alertsTable = document.querySelector('.alerts__table--tbody');
+const alertsHeading = document.querySelector('.heading__window');
+const alertsPendingTitle = document.querySelector('.alerts__title--pending');
+const alertsTriggeredTitle = document.querySelector('.alerts__title--triggered');
 
 
 let allSymbols;
@@ -281,12 +293,16 @@ function getCurrentTime() {
 function fillCreateAlertSymbols(coin = '') {
     const initialWatchlist = getFromLocalStorage('watchlist');
 
-    const symbolOptions = initialWatchlist.map(symbol => {
+    let symbolOptions = initialWatchlist.map(symbol => {
         if (symbol === coin) return `<option value="${symbol}" selected>${symbol}</option>`;
         else return `<option value="${symbol}">${symbol}</option>`;
     }).join('');
 
-    createalertOption.innerHTML = symbolOptions;
+    if (!initialWatchlist.includes(coin) && coin !== '') {
+        symbolOptions += `<option value="${coin}" selected>${coin}</option>`
+    }
+
+    formSelectSymbol.innerHTML = symbolOptions;
 }
 
 function showAlertNotification(title, desc = '', icon = 'ri-timer-flash-line') {
@@ -303,6 +319,81 @@ function showAlertNotification(title, desc = '', icon = 'ri-timer-flash-line') {
 
     initializeNotifications();
 }
+
+function updateAlertsView() {
+    const newRow = (alert) => {
+        return `<tr data-key="${alert.createdon}">
+        <td>
+            <div class="textContent">
+                <span class="title">${alert.title}</span>
+                <span class="description">${alert.description}</span>
+            </div>
+        </td>
+        <td>
+            <div class="control__buttons">
+                <i class="control__buttons--edit ri-pencil-line"></i>
+                <i class="control__buttons--delete ri-close-line"></i>
+            </div>
+        </td>
+        <td>${alert.symbol}</td>
+        <td><span>${alert.condition}</span></td>
+        <td>${alert.price}</td>
+    </tr>`
+    }
+
+    const allPendingAlerts = getFromLocalStorage('pendingAlerts');
+    const allTriggeredAlerts = getFromLocalStorage('triggeredAlerts');
+
+    if (alertsPendingTitle.classList.contains('active')) {
+        if (allPendingAlerts) {
+            const alertTableRows = allPendingAlerts.reverse().map(alert => newRow(alert)).join('');
+            alertsTable.innerHTML = alertTableRows;
+        }
+        else {
+            alertsTable.innerHTML = '';
+        }
+    }
+
+    else if (alertsTriggeredTitle.classList.contains('active')) {
+        if (allTriggeredAlerts) {
+            const alertTableRows = allTriggeredAlerts.reverse().map(alert => newRow(alert)).join('');
+            alertsTable.innerHTML = alertTableRows;
+        }
+        else {
+            alertsTable.innerHTML = '';
+        }
+    }
+}
+
+function createAlertModal(coin = '') {
+    createalertForm.setAttribute('data-key', '');
+    createalertTitle.textContent = 'Create Alert';
+    createalertSubmit.textContent = 'Create';
+
+    coin ? fillCreateAlertSymbols(coin) : fillCreateAlertSymbols();
+}
+
+function updateAlertModal(alert) {
+    createalertForm.setAttribute('data-key', alert.createdon);
+    createalertTitle.textContent = 'Update Alert';
+    formInputTitle.value = alert.title;
+    formInputDescription.value = alert.description;
+    fillCreateAlertSymbols(alert.symbol);
+    formSelectCondition.value = alert.condition;
+    formInputPrice.value = alert.price;
+    createalertSubmit.textContent = 'Update';
+}
+
+function showAlertModal() {
+    createalert.classList.remove('show');
+    createalert.classList.add('show');
+}
+
+function hideAlertModal() {
+    createalert.classList.remove('show');
+    createalertForm.reset();
+}
+
 
 
 fetch("https://api.binance.com/api/v3/exchangeInfo")
@@ -352,16 +443,13 @@ watchlistItems.addEventListener('click', (event) => {
         const coinName = event.target.parentElement.parentElement.querySelector('.symbol__name').textContent;
 
         // Fill Create alert window with watchlist symbols
-        fillCreateAlertSymbols(coinName);
-
-        createalert.classList.remove('show');
-        createalert.classList.add('show');
+        createAlertModal(coinName)
+        showAlertModal()
     }
 });
 
 createalertClose.addEventListener('click', () => {
-    createalert.classList.remove('show');
-    formSubmit.reset();
+    hideAlertModal()
 });
 
 bellwindowClearall.addEventListener('click', () => {
@@ -382,9 +470,12 @@ alertBell.addEventListener('click', () => {
     initializeNotifications();
 });
 
-formSubmit.addEventListener('submit', (event) => {
+createalertForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const formData = new FormData(formSubmit);
+    const formData = new FormData(createalertForm);
+
+    // If Update alert modal is uesd then data-key attribute will have value
+    const dataKey = Number(createalertForm.getAttribute('data-key'));
 
     const alertObject = {
         createdon: Date.now(),
@@ -394,19 +485,70 @@ formSubmit.addEventListener('submit', (event) => {
         condition: formData.get('condition'),
         price: formData.get('price'),
     };
-
     const pendingAlerts = getFromLocalStorage('pendingAlerts');
 
-    if (!pendingAlerts) addToLocalStorage('pendingAlerts', [alertObject]);
+    if (!dataKey) {
+        if (!pendingAlerts) addToLocalStorage('pendingAlerts', [alertObject]);
+        else {
+            addToLocalStorage('pendingAlerts', [...pendingAlerts, alertObject]);
+        }
+    }
     else {
-        addToLocalStorage('pendingAlerts', [...pendingAlerts, alertObject]);
+        const filteredAlerts = pendingAlerts.filter((alert) => alert.createdon !== dataKey);
+        updateLocalStorage('pendingAlerts', [...filteredAlerts, alertObject])
     }
 
     // Close create alert window
-    createalert.classList.remove('show');
-    formSubmit.reset();
+    hideAlertModal()
 
     // Update Pending alerts view
+    updateAlertsView();
+});
+
+createAlertButton.addEventListener('click', () => {
+    createAlertModal();
+    showAlertModal();
+})
+
+alertsTable.addEventListener('click', (event) => {
+    const editElement = event.target.classList.contains('control__buttons--edit');
+    const deleteElement = event.target.classList.contains('control__buttons--delete');
+    const rowElement = event.target.parentElement.parentElement.parentElement;
+    const dataKey = Number(rowElement.getAttribute('data-key'));
+
+    const typePending = alertsPendingTitle.classList.contains('active');
+    const allAlerts = typePending ? getFromLocalStorage('pendingAlerts') : getFromLocalStorage('triggeredAlerts');
+
+    // If type is pending then only can edit alert
+    if (editElement && typePending) {
+        const filteredAlerts = allAlerts.filter((alert) => alert.createdon === dataKey);
+        const filteredAlertObject = filteredAlerts[0];
+
+        // Update Alert modal window
+        updateAlertModal(filteredAlertObject);
+        showAlertModal();
+    }
+    else if (deleteElement) {
+        const filteredAlerts = allAlerts.filter((alert) => alert.createdon !== dataKey);
+        updateLocalStorage('pendingAlerts', filteredAlerts);
+        console.log(dataKey);
+        updateAlertsView()
+    }
+})
+
+alertsHeading.addEventListener('click', event => {
+    const targetClassList = event.target.classList
+
+    if (targetClassList.contains('alerts__title--pending') && !targetClassList.contains('active')) {
+        alertsTriggeredTitle.classList.remove('active')
+        alertsPendingTitle.classList.add('active');
+        updateAlertsView();
+    }
+    else if (targetClassList.contains('alerts__title--triggered') && !targetClassList.contains('active')) {
+        alertsPendingTitle.classList.remove('active');
+        alertsTriggeredTitle.classList.add('active');
+        updateAlertsView();
+    }
 });
 
 
@@ -471,3 +613,4 @@ class Notification {
 
 
 initializeWatchlist();
+updateAlertsView();

@@ -500,7 +500,6 @@
 
 .alerts {
     padding: 0 1.5rem;
-    height: 200vh;
     z-index: 1;
     width: calc(var(--container-width) - var(--left-width));
     box-shadow: 1px 0 5px 0 #0d0d0d;
@@ -526,16 +525,15 @@
         font-weight: 400;
         cursor: pointer;
         border-bottom: 3px solid transparent;
+        transition: all 0.2s;
 
         &:hover {
             color: var(--yellow-100);
-            transition: all 0.2s;
             border-bottom: 3px solid var(--yellow-100);
         }
 
         &.active {
             color: var(--yellow-100);
-            transition: all 0.2s;
             border-bottom: 3px solid var(--yellow-100);
         }
 
@@ -544,7 +542,7 @@
         }
     }
 
-    &__button {
+    &__create--button {
         background-color: var(--yellow-100);
         color: var(--dark-500);
         padding: 0.4rem 0.6rem;
@@ -556,7 +554,6 @@
 
         &:hover {
             background-color: var(--yellow-300);
-
         }
     }
 
@@ -570,10 +567,26 @@
             text-align: left;
             border-bottom: 1px solid var(--dark-300);
             color: var(--light-300);
+
+            // Symbol
+            &:nth-child(3) {
+                width: 4rem;
+            }
+
+            // Condition
+            &:nth-child(4) {
+                width: 4rem;
+                text-align: center;
+            }
+
+            // Price
+            &:nth-child(5) {
+                width: 4rem;
+            }
         }
 
         td {
-            padding: 1.5rem 0.75rem;
+            padding: 0.5rem 0.75rem;
             text-align: left;
             border-bottom: 1px solid var(--dark-300);
             color: var(--light-300);
@@ -599,7 +612,6 @@
 
                 .control__buttons {
                     display: flex;
-                    // gap: 1rem;
                     opacity: 0;
                     transition: all 0.2s;
 
@@ -607,32 +619,35 @@
                         font-size: 1.2rem;
                         color: var(--light-300);
                         cursor: pointer;
-                        padding: 1rem 0;
+                        padding: 1rem 0.25rem;
                         transition: all 0.3s;
                         scale: 0;
                     }
 
                     &--edit {
                         transform: translateX(0.4rem);
-
-                        &:hover {
-                            color: var(--yellow-100);
-                        }
                     }
 
                     &--delete {
                         transform: translateX(-0.4rem);
-
-                        &:hover {
-                            color: var(--red-100);
-                        }
                     }
                 }
             }
 
+            // Symbol
+            &:nth-child(3) {
+                width: 4rem;
+            }
+
             // Condition
             &:nth-child(4) {
+                width: 4rem;
                 text-align: center;
+            }
+
+            // Price
+            &:nth-child(5) {
+                width: 4rem;
             }
         }
 

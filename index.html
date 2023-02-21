@@ -49,28 +49,26 @@
         <span class="createalert__title">Create Alert</span>
         <i class="createalert__close ri-close-line"></i>
 
-        <form class="createalert__form">
+        <form class="createalert__form" data-key="">
             <div class="createalert__form--fields">
-                <input type="text" class="input createalert__form--title" name="title" required>
+                <input type="text" class="input title" name="title" required>
                 <span class="label createalert__form--title">Title</span>
             </div>
 
             <div class="createalert__form--fields">
-                <input type="text" class="input createalert__form--desc" name="description" required>
+                <input type="text" class="input description" name="description" required>
                 <span class="label createalert__form--desc">Description</span>
             </div>
 
             <div class="fields">
                 <div class="createalert__form--fields">
-                    <select name="symbol" class="select createalert__form--symbol">
-                        <option value="BTCUSDT">BTCUSDT</option>
-                        <option value="ETHUSDT" selected>ETHUSDT</option>
+                    <select name="symbol" class="select symbol">
                     </select>
                     <span class="label createalert__form--symbol">Symbol</span>
                 </div>
 
                 <div class="createalert__form--fields">
-                    <select name="condition" class="select createalert__form--condition">
+                    <select name="condition" class="select condition">
                         <option value=">=">Greater than or equal to (>=)</option>
                         <option value="<=">Less than or equal to (<=) </option>
                         <option value="<">Less than (<) </option>
@@ -82,7 +80,7 @@
             </div>
 
             <div class="createalert__form--fields">
-                <input type="number" min="0" step="any" class="input createalert__form--price" name="price" required>
+                <input type="number" min="0" step="any" class="input price" name="price" required>
                 <span class="label createalert__form--price">Alert Price</span>
             </div>
 
@@ -123,10 +121,10 @@
             <div class="container">
                 <div class="heading">
                     <div class="heading__window">
-                        <span class="alerts__title active">Pending</span>
-                        <span class="alerts__title">Triggered</span>
+                        <span class="alerts__title alerts__title--pending active">Pending</span>
+                        <span class="alerts__title alerts__title--triggered">Triggered</span>
                     </div>
-                    <div class="alerts__button">Create Alert</div>
+                    <div class="alerts__create--button">Create Alert</div>
                 </div>
 
                 <table class="alerts__table">
@@ -140,25 +138,6 @@
                         </tr>
                     </thead>
                     <tbody class="alerts__table--tbody">
-                        <tr>
-                            <td>
-                                <div class="textContent">
-                                    <span class="title">Bitcoin at important level</span>
-                                    <span class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Voluptatibus eaque reprehenderit voluptates quidem non accusamus, vero
-                                        asperiores officiis consequuntur eos nulla quo quasi expedita?</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="control__buttons">
-                                    <i class="control__buttons--edit ri-pencil-line"></i>
-                                    <i class="control__buttons--delete ri-close-line"></i>
-                                </div>
-                            </td>
-                            <td>BTCUSDT</td>
-                            <td><span>>=</span></td>
-                            <td>14550.32</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
