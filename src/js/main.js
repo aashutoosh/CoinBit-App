@@ -115,14 +115,14 @@ function addToWatchlist(coin, event) {
     }
 
     // If websocket is connected then subscribe to stream otherwise initiate connection
-    if (ws) subscribeStream(coin);
+    if (ws) subscribeStream(coin, 'watchlist');
     else wsConnect([coin]);
-
-    showAlertNotification(`Added: ${coin}`, `${coin} added to watchlist!`, 'ri-checkbox-circle-line');
 }
 
 function removeFromWatchlist(coin, element) {
     const initialWatchlist = getFromLocalStorage('watchlist');
+    unsubscribeStream(coin, 'watchlist');
+
     const modifiedWatchlist = initialWatchlist.filter(s => s !== coin);
     updateLocalStorage('watchlist', modifiedWatchlist);
 
@@ -131,9 +131,6 @@ function removeFromWatchlist(coin, element) {
 
     parentElement.removeChild(listElement);
 
-    unsubscribeStream(coin);
-
-    showAlertNotification(`Removed: ${coin}`, `${coin} removed from watchlist!`, 'ri-delete-bin-line');
 }
 
 function initializeWatchlist() {
@@ -162,7 +159,9 @@ function initializeWatchlist() {
         watchlistItems.innerHTML = watchlistItem
 
         // Start websocket connection
-        wsConnect(initialWatchlist);
+        // with all unique symbols i.e watchlist + pending alerts
+        const allUniqueSymbols = getAllUniqueSymbols();
+        wsConnect(allUniqueSymbols);
     }
 }
 
@@ -193,9 +192,9 @@ function initializeNotifications() {
     bellwindowContainer.scrollTop = 0;
 }
 
-function wsConnect(watchlist) {
+function wsConnect(allSymbols) {
     const wsUrl = "wss://stream.binance.com:443/stream?streams=";
-    const allStreams = watchlist.map(coin => coin.toLowerCase() + '@ticker').join('/')
+    const allStreams = allSymbols.map(coin => coin.toLowerCase() + '@ticker').join('/')
 
     ws = new WebSocket(wsUrl + allStreams);
 
@@ -217,25 +216,61 @@ function wsConnect(watchlist) {
 
         // Reconnect to the WebSocket after 10 seconds
         setTimeout(function () {
-            wsConnect(watchlist);
+            wsConnect(allSymbols);
         }, 10000);
     };
 }
 
-function subscribeStream(coin) {
-    ws.send(JSON.stringify({
-        id: Date.now(),
-        method: "SUBSCRIBE",
-        params: [coin.toLowerCase() + '@ticker']
-    }));
+function subscribeStream(coin, source) {
+    const subscribeCoin = (coin) => {
+        ws.send(JSON.stringify({
+            id: Date.now(),
+            method: "SUBSCRIBE",
+            params: [coin.toLowerCase() + '@ticker']
+        }));
+
+        showAlertNotification(`Subscribed: ${coin}`, `${coin} subscribed to websocket connection!`, 'ri-checkbox-circle-line');
+    }
+
+    const pendingAlertsSymbols = getFromLocalStorage('pendingAlerts').map(alert => alert.symbol);
+
+    if (source === 'watchlist') {
+        if (!pendingAlertsSymbols.includes(coin)) {
+            subscribeCoin(coin);
+        };
+    };
 }
 
-function unsubscribeStream(coin) {
-    ws.send(JSON.stringify({
-        id: Date.now(),
-        method: "UNSUBSCRIBE",
-        params: [coin.toLowerCase() + '@ticker']
-    }));
+function unsubscribeStream(coin, source) {
+    const unsubscribeCoin = (coin) => {
+        ws.send(JSON.stringify({
+            id: Date.now(),
+            method: "UNSUBSCRIBE",
+            params: [coin.toLowerCase() + '@ticker']
+        }));
+
+        showAlertNotification(`Unsubscribed: ${coin}`, `${coin} unsubscribed from websocket connection!`, 'ri-delete-bin-line');
+    }
+
+    const pendingAlertsSymbols = getFromLocalStorage('pendingAlerts').map(alert => alert.symbol);
+    const watchlistSymbols = getFromLocalStorage('watchlist');
+    const symbCount = pendingAlertsSymbols.filter(symbol => symbol === coin).length;
+
+    if (source === 'watchlist') {
+        // If symbol is also not in pendingAlertSymbols then unsubscribe its data
+        if (!pendingAlertsSymbols.includes(coin)) {
+            unsubscribeCoin(coin);
+        }
+    }
+    else if (source === 'alertsTable') {
+        // If symbol is also not in watchlistSymbols and 
+        // if it has only one alert in table then unsubscribe its data
+        if (!watchlistSymbols.includes(coin) && symbCount == 1) {
+            unsubscribeCoin(coin);
+        }
+    }
+
+
 }
 
 function updateWatchlistData(data) {
@@ -394,6 +429,16 @@ function hideAlertModal() {
     createalertForm.reset();
 }
 
+function getAllUniqueSymbols() {
+    const watchlistSymbols = getFromLocalStorage('watchlist');
+    const pendingAlertsSymbols = getFromLocalStorage('pendingAlerts').map(alert => alert.symbol);
+
+    const allSymbols = [...watchlistSymbols, ...pendingAlertsSymbols];
+    const allUniqueSymbols = [...(new Set(allSymbols))];
+
+    return allUniqueSymbols;
+}
+
 
 
 fetch("https://api.binance.com/api/v3/exchangeInfo")
@@ -519,20 +564,24 @@ alertsTable.addEventListener('click', (event) => {
     const typePending = alertsPendingTitle.classList.contains('active');
     const allAlerts = typePending ? getFromLocalStorage('pendingAlerts') : getFromLocalStorage('triggeredAlerts');
 
+    const filteredAlerts = allAlerts.filter((alert) => alert.createdon === dataKey);
+    const filteredAlertObject = filteredAlerts[0];
+
     // If type is pending then only can edit alert
     if (editElement && typePending) {
-        const filteredAlerts = allAlerts.filter((alert) => alert.createdon === dataKey);
-        const filteredAlertObject = filteredAlerts[0];
-
         // Update Alert modal window
         updateAlertModal(filteredAlertObject);
         showAlertModal();
     }
     else if (deleteElement) {
         const filteredAlerts = allAlerts.filter((alert) => alert.createdon !== dataKey);
+
+        if (typePending) {
+            unsubscribeStream(filteredAlertObject.symbol, 'alertsTable');
+        }
+
         updateLocalStorage('pendingAlerts', filteredAlerts);
-        console.log(dataKey);
-        updateAlertsView()
+        updateAlertsView();
     }
 })
 
