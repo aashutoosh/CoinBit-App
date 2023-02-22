@@ -29,6 +29,7 @@ const alertsTable = document.querySelector('.alerts__table--tbody');
 const alertsHeading = document.querySelector('.heading__window');
 const alertsPendingTitle = document.querySelector('.alerts__title--pending');
 const alertsTriggeredTitle = document.querySelector('.alerts__title--triggered');
+const modalPrice = document.querySelector('.createalert__form--fields .symbolprice');
 
 
 let allFetchedSymbols;
@@ -202,6 +203,7 @@ function wsConnect(allSymbols) {
         if ('stream' in data) {
             updateWatchlistData(data);
             checkForAlerts(data);
+            updateModalPrice(data)
         }
     };
 
@@ -479,6 +481,29 @@ function checkForAlerts(coinData) {
     });
 }
 
+function updateModalPrice(coinData) {
+    if (createalert.classList.contains('show')) {
+        const coin = coinData.data.s;
+        const currentPrice = Number(coinData.data.c);
+
+        const selectElement = document.getElementById("modalSymbolSelect");
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const selectedOptionValue = selectedOption.value;
+
+        if (selectedOptionValue === coin) {
+            const modalSymbolPrice = document.getElementById("modalSymbolPrice");
+            const prevPrice = Number(modalSymbolPrice.textContent);
+
+            // Update the price.
+            modalSymbolPrice.textContent = currentPrice;
+
+            // Add the green or red class to the price element.
+            modalSymbolPrice.classList.remove('green', 'red');
+            if (currentPrice > prevPrice) modalSymbolPrice.classList.add('green');
+            else modalSymbolPrice.classList.add('red');
+        }
+    }
+}
 
 
 fetch("https://api.binance.com/api/v3/exchangeInfo")
