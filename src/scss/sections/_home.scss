@@ -142,6 +142,7 @@
                 transform: translateY(-50%);
                 font-weight: 500;
                 font-size: 0.9rem;
+                pointer-events: none;
             }
         }
 
@@ -540,6 +541,7 @@
 }
 
 .alerts {
+    display: none;
     padding: 0 1.5rem;
     z-index: 1;
     width: calc(var(--container-width) - var(--left-width));
@@ -555,6 +557,7 @@
         &__window {
             display: flex;
             gap: 1.5rem;
+            color: var(--light-900);
         }
     }
 
@@ -566,14 +569,17 @@
         font-weight: 400;
         cursor: pointer;
         border-bottom: 3px solid transparent;
-        transition: all 0.2s;
+        transition: all 0.1s;
+        scale: 0.9;
+        transform-origin: center;
 
         &:hover {
             color: var(--yellow-100);
-            border-bottom: 3px solid var(--yellow-100);
+            scale: 1;
         }
 
         &.active {
+            scale: 1;
             color: var(--yellow-100);
             border-bottom: 3px solid var(--yellow-100);
         }

@@ -14,6 +14,8 @@
 @import "layout/main";
 
 // Import Page Styles
-@import "pages/home";
-@import "pages/about";
-@import "pages/contact";
+@import "sections/home";
+@import "sections/settings";
+@import "sections/about";
+@import "sections/contact";
+@import "sections/common";

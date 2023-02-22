@@ -876,6 +876,7 @@ body {
           transform: translateY(-50%);
   font-weight: 500;
   font-size: 0.9rem;
+  pointer-events: none;
 }
 .createalert__form .fields {
   display: -webkit-box;
@@ -1299,6 +1300,7 @@ body {
 }
 
 .alerts {
+  display: none;
   padding: 0 1.5rem;
   z-index: 1;
   width: calc(var(--container-width) - var(--left-width));
@@ -1323,6 +1325,7 @@ body {
   display: -ms-flexbox;
   display: flex;
   gap: 1.5rem;
+  color: var(--light-900);
 }
 .alerts__title {
   height: var(--header-height);
@@ -1336,14 +1339,18 @@ body {
   font-weight: 400;
   cursor: pointer;
   border-bottom: 3px solid transparent;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+  scale: 0.9;
+  -webkit-transform-origin: center;
+          transform-origin: center;
 }
 .alerts__title:hover {
   color: var(--yellow-100);
-  border-bottom: 3px solid var(--yellow-100);
+  scale: 1;
 }
 .alerts__title.active {
+  scale: 1;
   color: var(--yellow-100);
   border-bottom: 3px solid var(--yellow-100);
 }
@@ -1477,4 +1484,20 @@ body {
   width: 14px;
   height: 14px;
   accent-color: var(--yellow-100);
+}
+
+.settings {
+  display: none;
+}
+
+.about {
+  display: none;
+}
+
+.contact {
+  display: none;
+}
+
+.showSection {
+  display: block;
 }

@@ -21,6 +21,8 @@ const formInputPrice = document.querySelector('.input.price');
 const createalertClose = document.querySelector('.createalert__close');
 const createalertSubmit = document.querySelector('.createalert__form--submit');
 
+const navLinks = document.getElementById('nav__links');
+const allNavLinks = document.querySelectorAll('.nav__link');
 const alertBell = document.querySelector('.nav__notification');
 const notificationLight = document.querySelector('.nav__notification--light');
 
@@ -690,6 +692,24 @@ alertsHeading.addEventListener('click', event => {
         alertsTriggeredTitle.classList.add('active');
         updateAlertsView();
     }
+});
+
+navLinks.addEventListener('click', event => {
+    // Only perform this when its clicked on a tags
+    if (event.target.tagName === 'A') {
+        allNavLinks.forEach(link => link.classList.remove('active'));
+        event.target.parentElement.classList.add('active')
+
+        const clickedLinkText = event.target.textContent.toLowerCase();
+
+        // Removes showSection from all sections
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.remove('showSection');
+        });
+
+        // Add showSection class to respective section
+        document.querySelector(`.${clickedLinkText}`).classList.add('showSection');
+    };
 });
 
 
