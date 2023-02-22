@@ -31,7 +31,7 @@ const alertsPendingTitle = document.querySelector('.alerts__title--pending');
 const alertsTriggeredTitle = document.querySelector('.alerts__title--triggered');
 
 
-let allSymbols;
+let allFetchedSymbols;
 let ws;
 
 function addToLocalStorage(key, value) {
@@ -39,7 +39,7 @@ function addToLocalStorage(key, value) {
 }
 
 function getFromLocalStorage(key) {
-    return JSON.parse(localStorage.getItem(key))
+    return JSON.parse(localStorage.getItem(key) || "[]")
 }
 
 function updateLocalStorage(key, value) {
@@ -52,13 +52,13 @@ function removeFromLocalStorage(key) {
 
 function addCoins(params) {
     if (params) {
-        const filteredCoins = allSymbols.filter((symbol) => symbol.indexOf(params.toUpperCase()) !== -1)
+        const filteredCoins = allFetchedSymbols.filter((symbol) => symbol.indexOf(params.toUpperCase()) !== -1)
 
         const coinsListHtml = filteredCoins.map(
             (coin) => {
                 const initialWatchlist = getFromLocalStorage('watchlist')
 
-                if (initialWatchlist && initialWatchlist.includes(coin)) {
+                if (initialWatchlist.includes(coin)) {
                     return `<li class="searchresults__item">
                     <span class="coinname">${coin}</span>
                     <i class="button__item button__item--green ri-check-line active"></i>
@@ -101,22 +101,17 @@ function addToWatchlist(coin, event) {
         event.target.classList.add('ri-check-line', 'active');
     }
 
+    // If websocket is connected then subscribe to stream otherwise initiate connection
+    if (ws) subscribeStream(coin, 'watchlist');
+    else wsConnect([coin]);
+
     const initialWatchlist = getFromLocalStorage('watchlist');
 
-    if (!initialWatchlist) {
-        addToLocalStorage('watchlist', [coin]);
-        activateButton();
-        watchlistItems.innerHTML = watchlistItem;
-    }
-    else if (!initialWatchlist.includes(coin)) {
+    if (!initialWatchlist.includes(coin)) {
         addToLocalStorage('watchlist', [...initialWatchlist, coin]);
         activateButton();
         watchlistItems.innerHTML += watchlistItem;
     }
-
-    // If websocket is connected then subscribe to stream otherwise initiate connection
-    if (ws) subscribeStream(coin, 'watchlist');
-    else wsConnect([coin]);
 }
 
 function removeFromWatchlist(coin, element) {
@@ -136,10 +131,10 @@ function removeFromWatchlist(coin, element) {
 function initializeWatchlist() {
     const initialWatchlist = getFromLocalStorage('watchlist')
 
-    if (!initialWatchlist) {
+    if (initialWatchlist.length === 0) {
         watchlistItems.innerHTML = ''
     }
-    else if (initialWatchlist.length > 0) {
+    else if (initialWatchlist.length) {
         const watchlistItem = initialWatchlist.map((coin) => {
             return `<li class="watchlist__item symbol ">
             <span class="symbol__name">${coin}</span>
@@ -168,12 +163,12 @@ function initializeWatchlist() {
 function initializeNotifications() {
     const allNotifications = getFromLocalStorage('notifications')
 
-    if (!allNotifications) {
+    if (allNotifications.length === 0) {
         bellwindowContainer.innerHTML = '';
         bellwindowEmpty.classList.remove('show');
         bellwindowEmpty.classList.add('show');
     }
-    else if (allNotifications.length > 0) {
+    else if (allNotifications.length) {
         const notfItems = allNotifications.map((notf) => {
             return `<li class="notification">
             <span class="notification__time">${notf.time}</span>
@@ -206,6 +201,7 @@ function wsConnect(allSymbols) {
         const data = JSON.parse(event.data);
         if ('stream' in data) {
             updateWatchlistData(data);
+            checkForAlerts(data);
         }
     };
 
@@ -233,9 +229,10 @@ function subscribeStream(coin, source) {
     }
 
     const pendingAlertsSymbols = getFromLocalStorage('pendingAlerts').map(alert => alert.symbol);
+    const watchlistSymbols = getFromLocalStorage('watchlist');
 
     if (source === 'watchlist') {
-        if (!pendingAlertsSymbols.includes(coin)) {
+        if (!pendingAlertsSymbols.includes(coin) && !watchlistSymbols.includes(coin)) {
             subscribeCoin(coin);
         };
     };
@@ -269,8 +266,6 @@ function unsubscribeStream(coin, source) {
             unsubscribeCoin(coin);
         }
     }
-
-
 }
 
 function updateWatchlistData(data) {
@@ -439,12 +434,54 @@ function getAllUniqueSymbols() {
     return allUniqueSymbols;
 }
 
+function checkForAlerts(coinData) {
+    function conditionMatched(currentAlert) {
+        showAlertNotification(currentAlert.title, currentAlert.description, 'ri-notification-4-line');
+
+        // Remove from pending alerts
+        const filteredAlerts = allPendingAlerts.filter(alert => alert.createdon !== currentAlert.createdon);
+        updateLocalStorage('pendingAlerts', filteredAlerts);
+
+        // and move to triggered alerts
+        const allTriggeredAlerts = getFromLocalStorage('triggeredAlerts');
+        if (allTriggeredAlerts.length === 0) {
+            addToLocalStorage('triggeredAlerts', [currentAlert]);
+        }
+        else {
+            updateLocalStorage('triggeredAlerts', [currentAlert, ...allTriggeredAlerts]);
+        }
+
+        updateAlertsView();
+    }
+
+    const coin = coinData.data.s;
+    const currentPrice = Number(coinData.data.c);
+    const allPendingAlerts = getFromLocalStorage('pendingAlerts');
+    const pendingAlerts = allPendingAlerts.filter(alert => alert.symbol === coin);
+
+    pendingAlerts.forEach(alert => {
+        const condition = alert.condition;
+        if (condition === '>=' && currentPrice >= alert.price) {
+            conditionMatched(alert);
+        }
+        else if (condition === '<=' && currentPrice <= alert.price) {
+            conditionMatched(alert);
+        }
+        else if (condition === '>' && currentPrice > alert.price) {
+            conditionMatched(alert);
+        }
+        else if (condition === '==' && currentPrice === alert.price) {
+            conditionMatched(alert);
+        }
+    });
+}
+
 
 
 fetch("https://api.binance.com/api/v3/exchangeInfo")
     .then(response => response.json())
     .then(data => {
-        allSymbols = data.symbols.map(symbol => symbol.symbol);
+        allFetchedSymbols = data.symbols.map(symbol => symbol.symbol);
     });
 
 searchInput.addEventListener('input', () => addCoins(searchInput.value));
@@ -567,21 +604,29 @@ alertsTable.addEventListener('click', (event) => {
     const filteredAlerts = allAlerts.filter((alert) => alert.createdon === dataKey);
     const filteredAlertObject = filteredAlerts[0];
 
+
     // If type is pending then only can edit alert
-    if (editElement && typePending) {
-        // Update Alert modal window
-        updateAlertModal(filteredAlertObject);
-        showAlertModal();
+    if (editElement) {
+        if (typePending) {
+            // Update Alert modal window
+            updateAlertModal(filteredAlertObject);
+            showAlertModal();
+        }
     }
     else if (deleteElement) {
         const filteredAlerts = allAlerts.filter((alert) => alert.createdon !== dataKey);
 
         if (typePending) {
             unsubscribeStream(filteredAlertObject.symbol, 'alertsTable');
+
+            updateLocalStorage('pendingAlerts', filteredAlerts);
+            updateAlertsView();
         }
 
-        updateLocalStorage('pendingAlerts', filteredAlerts);
-        updateAlertsView();
+        else {
+            updateLocalStorage('triggeredAlerts', filteredAlerts);
+            updateAlertsView();
+        }
     }
 })
 
@@ -643,7 +688,7 @@ class Notification {
 
         // Save alerts to local storage
         const allNotifications = getFromLocalStorage('notifications');
-        if (!allNotifications) {
+        if (allNotifications.length === 0) {
             addToLocalStorage('notifications', [this.notfObject])
         }
         else {
