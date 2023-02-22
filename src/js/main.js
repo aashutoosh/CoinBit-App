@@ -470,6 +470,9 @@ function checkForAlerts(coinData) {
         else if (condition === '>' && currentPrice > alert.price) {
             conditionMatched(alert);
         }
+        else if (condition === '<' && currentPrice < alert.price) {
+            conditionMatched(alert);
+        }
         else if (condition === '==' && currentPrice === alert.price) {
             conditionMatched(alert);
         }
