@@ -171,21 +171,19 @@ function initializeNotifications() {
     }
     else if (allNotifications.length) {
         const notfItems = allNotifications.map((notf) => {
-            return `<li class="notification">
+            return `<li class="notification" data-key=${notf.key}>
             <span class="notification__time">${notf.time}</span>
             <div class="notification__container">
                 <span class="notification__title">${notf.title}</span>
                 <span class="notification__desc">${notf.description}</span>
             </div>
+            <i class="notification__button--close ri-close-line"></i>
         </li>`;
-        }).join('')
+        }).join('');
 
         bellwindowContainer.innerHTML = notfItems;
         bellwindowEmpty.classList.remove('show');
-    }
-
-    // Always scroll to top to show latest notification
-    bellwindowContainer.scrollTop = 0;
+    };
 }
 
 function wsConnect(allSymbols) {
@@ -524,7 +522,7 @@ document.addEventListener('mousedown', (event) => {
 });
 
 document.addEventListener('click', (event) => {
-    if (!bellwindow.contains(event.target) && !alertBell.contains(event.target)) {
+    if (!alertBell.contains(event.target)) {
         bellwindow.classList.remove('show');
     };
 });
@@ -578,6 +576,27 @@ alertBell.addEventListener('click', () => {
     notificationLight.classList.remove('active');
 
     initializeNotifications();
+
+    // Always scroll to top to show latest notification
+    bellwindowContainer.scrollTop = 0;
+});
+
+bellwindow.addEventListener('click', event => {
+    if (event.target.classList.contains('notification__button--close')) {
+        const parentElement = event.target.parentElement;
+        const dataKey = Number(parentElement.getAttribute('data-key'));
+
+        const allAlerts = getFromLocalStorage('notifications');
+        const filteredAlerts = allAlerts.filter(alert => alert.key !== dataKey);
+
+        updateLocalStorage('notifications', filteredAlerts);
+
+        initializeNotifications();
+    }
+
+    // Due to event bubbling event triggered here moves up to documnent hence closing bell window
+    // To prevent this stop event to propagate further
+    event.stopPropagation();
 });
 
 createalertForm.addEventListener('submit', (event) => {
@@ -682,6 +701,7 @@ class Notification {
         this.duration = 5000;
         this.container = document.createElement('div');
         this.notfObject = {
+            key: Date.now(),
             time: getCurrentTime(),
             title: this.title,
             description: this.description,
