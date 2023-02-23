@@ -566,26 +566,34 @@
         display: flex;
         align-items: center;
         font-size: 1rem;
+        width: 6rem;
         font-weight: 400;
         cursor: pointer;
         border-bottom: 3px solid transparent;
         transition: all 0.1s;
-        scale: 0.9;
+        scale: 1;
         transform-origin: center;
 
         &:hover {
             color: var(--yellow-100);
-            scale: 1;
+
+            i {
+                padding-right: 0.65rem;
+            }
         }
 
         &.active {
-            scale: 1;
             color: var(--yellow-100);
             border-bottom: 3px solid var(--yellow-100);
+
+            i {
+                padding-right: 0.65rem;
+            }
         }
 
-        span {
-            margin-left: 0.5rem;
+        i {
+            padding-right: 0.5rem;
+            transition: all 0.2s;
         }
     }
 

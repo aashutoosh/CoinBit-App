@@ -1336,26 +1336,33 @@ body {
       -ms-flex-align: center;
           align-items: center;
   font-size: 1rem;
+  width: 6rem;
   font-weight: 400;
   cursor: pointer;
   border-bottom: 3px solid transparent;
   -webkit-transition: all 0.1s;
   transition: all 0.1s;
-  scale: 0.9;
+  scale: 1;
   -webkit-transform-origin: center;
           transform-origin: center;
 }
 .alerts__title:hover {
   color: var(--yellow-100);
-  scale: 1;
+}
+.alerts__title:hover i {
+  padding-right: 0.65rem;
 }
 .alerts__title.active {
-  scale: 1;
   color: var(--yellow-100);
   border-bottom: 3px solid var(--yellow-100);
 }
-.alerts__title span {
-  margin-left: 0.5rem;
+.alerts__title.active i {
+  padding-right: 0.65rem;
+}
+.alerts__title i {
+  padding-right: 0.5rem;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 .alerts__create--button {
   background-color: var(--yellow-100);
