@@ -1,5 +1,28 @@
-// ring keyframe taken from https://codepen.io/Mrshcom/pen/kNmBGm
+@keyframes slideIn {
+    from {
+        bottom: -5rem;
+        opacity: 0;
+    }
 
+    to {
+        bottom: 5rem;
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        bottom: 5rem;
+        opacity: 1;
+    }
+
+    to {
+        bottom: -5rem;
+        opacity: 0;
+    }
+}
+
+// ring keyframe taken from https://codepen.io/Mrshcom/pen/kNmBGm
 @keyframes ring {
     0% {
         transform: rotate(0);

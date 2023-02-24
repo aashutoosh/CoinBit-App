@@ -363,6 +363,47 @@ body {
   }
 }
 
+@-webkit-keyframes slideIn {
+  from {
+    bottom: -5rem;
+    opacity: 0;
+  }
+  to {
+    bottom: 5rem;
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    bottom: -5rem;
+    opacity: 0;
+  }
+  to {
+    bottom: 5rem;
+    opacity: 1;
+  }
+}
+@-webkit-keyframes slideOut {
+  from {
+    bottom: 5rem;
+    opacity: 1;
+  }
+  to {
+    bottom: -5rem;
+    opacity: 0;
+  }
+}
+@keyframes slideOut {
+  from {
+    bottom: 5rem;
+    opacity: 1;
+  }
+  to {
+    bottom: -5rem;
+    opacity: 0;
+  }
+}
 @-webkit-keyframes ring {
   0% {
     -webkit-transform: rotate(0);
@@ -461,7 +502,6 @@ body {
             transform: rotate(0);
   }
 }
-
 @keyframes ring {
   0% {
     -webkit-transform: rotate(0);
@@ -799,6 +839,35 @@ body {
 }
 .notifications .notification__close:hover {
   background-color: rgb(101, 101, 101);
+}
+
+.notifications2 {
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  pointer-events: none;
+  font-size: 0.9rem;
+  gap: 0.5rem;
+  bottom: 5rem;
+  right: 50%;
+  z-index: var(--z-modal);
+  -webkit-transform: translateX(50%);
+          transform: translateX(50%);
+  background-color: var(--dark-300);
+  padding: 0.5rem 1.5rem;
+  border-radius: 5rem;
+}
+.notifications2.show {
+  -webkit-animation: slideIn 0.3s ease-in-out;
+          animation: slideIn 0.3s ease-in-out;
+}
+.notifications2.hide {
+  -webkit-animation: slideOut 0.3s ease-in-out;
+          animation: slideOut 0.3s ease-in-out;
 }
 
 .createalert {
@@ -1348,6 +1417,7 @@ body {
 }
 .alerts__title:hover {
   color: var(--yellow-100);
+  font-weight: 500;
 }
 .alerts__title:hover i {
   padding-right: 0.65rem;
@@ -1355,6 +1425,7 @@ body {
 .alerts__title.active {
   color: var(--yellow-100);
   border-bottom: 3px solid var(--yellow-100);
+  font-weight: 500;
 }
 .alerts__title.active i {
   padding-right: 0.65rem;
@@ -1495,6 +1566,148 @@ body {
 
 .settings {
   display: none;
+  padding: 0 1.5rem;
+  z-index: 1;
+  width: calc(var(--container-width) - var(--left-width));
+}
+.settings__title {
+  height: var(--header-height);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1rem;
+  width: 6rem;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+}
+.settings__title i {
+  padding-right: 0.65rem;
+}
+.settings__container {
+  padding: 3rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1rem;
+  border-top: 1px solid var(--dark-300);
+  font-size: 1rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--dark-300);
+}
+
+.discord {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.discord__label {
+  display: inline-block;
+  width: 15rem;
+}
+.discord input[type=checkbox] {
+  position: relative;
+  cursor: pointer;
+  width: 2.4rem;
+  height: 1.2rem;
+  -webkit-appearance: none;
+  outline: none;
+  border-radius: 0.75rem;
+  background-color: var(--grey-900);
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+.discord input[type=checkbox]:before {
+  content: "";
+  position: absolute;
+  width: 0.8rem;
+  height: 0.8rem;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  left: 3px;
+  background-color: white;
+  border-radius: 50%;
+  -webkit-transition: left 0.3s;
+  transition: left 0.3s;
+}
+.discord input[type=checkbox]:checked:before {
+  background-color: var(--yellow-100);
+  left: calc(100% - 0.8rem - 3px);
+}
+
+.webhook {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.webhook.show {
+  opacity: 1;
+  pointer-events: initial;
+}
+.webhook__label {
+  display: inline-block;
+  width: 15rem;
+}
+.webhook__input {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+}
+.webhook__input .save__url {
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--yellow-100);
+  color: var(--dark-900);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+.webhook__input i {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  color: var(--light-900);
+}
+.webhook input {
+  background-color: inherit;
+  outline: none;
+  border: none;
+  color: inherit;
+  font-weight: 400;
+  width: 15rem;
+  height: 2rem;
+  font-size: 0.9rem;
+  padding-left: 1.5rem;
+  border-bottom: 1px solid var(--dark-300);
 }
 
 .about {

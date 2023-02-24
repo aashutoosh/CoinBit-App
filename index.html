@@ -45,6 +45,12 @@
 
     <div class="notifications" id="notifications"></div>
 
+    <!-- notifications2 element will be added in the HTML dynamically using JS -->
+    <!-- <div class="notifications2 show" id="notifications2">
+        <i class="${icon}"></i>
+        <span class="message">${message}</span>
+    </div> -->
+
     <div class="createalert" id="createalert">
         <span class="createalert__title">Create Alert</span>
         <i class="createalert__close ri-close-line"></i>
@@ -144,7 +150,24 @@
         </section>
 
         <section class="settings" id="settings">
-            <h2>settings</h2>
+            <div class="heading">
+                <span class="settings__title"><i class="ri-settings-3-line"></i></i>Settings</span>
+            </div>
+
+            <div class="settings__container">
+                <div class="discord">
+                    <label class="discord__label" for="discord__checkbox">Send Discord Alert</label>
+                    <input type="checkbox" id="discord__checkbox" class="discord__checkbox">
+                </div>
+                <div class="webhook">
+                    <label class="webhook__label" for="webhookURL">Discord Webhook URL</label>
+                    <div class="webhook__input">
+                        <input type="text" name="webhookURL" id="webhookURL">
+                        <i class="ri-link-m"></i>
+                        <div class="save__url">Save</div>
+                    </div>
+                </div>
+            </div>
         </section>
         <section class="about" id="about">
             <h2>about</h2>

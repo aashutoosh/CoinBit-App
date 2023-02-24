@@ -33,6 +33,10 @@ const alertsPendingTitle = document.querySelector('.alerts__title--pending');
 const alertsTriggeredTitle = document.querySelector('.alerts__title--triggered');
 const modalPrice = document.querySelector('.createalert__form--fields .symbolprice');
 
+const discordCheckbox = document.getElementById('discord__checkbox');
+const webhookSettings = document.querySelector('.webhook');
+const saveUrlButton = document.querySelector('.save__url');
+
 
 let allFetchedSymbols;
 let ws;
@@ -195,7 +199,7 @@ function wsConnect(allSymbols) {
     ws = new WebSocket(wsUrl + allStreams);
 
     ws.onopen = (event) => {
-        showAlertNotification('WebSocket Open', 'Binance websocket connection opened!', 'ri-link-m');
+        showNotification2('WebSocket Connected', 'ri-link-m');
     }
 
     ws.onmessage = (event) => {
@@ -207,10 +211,13 @@ function wsConnect(allSymbols) {
         }
     };
 
-    ws.onerror = (event) => console.error("WebSocket error: ", event)
+    ws.onerror = (event) => {
+        showNotification2('WebSocket error', 'ri-error-warning-line');
+        console.error("WebSocket error: ", event)
+    }
 
     ws.onclose = (event) => {
-        showAlertNotification('WebSocket Close', 'Binance websocket connection closed!', 'ri-link-unlink-m');
+        showNotification2('WebSocket disonnected', 'ri-link-unlink-m');
 
         // Reconnect to the WebSocket after 10 seconds
         setTimeout(function () {
@@ -227,7 +234,7 @@ function subscribeStream(coin, source) {
             params: [coin.toLowerCase() + '@ticker']
         }));
 
-        showAlertNotification(`Subscribed: ${coin}`, `${coin} subscribed to websocket connection!`, 'ri-checkbox-circle-line');
+        showNotification2(`Subscribed: ${coin}`, 'ri-checkbox-circle-line');
     }
 
     const pendingAlertsSymbols = getFromLocalStorage('pendingAlerts').map(alert => alert.symbol);
@@ -248,7 +255,7 @@ function unsubscribeStream(coin, source) {
             params: [coin.toLowerCase() + '@ticker']
         }));
 
-        showAlertNotification(`Unsubscribed: ${coin}`, `${coin} unsubscribed from websocket connection!`, 'ri-delete-bin-line');
+        showNotification2(`Unsubscribed: ${coin}`, 'ri-delete-bin-line');
     }
 
     const pendingAlertsSymbols = getFromLocalStorage('pendingAlerts').map(alert => alert.symbol);
@@ -505,6 +512,75 @@ function updateModalPrice(coinData) {
     }
 }
 
+function showNotification2(message, icon = 'ri-notification-4-line') {
+    const existingNotification = document.querySelector('#notifications2');
+
+    // If the existing notification is found, just update its content and reset the timeout
+    if (existingNotification) {
+        existingNotification.querySelector('.message').textContent = message;
+        clearTimeout(existingNotification.dataset.timeoutId);
+        existingNotification.dataset.timeoutId = setTimeout(() => {
+            existingNotification.classList.add('hide');
+            setTimeout(() => {
+                existingNotification.remove();
+            }, 200);
+        }, 2000);
+    }
+    else {
+        // If the existing notification is not found, create a new element and add it to the DOM
+        const notification = document.createElement('div');
+        notification.classList.add('notifications2', 'show');
+        notification.id = 'notifications2';
+        notification.innerHTML = `
+            <i class="${icon}"></i>
+            <span class="message">${message}</span>
+        `;
+        document.body.appendChild(notification);
+
+        notification.dataset.timeoutId = setTimeout(() => {
+            notification.classList.add('hide');
+            setTimeout(() => {
+                notification.remove();
+            }, 200);
+        }, 2000);
+    }
+}
+
+function checkDiscordAlerts() {
+    const savedSetting = localStorage.getItem('sendDiscordAlerts');
+    discordCheckbox.checked = savedSetting === "true";
+
+    // Dispatch a 'change' event on the checkbox to trigger the event listener
+    discordCheckbox.dispatchEvent(new Event('change'));
+}
+
+function saveWebhookUrl() {
+    const webhookUrlInput = document.getElementById('webhookURL');
+    const webhookUrl = webhookUrlInput.value.trim();
+
+    isValidWebhookUrl = webhookUrl.startsWith('https://discordapp.com/api/webhooks/');
+    if (!isValidWebhookUrl && !webhookUrl === '') {
+        showNotification2('Please enter a valid Discord webhook URL.', 'ri-error-warning-line');
+        return;
+    }
+
+    addToLocalStorage('discordWebhookUrl', webhookUrl);
+    webhookUrlInput.value = webhookUrl;
+    showNotification2('Webhook URL saved!', 'ri-checkbox-circle-line');
+
+    viewWebhookURL();
+}
+
+function viewWebhookURL() {
+    const webhookUrlInput = document.getElementById('webhookURL');
+
+    // Check if the webhook URL exists in local storage and update the input value
+    const savedWebhookUrl = getFromLocalStorage('discordWebhookUrl');
+    if (savedWebhookUrl) {
+        webhookUrlInput.value = savedWebhookUrl;
+    }
+}
+
 
 fetch("https://api.binance.com/api/v3/exchangeInfo")
     .then(response => response.json())
@@ -605,7 +681,7 @@ createalertForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(createalertForm);
 
-    // If Update alert modal is uesd then data-key attribute will have value
+    // If Update alert modal is used then data-key attribute will have value
     const dataKey = Number(createalertForm.getAttribute('data-key'));
 
     const alertObject = {
@@ -622,11 +698,13 @@ createalertForm.addEventListener('submit', (event) => {
         if (!pendingAlerts) addToLocalStorage('pendingAlerts', [alertObject]);
         else {
             addToLocalStorage('pendingAlerts', [...pendingAlerts, alertObject]);
+            showNotification2('Alert Created!', 'ri-checkbox-circle-line');
         }
     }
     else {
         const filteredAlerts = pendingAlerts.filter((alert) => alert.createdon !== dataKey);
-        updateLocalStorage('pendingAlerts', [...filteredAlerts, alertObject])
+        updateLocalStorage('pendingAlerts', [...filteredAlerts, alertObject]);
+        showNotification2('Alert Updated!', 'ri-edit-2-line');
     }
 
     // Close create alert window
@@ -670,11 +748,13 @@ alertsTable.addEventListener('click', (event) => {
 
             updateLocalStorage('pendingAlerts', filteredAlerts);
             updateAlertsView();
+            showNotification2('Pending alert deleted!', 'ri-delete-bin-6-line');
         }
 
         else {
             updateLocalStorage('triggeredAlerts', filteredAlerts);
             updateAlertsView();
+            showNotification2('Triggered alert deleted!', 'ri-delete-bin-6-line');
         }
     }
 })
@@ -711,6 +791,20 @@ navLinks.addEventListener('click', event => {
         document.querySelector(`.${clickedLinkText}`).classList.add('showSection');
     };
 });
+
+discordCheckbox.addEventListener('change', () => {
+    if (discordCheckbox.checked) {
+        viewWebhookURL();
+        webhookSettings.classList.add('show');
+        localStorage.setItem('sendDiscordAlerts', true);
+    }
+    else {
+        webhookSettings.classList.remove('show');
+        localStorage.setItem('sendDiscordAlerts', false);
+    }
+});
+
+saveUrlButton.addEventListener('click', saveWebhookUrl);
 
 
 class Notification {
@@ -776,3 +870,4 @@ class Notification {
 
 initializeWatchlist();
 updateAlertsView();
+checkDiscordAlerts();
