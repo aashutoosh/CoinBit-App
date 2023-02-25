@@ -447,6 +447,9 @@ function checkForAlerts(coinData) {
     function conditionMatched(currentAlert) {
         showAlertNotification(currentAlert.title, currentAlert.description, 'ri-notification-4-line');
 
+        // Send to discord
+        sendMessage(currentAlert);
+
         // Remove from pending alerts
         const filteredAlerts = allPendingAlerts.filter(alert => alert.createdon !== currentAlert.createdon);
         updateLocalStorage('pendingAlerts', filteredAlerts);
@@ -578,6 +581,43 @@ function viewWebhookURL() {
     const savedWebhookUrl = getFromLocalStorage('discordWebhookUrl');
     if (savedWebhookUrl) {
         webhookUrlInput.value = savedWebhookUrl;
+    }
+}
+
+function sendMessage(alert) {
+    const webhookURL = getFromLocalStorage('discordWebhookUrl');
+    const discordEnabled = document.getElementById('discord__checkbox')
+
+    if (discordEnabled.checked && typeof (webhookURL) === 'string' && webhookURL !== "") {
+
+        const payload = {
+            embeds: [
+                {
+                    type: "rich",
+                    title: alert.title,
+                    description: alert.description,
+                    color: 0xf0ba09,
+                    fields: [
+                        {
+                            name: "\u200B",
+                            value: `${alert.symbol} ${alert.condition} ${alert.price}`
+                        }
+                    ],
+                    footer: {
+                        text: `Sent from https://coinbit.pages.dev/`
+                    }
+                }
+            ]
+        };
+
+        fetch(webhookURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        }).catch(error => showNotification2(`Error: ${error}`, 'ri-error-warning-line'));
+    }
+    else {
+        showNotification2('Please enter valid discord webhook URL.', 'ri-error-warning-line');
     }
 }
 
@@ -796,11 +836,11 @@ discordCheckbox.addEventListener('change', () => {
     if (discordCheckbox.checked) {
         viewWebhookURL();
         webhookSettings.classList.add('show');
-        localStorage.setItem('sendDiscordAlerts', true);
+        addToLocalStorage('sendDiscordAlerts', true);
     }
     else {
         webhookSettings.classList.remove('show');
-        localStorage.setItem('sendDiscordAlerts', false);
+        addToLocalStorage('sendDiscordAlerts', false);
     }
 });
 
