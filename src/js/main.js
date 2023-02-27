@@ -253,6 +253,7 @@ function subscribeStream(coin, source) {
     };
 }
 
+// done
 function unsubscribeStream(coin, source) {
     const unsubscribeCoin = (coin) => {
         ws.send(JSON.stringify({

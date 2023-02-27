@@ -1,6 +1,7 @@
 import * as model from './model.js';
 import searchResultsView from './views/searchResultsView.js';
 import watchlistView from './views/watchlistView.js';
+import { showNotification2 } from './views/secondaryNotificationView.js';
 
 // SearchResults
 const showSearchResults = async function () {
@@ -56,7 +57,7 @@ const removeFromWatchlist = function (symbol) {
 
 // Websocket
 const initializeWebsocket = function (symbolsArray) {
-    model.websocket.init(symbolsArray, websocketDataHandler);
+    model.websocket.init(symbolsArray, websocketDataHandler, showNotification2);
 }
 
 const websocketDataHandler = function (data) {
@@ -73,7 +74,6 @@ const websocketSubscribe = function (symbol) {
     if (model.websocket.ws) {
         if (!uniquelyAddedSymbols.includes(symbol)) {
             model.websocket.subscribeSymbol(symbol);
-            console.log(`Subscribed ${symbol}`);
         }
     }
     else {
@@ -87,7 +87,6 @@ const websocketUnsubscribe = function (symbol) {
     if (model.websocket.ws) {
         if (!uniquelyAddedSymbols.includes(symbol)) {
             model.websocket.unsubscribeSymbol(symbol);
-            console.log(`Unsubscribed ${symbol}`);
         }
     }
 }
