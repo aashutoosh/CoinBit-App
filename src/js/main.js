@@ -57,6 +57,7 @@ function removeFromLocalStorage(key) {
     localStorage.removeItem(key)
 }
 
+// done
 function addCoins(params) {
     if (params) {
         const filteredCoins = allFetchedSymbols.filter((symbol) => symbol.indexOf(params.toUpperCase()) !== -1)
@@ -87,6 +88,7 @@ function addCoins(params) {
     }
 }
 
+// done
 function addToWatchlist(coin, event) {
     const watchlistItem = `<li class="watchlist__item symbol ">
         <span class="symbol__name">${coin}</span>
@@ -121,6 +123,7 @@ function addToWatchlist(coin, event) {
     }
 }
 
+// done
 function removeFromWatchlist(coin, element) {
     const initialWatchlist = getFromLocalStorage('watchlist');
     unsubscribeStream(coin, 'watchlist');
@@ -135,6 +138,7 @@ function removeFromWatchlist(coin, element) {
 
 }
 
+// done
 function initializeWatchlist() {
     const initialWatchlist = getFromLocalStorage('watchlist')
 
@@ -192,6 +196,7 @@ function initializeNotifications() {
     };
 }
 
+// done
 function wsConnect(allSymbols) {
     const wsUrl = "wss://stream.binance.com:443/stream?streams=";
     const allStreams = allSymbols.map(coin => coin.toLowerCase() + '@ticker').join('/')
@@ -226,6 +231,7 @@ function wsConnect(allSymbols) {
     };
 }
 
+// done
 function subscribeStream(coin, source) {
     const subscribeCoin = (coin) => {
         ws.send(JSON.stringify({
@@ -277,6 +283,7 @@ function unsubscribeStream(coin, source) {
     }
 }
 
+// done
 function updateWatchlistData(data) {
     const coin = data.data.s;
     const price = Number(data.data.c);
@@ -319,6 +326,7 @@ function updateWatchlistData(data) {
     }
 }
 
+// done
 function getCurrentTime() {
     const currentDate = new Date();
     const hours = currentDate.getHours();
@@ -433,6 +441,7 @@ function hideAlertModal() {
     createalertForm.reset();
 }
 
+// done
 function getAllUniqueSymbols() {
     const watchlistSymbols = getFromLocalStorage('watchlist');
     const pendingAlertsSymbols = getFromLocalStorage('pendingAlerts').map(alert => alert.symbol);
@@ -621,15 +630,17 @@ function sendMessage(alert) {
     }
 }
 
-
+// done
 fetch("https://api.binance.com/api/v3/exchangeInfo")
     .then(response => response.json())
     .then(data => {
         allFetchedSymbols = data.symbols.map(symbol => symbol.symbol);
     });
 
+// done
 searchInput.addEventListener('input', () => addCoins(searchInput.value));
 
+// done
 // Hides search result when clicked outside of search result and search input
 document.addEventListener('mousedown', (event) => {
     if (!searchResults.contains(event.target) && !searchInput.contains(event.target)) {
@@ -639,15 +650,18 @@ document.addEventListener('mousedown', (event) => {
     }
 });
 
+
 document.addEventListener('click', (event) => {
     if (!alertBell.contains(event.target)) {
         bellwindow.classList.remove('show');
     };
 });
 
+// done
 // Shows search result again if input is in focus
 searchInput.addEventListener('focus', () => searchResults.style.display = 'block');
 
+// done
 // Used event delegation here
 searchResults.addEventListener('click', (event) => {
     if (event.target.classList.contains('button__item')) {
@@ -657,6 +671,7 @@ searchResults.addEventListener('click', (event) => {
     }
 });
 
+// partially done
 // Used event delegation here
 watchlistItems.addEventListener('click', (event) => {
     if (event.target.classList.contains('delete')) {

@@ -17,6 +17,12 @@ class SearchResultsView {
         this._searchResults.style.display = 'block';
     }
 
+    modifyAddToCheck(event) {
+        // Activate checked green button
+        event.target.classList.remove('ri-add-line');
+        event.target.classList.add('ri-check-line', 'active');
+    }
+
     addInputChangeHandler(handler) {
         this._searchInput.addEventListener('input', handler);
     }
@@ -30,6 +36,16 @@ class SearchResultsView {
             this._clearSearchInput();
             handler();
         });
+    }
+
+    addSymbolToWatchlisthandler(handler) {
+        this._searchResults.addEventListener('click', (event) => {
+            if (event.target.classList.contains('button__item')) {
+                const coinName = event.target.parentElement.querySelector('.coinname').textContent;
+
+                handler(coinName, event);
+            }
+        })
     }
 
     _clearSearchInput() {
