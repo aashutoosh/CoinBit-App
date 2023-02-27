@@ -1,6 +1,7 @@
 import * as model from './model.js';
 import searchResultsView from './views/searchResultsView.js';
 import watchlistView from './views/watchlistView.js';
+import alertModalView from './views/alertModalView.js';
 import { showNotification2 } from './views/secondaryNotificationView.js';
 
 // SearchResults
@@ -55,6 +56,30 @@ const removeFromWatchlist = function (symbol) {
     websocketUnsubscribe(symbol)
 }
 
+// Alert Modal
+const createNewAlertModal = function (symbol = '') {
+    alertModalView.updateData(model.state.uniquelyAddedSymbols);
+    alertModalView.create(symbol);
+}
+
+const submitNewAlert = function (alertObject, dataKey) {
+    if (!dataKey) {
+        // Create alert
+        model.addNewAlert(alertObject);
+        showNotification2('Alert Created!', 'ri-checkbox-circle-line');
+    }
+    else {
+        // Modify alert
+        model.modifyAlert(alertObject, dataKey);
+        showNotification2('Alert Updated!', 'ri-edit-2-line');
+    }
+
+    alertModalView.close();
+
+    // Update Pending alerts view
+    // updateAlertsView();
+}
+
 // Websocket
 const initializeWebsocket = function (symbolsArray) {
     model.websocket.init(symbolsArray, websocketDataHandler, showNotification2);
@@ -63,8 +88,8 @@ const initializeWebsocket = function (symbolsArray) {
 const websocketDataHandler = function (data) {
     if ('stream' in data) {
         watchlistView.updateWatchlistItemData(data);
+        alertModalView.updateModalSymbolPrice(data);
         // checkForAlerts(data);
-        // updateModalPrice(data)
     }
 }
 
@@ -99,6 +124,11 @@ const init = function () {
     searchResultsView.addInputChangeHandler(showSearchResults);
     searchResultsView.addSearchResultsHideHandler(hideSearchResults);
     searchResultsView.addSymbolToWatchlisthandler(addToWatchlist);
+
     watchlistView.addDeleteItemHandler(removeFromWatchlist);
+    watchlistView.addAlertModalHandler(createNewAlertModal);
+
+    alertModalView.alertModalClose();
+    alertModalView.addSubmitHandler(submitNewAlert);
 };
 init();

@@ -7,8 +7,8 @@ export const state = {
     exchangeSymbols: [],
     uniquelyAddedSymbols: [],
     watchlist: [],
-    pendingAlerts: {},
-    triggeredAlerts: {},
+    pendingAlerts: [],
+    triggeredAlerts: [],
     discordWebhookUrl: "",
     sendDiscordAlerts: false,
     notifications: [],
@@ -41,8 +41,8 @@ export function updateUniqueSymbols() {
 function updateState() {
     updateUniqueSymbols();
     state.watchlist = getFromLocalStorage('watchlist') || [];
-    state.pendingAlerts = getFromLocalStorage('pendingAlerts') || {};
-    state.triggeredAlerts = getFromLocalStorage('triggeredAlerts') || {};
+    state.pendingAlerts = getFromLocalStorage('pendingAlerts') || [];
+    state.triggeredAlerts = getFromLocalStorage('triggeredAlerts') || [];
     state.discordWebhookUrl = getFromLocalStorage('discordWebhookUrl') || "";
     state.sendDiscordAlerts = getFromLocalStorage('watchlist') || false;
     state.notifications = getFromLocalStorage('notifications') || [];
@@ -61,6 +61,30 @@ export function removeFromWatchlist(symbol) {
     updateState();
 }
 
+// Alert Modal
+export function addNewAlert(alertObject) {
+    const pendingAlerts = state.pendingAlerts;
+
+    if (pendingAlerts.length === 0) {
+        addToLocalStorage('pendingAlerts', [alertObject]);
+    }
+    else {
+        updateLocalStorage('pendingAlerts', [...pendingAlerts, alertObject]);
+    }
+
+    updateState();
+}
+
+export function modifyAlert(alertObject, dataKey) {
+    const pendingAlerts = state.pendingAlerts;
+    const filteredAlerts = pendingAlerts.filter((alert) => alert.createdon !== dataKey);
+
+    updateLocalStorage('pendingAlerts', [...filteredAlerts, alertObject]);
+
+    updateState();
+}
+
+// Websocket
 class wsConnect {
     _initialSymbols;
     dataHandler;

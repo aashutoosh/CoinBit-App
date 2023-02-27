@@ -41,18 +41,22 @@ const saveUrlButton = document.querySelector('.save__url');
 let allFetchedSymbols;
 let ws;
 
+// done
 function addToLocalStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value))
 }
 
+// done
 function getFromLocalStorage(key) {
     return JSON.parse(localStorage.getItem(key) || "[]")
 }
 
+// done
 function updateLocalStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value))
 }
 
+// done
 function removeFromLocalStorage(key) {
     localStorage.removeItem(key)
 }
@@ -338,6 +342,7 @@ function getCurrentTime() {
     return `${formattedHours}:${formattedMinutes} ${period}`;
 }
 
+// done
 function fillCreateAlertSymbols(coin = '') {
     const initialWatchlist = getFromLocalStorage('watchlist');
 
@@ -413,6 +418,7 @@ function updateAlertsView() {
     }
 }
 
+// done
 function createAlertModal(coin = '') {
     createalertForm.setAttribute('data-key', '');
     createalertTitle.textContent = 'Create Alert';
@@ -421,6 +427,7 @@ function createAlertModal(coin = '') {
     coin ? fillCreateAlertSymbols(coin) : fillCreateAlertSymbols();
 }
 
+// done
 function updateAlertModal(alert) {
     createalertForm.setAttribute('data-key', alert.createdon);
     createalertTitle.textContent = 'Update Alert';
@@ -432,11 +439,13 @@ function updateAlertModal(alert) {
     createalertSubmit.textContent = 'Update';
 }
 
+// done
 function showAlertModal() {
     createalert.classList.remove('show');
     createalert.classList.add('show');
 }
 
+// done
 function hideAlertModal() {
     createalert.classList.remove('show');
     createalertForm.reset();
@@ -501,6 +510,7 @@ function checkForAlerts(coinData) {
     });
 }
 
+// done
 function updateModalPrice(coinData) {
     if (createalert.classList.contains('show')) {
         const coin = coinData.data.s;
@@ -525,6 +535,7 @@ function updateModalPrice(coinData) {
     }
 }
 
+// done
 function showNotification2(message, icon = 'ri-notification-4-line') {
     const existingNotification = document.querySelector('#notifications2');
 
@@ -672,7 +683,7 @@ searchResults.addEventListener('click', (event) => {
     }
 });
 
-// partially done
+// done
 // Used event delegation here
 watchlistItems.addEventListener('click', (event) => {
     if (event.target.classList.contains('delete')) {
@@ -690,6 +701,7 @@ watchlistItems.addEventListener('click', (event) => {
     }
 });
 
+// done
 createalertClose.addEventListener('click', () => {
     hideAlertModal()
 });
@@ -770,6 +782,7 @@ createalertForm.addEventListener('submit', (event) => {
     updateAlertsView();
 });
 
+// done
 createAlertButton.addEventListener('click', () => {
     createAlertModal();
     showAlertModal();

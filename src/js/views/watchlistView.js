@@ -63,26 +63,23 @@ class WatchlistView {
         this._watchlistItems.addEventListener('click', (event) => {
             if (event.target.classList.contains('delete')) {
                 const listElement = event.target.closest('.watchlist__item')
-                const coinName = listElement.querySelector('.symbol__name').textContent;
+                const symbol = listElement.querySelector('.symbol__name').textContent;
 
                 // Remove element from DOM
                 this._watchlistItems.removeChild(listElement);
 
-                handler(coinName);
+                handler(symbol);
             }
         });
     }
 
-    addCreateAlertHandler(handler) {
+    addAlertModalHandler(handler) {
         // Used event delegation here
         this._watchlistItems.addEventListener('click', (event) => {
             if (event.target.classList.contains('createNewAlert')) {
-                const coinName = event.target.parentElement.parentElement.querySelector('.symbol__name').textContent;
+                const symbol = event.target.parentElement.parentElement.querySelector('.symbol__name').textContent;
 
-                handler(coinName);
-                // Fill Create alert window with watchlist symbols
-                // createAlertModal(coinName)
-                // showAlertModal()
+                handler(symbol);
             }
         });
     }
