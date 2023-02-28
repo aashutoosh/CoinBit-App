@@ -14,7 +14,7 @@ class AlertSectionView {
     }
 
     render() {
-        const markup = this._genrateMarkup();
+        const markup = this._generateMarkup();
         this._alertsTable.innerHTML = markup;
     }
 
@@ -26,7 +26,7 @@ class AlertSectionView {
         return pendingAlertsType ? this._allPendingAlerts : this._allTriggeredAlerts;
     }
 
-    _genrateMarkup() {
+    _generateMarkup() {
         const pendingAlertsType = this._isPendingAlertType();
         const allAlerts = this._getAllAlerts(pendingAlertsType);
 

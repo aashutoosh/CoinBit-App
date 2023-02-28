@@ -7,12 +7,12 @@ class WatchlistView {
     }
 
     render() {
-        const markup = this._genrateMarkup();
+        const markup = this._generateMarkup();
         this._watchlistItems.innerHTML = markup;
     }
 
     addToWatchlist(symbol) {
-        const markup = this._genrateMarkup([symbol]);
+        const markup = this._generateMarkup([symbol]);
         this._watchlistItems.innerHTML += markup;
     }
 
@@ -88,7 +88,7 @@ class WatchlistView {
         this._watchlistItems.value = '';
     }
 
-    _genrateMarkup(symbols = this._watchlistSymbols) {
+    _generateMarkup(symbols = this._watchlistSymbols) {
         if (symbols.length === 0) return ''
 
         const markup = symbols.map((symbol) => {

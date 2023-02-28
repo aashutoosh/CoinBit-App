@@ -12,7 +12,7 @@ class SearchResultsView {
 
     render() {
         this._searchQuery = this._searchInput.value.toUpperCase();
-        const markup = this._genrateMarkup();
+        const markup = this._generateMarkup();
         this._searchResults.innerHTML = markup;
         this._searchResults.style.display = 'block';
     }
@@ -52,7 +52,7 @@ class SearchResultsView {
         this._searchInput.value = '';
     }
 
-    _genrateMarkup() {
+    _generateMarkup() {
         if (!this._searchQuery) return '';
         const filteredSymbols = this._allSymbols.filter((symbol) => symbol.indexOf(this._searchQuery) !== -1);
 

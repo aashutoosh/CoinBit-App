@@ -26,7 +26,7 @@ class AlertModalView {
         this._uniqueSymbols = symbols;
     }
 
-    _genrateOptionsMarkup(currentSymbol = '') {
+    _generateOptionsMarkup(currentSymbol = '') {
         const markup = this._uniqueSymbols.map(symbol => {
             if (symbol === currentSymbol) return `<option value="${symbol}" selected>${symbol}</option>`;
             else return `<option value="${symbol}">${symbol}</option>`;
@@ -39,7 +39,7 @@ class AlertModalView {
         this._createalertForm.setAttribute('data-key', '');
         this._createalertTitle.textContent = 'Create Alert';
         this._createalertSubmit.textContent = 'Create';
-        this._formSelectSymbol.innerHTML = this._genrateOptionsMarkup(symbol);
+        this._formSelectSymbol.innerHTML = this._generateOptionsMarkup(symbol);
 
         this.show();
     }
@@ -52,7 +52,7 @@ class AlertModalView {
         this._formInputDescription.value = alert.description;
         this._formSelectCondition.value = alert.condition;
         this._formInputPrice.value = alert.price;
-        this._formSelectSymbol.innerHTML = this._genrateOptionsMarkup(alert.symbol);
+        this._formSelectSymbol.innerHTML = this._generateOptionsMarkup(alert.symbol);
 
         this.show();
     }
