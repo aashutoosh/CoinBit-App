@@ -4,7 +4,6 @@ class AlertSectionView {
     _alertsHeading = document.querySelector('.heading__window');
     _alertsPendingTitle = document.querySelector('.alerts__title--pending');
     _alertsTriggeredTitle = document.querySelector('.alerts__title--triggered');
-    _modalPrice = document.querySelector('.createalert__form--fields .symbolprice');
     _allPendingAlerts;
     _allTriggeredAlerts;
 
@@ -98,7 +97,6 @@ class AlertSectionView {
     addCreateAlertButtonHandler(handler) {
         this._createAlertButton.addEventListener('click', handler)
     }
-
 }
 
 export default new AlertSectionView();

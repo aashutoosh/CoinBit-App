@@ -1,4 +1,5 @@
 import * as model from './model.js';
+import headerView from './views/headerView.js';
 import searchResultsView from './views/searchResultsView.js';
 import watchlistView from './views/watchlistView.js';
 import alertModalView from './views/alertModalView.js';
@@ -146,6 +147,8 @@ const init = function () {
     initializeWatchlist();
     updateAlertsView();
     initializeWebsocket(model.state.uniquelyAddedSymbols);
+
+    headerView.activeNavSection();
 
     searchResultsView.addInputChangeHandler(showSearchResults);
     searchResultsView.addSearchResultsHideHandler(hideSearchResults);
