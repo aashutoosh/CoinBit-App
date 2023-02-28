@@ -84,6 +84,22 @@ export function modifyAlert(alertObject, dataKey) {
     updateState();
 }
 
+// Alert Section
+export function deleteAlert(alertObject, pendingAlertType) {
+    const symbol = alertObject.symbol;
+    const allAlerts = pendingAlertType ? state.pendingAlerts : state.triggeredAlerts;
+    const filteredAlerts = allAlerts.filter((alert) => alert.createdon !== alertObject.createdon);
+    const alertType = pendingAlertType ? 'pendingAlerts' : 'triggeredAlerts';
+    updateLocalStorage(alertType, filteredAlerts);
+
+    updateState();
+
+    // If symbol is not present in uniqueSymbols array then unsucbscribe it from websocket stream
+    if (!state.uniquelyAddedSymbols.includes(symbol)) {
+        websocket.unsubscribeSymbol(symbol);
+    }
+}
+
 // Websocket
 class wsConnect {
     _initialSymbols;

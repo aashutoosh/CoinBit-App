@@ -373,6 +373,7 @@ function showAlertNotification(title, desc = '', icon = 'ri-timer-flash-line') {
     initializeNotifications();
 }
 
+// done
 function updateAlertsView() {
     const newRow = (alert) => {
         return `<tr data-key="${alert.createdon}">
@@ -745,6 +746,7 @@ bellwindow.addEventListener('click', event => {
     event.stopPropagation();
 });
 
+// done
 createalertForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(createalertForm);
@@ -788,6 +790,7 @@ createAlertButton.addEventListener('click', () => {
     showAlertModal();
 })
 
+// done
 alertsTable.addEventListener('click', (event) => {
     const editElement = event.target.classList.contains('control__buttons--edit');
     const deleteElement = event.target.classList.contains('control__buttons--delete');
@@ -828,6 +831,7 @@ alertsTable.addEventListener('click', (event) => {
     }
 })
 
+// done
 alertsHeading.addEventListener('click', event => {
     const targetClassList = event.target.classList
 

@@ -2,6 +2,7 @@ import * as model from './model.js';
 import searchResultsView from './views/searchResultsView.js';
 import watchlistView from './views/watchlistView.js';
 import alertModalView from './views/alertModalView.js';
+import alertSectionView from './views/alertSectionView.js';
 import { showNotification2 } from './views/secondaryNotificationView.js';
 
 // SearchResults
@@ -62,6 +63,11 @@ const createNewAlertModal = function (symbol = '') {
     alertModalView.create(symbol);
 }
 
+const editAlertModal = function (alert) {
+    alertModalView.updateData(model.state.uniquelyAddedSymbols);
+    alertModalView.update(alert);
+}
+
 const submitNewAlert = function (alertObject, dataKey) {
     if (!dataKey) {
         // Create alert
@@ -76,8 +82,27 @@ const submitNewAlert = function (alertObject, dataKey) {
 
     alertModalView.close();
 
-    // Update Pending alerts view
-    // updateAlertsView();
+    updateAlertsView();
+}
+
+// Alerts Section
+const updateAlertsView = function () {
+    alertSectionView.updateData(model.state.pendingAlerts, model.state.triggeredAlerts);
+    alertSectionView.render();
+}
+
+const alertsAction = function (buttonType, pendingAlertType, alertObj) {
+    // If type is pending then only can edit alert
+    if (buttonType === 'edit' && pendingAlertType) {
+        editAlertModal(alertObj);
+    }
+    else if (buttonType === 'delete') {
+        model.deleteAlert(alertObj, pendingAlertType);
+        const alertType = pendingAlertType ? 'Pending' : 'Triggered';
+        showNotification2(`${alertType} alert deleted!`, 'ri-delete-bin-6-line');
+    }
+
+    updateAlertsView();
 }
 
 // Websocket
@@ -119,6 +144,7 @@ const websocketUnsubscribe = function (symbol) {
 const init = function () {
     model.updateUniqueSymbols();
     initializeWatchlist();
+    updateAlertsView();
     initializeWebsocket(model.state.uniquelyAddedSymbols);
 
     searchResultsView.addInputChangeHandler(showSearchResults);
@@ -130,5 +156,10 @@ const init = function () {
 
     alertModalView.alertModalClose();
     alertModalView.addSubmitHandler(submitNewAlert);
+
+    alertSectionView.addButtonHandler(alertsAction);
+    alertSectionView.switchTableTypeHandler(updateAlertsView);
+    alertSectionView.addCreateAlertButtonHandler(createNewAlertModal);
 };
+
 init();
