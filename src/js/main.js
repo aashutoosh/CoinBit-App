@@ -847,6 +847,7 @@ alertsHeading.addEventListener('click', event => {
     }
 });
 
+// done
 navLinks.addEventListener('click', event => {
     // Only perform this when its clicked on a tags
     if (event.target.tagName === 'A') {
@@ -879,7 +880,7 @@ discordCheckbox.addEventListener('change', () => {
 
 saveUrlButton.addEventListener('click', saveWebhookUrl);
 
-
+// done
 class Notification {
     constructor({ title, description, icon = 'ri-timer-flash-line' }) {
         this.title = title;

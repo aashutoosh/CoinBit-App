@@ -48,7 +48,7 @@ function updateState() {
     state.notifications = getFromLocalStorage('notifications') || [];
 }
 
-// Wathclist
+// Watchlist
 export function addToWatchlist(symbol) {
     const initialWatchlist = state.watchlist;
     addToLocalStorage('watchlist', [...initialWatchlist, symbol]);
@@ -98,6 +98,35 @@ export function deleteAlert(alertObject, pendingAlertType) {
     if (!state.uniquelyAddedSymbols.includes(symbol)) {
         websocket.unsubscribeSymbol(symbol);
     }
+}
+
+// Primary Notification
+export function savePrimaryNotification(notfObject) {
+    const allNotifications = state.notifications;
+
+    if (allNotifications.length === 0) {
+        addToLocalStorage('notifications', [notfObject])
+    }
+    else {
+        updateLocalStorage('notifications', [notfObject, ...allNotifications])
+    }
+
+    updateState();
+}
+
+export function deletePrimaryNotification(dataKey) {
+    const allNotifications = state.notifications;
+    const filteredNotf = allNotifications.filter((notf) => notf.key !== dataKey);
+
+    updateLocalStorage('notifications', filteredNotf)
+
+    updateState();
+}
+
+export function deleteAllPrimaryNotification() {
+    removeFromLocalStorage('notifications');
+
+    updateState();
 }
 
 // Websocket

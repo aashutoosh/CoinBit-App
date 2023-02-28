@@ -4,7 +4,9 @@ import searchResultsView from './views/searchResultsView.js';
 import watchlistView from './views/watchlistView.js';
 import alertModalView from './views/alertModalView.js';
 import alertSectionView from './views/alertSectionView.js';
+import primaryNotificationView from './views/primaryNotificationView.js';
 import { showNotification2 } from './views/secondaryNotificationView.js';
+import { getCurrentTime } from './helpers.js';
 
 // SearchResults
 const showSearchResults = async function () {
@@ -142,6 +144,20 @@ const websocketUnsubscribe = function (symbol) {
     }
 }
 
+// Primary Notification
+const showPrimaryNotification = function (title, description, icon = 'ri-timer-flash-line') {
+    primaryNotificationView.render(title, description, icon);
+
+    const notfObject = {
+        key: Date.now(),
+        time: getCurrentTime(),
+        title: title,
+        description: description,
+    };
+
+    model.savePrimaryNotification(notfObject);
+}
+
 const init = function () {
     model.updateUniqueSymbols();
     initializeWatchlist();
@@ -166,3 +182,5 @@ const init = function () {
 };
 
 init();
+
+// showPrimaryNotification('ffgsv', 'sfnvidnvd')
