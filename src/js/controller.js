@@ -1,5 +1,6 @@
 import * as model from './model.js';
 import headerView from './views/headerView.js';
+import notificationWindowView from './views/notificationWindowView.js';
 import searchResultsView from './views/searchResultsView.js';
 import watchlistView from './views/watchlistView.js';
 import alertModalView from './views/alertModalView.js';
@@ -108,6 +109,26 @@ const alertsAction = function (buttonType, pendingAlertType, alertObj) {
     updateAlertsView();
 }
 
+// Notification Window
+const showNotificationWindow = function () {
+    notificationWindowView.updateData(model.state.notifications);
+    notificationWindowView.render();
+}
+
+const removeNotification = function (dataKey) {
+    model.deletePrimaryNotification(dataKey)
+    showNotificationWindow();
+}
+
+const clearNotificationWindow = function () {
+    model.deleteAllPrimaryNotification()
+}
+
+const toggleAlertBell = function () {
+    notificationWindowView.updateData(model.state.notifications);
+    notificationWindowView.render();
+}
+
 // Websocket
 const initializeWebsocket = function (symbolsArray) {
     model.websocket.init(symbolsArray, websocketDataHandler, showSecondaryNotification);
@@ -155,6 +176,9 @@ const showPrimaryNotification = function (title, description, icon = 'ri-timer-f
         description: description,
     };
 
+    // Activate Notification bell
+    notificationWindowView.showNotificationLight();
+
     model.savePrimaryNotification(notfObject);
 }
 
@@ -162,9 +186,15 @@ const init = function () {
     model.updateUniqueSymbols();
     initializeWatchlist();
     updateAlertsView();
+    showNotificationWindow();
     initializeWebsocket(model.state.uniquelyAddedSymbols);
 
     headerView.activeNavSection();
+
+    notificationWindowView.addHideWindowHandler();
+    notificationWindowView.addClearWindowHandler(clearNotificationWindow);
+    notificationWindowView.addAlertBellHandler(toggleAlertBell);
+    notificationWindowView.addNotificationRemoveHandler(removeNotification);
 
     searchResultsView.addInputChangeHandler(showSearchResults);
     searchResultsView.addSearchResultsHideHandler(hideSearchResults);

@@ -175,6 +175,7 @@ function initializeWatchlist() {
     }
 }
 
+// done
 function initializeNotifications() {
     const allNotifications = getFromLocalStorage('notifications')
 
@@ -358,6 +359,7 @@ function fillCreateAlertSymbols(coin = '') {
     formSelectSymbol.innerHTML = symbolOptions;
 }
 
+// done
 function showAlertNotification(title, desc = '', icon = 'ri-timer-flash-line') {
     const notification = new Notification({
         title,
@@ -663,7 +665,7 @@ document.addEventListener('mousedown', (event) => {
     }
 });
 
-
+// done
 document.addEventListener('click', (event) => {
     if (!alertBell.contains(event.target)) {
         bellwindow.classList.remove('show');
@@ -707,6 +709,7 @@ createalertClose.addEventListener('click', () => {
     hideAlertModal()
 });
 
+// done
 bellwindowClearall.addEventListener('click', () => {
     bellwindowContainer.innerHTML = '';
 
@@ -718,6 +721,7 @@ bellwindowClearall.addEventListener('click', () => {
     removeFromLocalStorage('notifications');
 });
 
+// done
 alertBell.addEventListener('click', () => {
     bellwindow.classList.toggle('show');
     notificationLight.classList.remove('active');
@@ -728,6 +732,7 @@ alertBell.addEventListener('click', () => {
     bellwindowContainer.scrollTop = 0;
 });
 
+// done
 bellwindow.addEventListener('click', event => {
     if (event.target.classList.contains('notification__button--close')) {
         const parentElement = event.target.parentElement;
