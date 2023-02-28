@@ -1,6 +1,6 @@
 import { SECONDARY_NOTIFICATION_SEC } from "../config.js";
 
-export function showNotification2(message, icon = 'ri-notification-4-line') {
+export function showSecondaryNotification(message, icon = 'ri-notification-4-line') {
     const existingNotification = document.querySelector('#notifications2');
 
     // If the existing notification is found, just update its content and reset the timeout

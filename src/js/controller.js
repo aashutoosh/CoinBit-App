@@ -5,7 +5,7 @@ import watchlistView from './views/watchlistView.js';
 import alertModalView from './views/alertModalView.js';
 import alertSectionView from './views/alertSectionView.js';
 import primaryNotificationView from './views/primaryNotificationView.js';
-import { showNotification2 } from './views/secondaryNotificationView.js';
+import { showSecondaryNotification } from './views/secondaryNotificationView.js';
 import { getCurrentTime } from './helpers.js';
 
 // SearchResults
@@ -75,12 +75,12 @@ const submitNewAlert = function (alertObject, dataKey) {
     if (!dataKey) {
         // Create alert
         model.addNewAlert(alertObject);
-        showNotification2('Alert Created!', 'ri-checkbox-circle-line');
+        showSecondaryNotification('Alert Created!', 'ri-checkbox-circle-line');
     }
     else {
         // Modify alert
         model.modifyAlert(alertObject, dataKey);
-        showNotification2('Alert Updated!', 'ri-edit-2-line');
+        showSecondaryNotification('Alert Updated!', 'ri-edit-2-line');
     }
 
     alertModalView.close();
@@ -102,7 +102,7 @@ const alertsAction = function (buttonType, pendingAlertType, alertObj) {
     else if (buttonType === 'delete') {
         model.deleteAlert(alertObj, pendingAlertType);
         const alertType = pendingAlertType ? 'Pending' : 'Triggered';
-        showNotification2(`${alertType} alert deleted!`, 'ri-delete-bin-6-line');
+        showSecondaryNotification(`${alertType} alert deleted!`, 'ri-delete-bin-6-line');
     }
 
     updateAlertsView();
@@ -110,7 +110,7 @@ const alertsAction = function (buttonType, pendingAlertType, alertObj) {
 
 // Websocket
 const initializeWebsocket = function (symbolsArray) {
-    model.websocket.init(symbolsArray, websocketDataHandler, showNotification2);
+    model.websocket.init(symbolsArray, websocketDataHandler, showSecondaryNotification);
 }
 
 const websocketDataHandler = function (data) {
