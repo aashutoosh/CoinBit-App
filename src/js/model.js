@@ -101,7 +101,7 @@ export function modifyAlert(alertObject, dataKey) {
     const pendingAlerts = state.pendingAlerts;
     const filteredAlerts = pendingAlerts.filter((alert) => alert.createdon !== dataKey);
 
-    updateLocalStorage('pendingAlerts', [...filteredAlerts, alertObject]);
+    updateLocalStorage('pendingAlerts', [alertObject, ...filteredAlerts]);
 
     updateState();
 }
@@ -239,7 +239,7 @@ class wsConnect {
 
         // Reconnect to the WebSocket after 10 seconds
         setTimeout(() => {
-            this.init(this._initialSymbols, this.dataHandler);
+            this.init(this._initialSymbols, this.dataHandler, this.notificationHandler);
         }, WEBSOCKET_RECONNECT_SEC);
     }
 
