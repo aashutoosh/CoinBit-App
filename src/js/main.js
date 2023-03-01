@@ -573,6 +573,7 @@ function showNotification2(message, icon = 'ri-notification-4-line') {
     }
 }
 
+// done
 function checkDiscordAlerts() {
     const savedSetting = localStorage.getItem('sendDiscordAlerts');
     discordCheckbox.checked = savedSetting === "true";
@@ -581,6 +582,7 @@ function checkDiscordAlerts() {
     discordCheckbox.dispatchEvent(new Event('change'));
 }
 
+// done
 function saveWebhookUrl() {
     const webhookUrlInput = document.getElementById('webhookURL');
     const webhookUrl = webhookUrlInput.value.trim();
@@ -598,6 +600,7 @@ function saveWebhookUrl() {
     viewWebhookURL();
 }
 
+// done
 function viewWebhookURL() {
     const webhookUrlInput = document.getElementById('webhookURL');
 
@@ -608,6 +611,7 @@ function viewWebhookURL() {
     }
 }
 
+// done
 function sendMessage(alert) {
     const webhookURL = getFromLocalStorage('discordWebhookUrl');
     const discordEnabled = document.getElementById('discord__checkbox')
@@ -871,6 +875,7 @@ navLinks.addEventListener('click', event => {
     };
 });
 
+// done
 discordCheckbox.addEventListener('change', () => {
     if (discordCheckbox.checked) {
         viewWebhookURL();
@@ -883,6 +888,7 @@ discordCheckbox.addEventListener('change', () => {
     }
 });
 
+// done
 saveUrlButton.addEventListener('click', saveWebhookUrl);
 
 // done

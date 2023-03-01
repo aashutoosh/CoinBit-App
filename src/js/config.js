@@ -4,3 +4,5 @@ export const WEBSOCKET_INITIAL_WAIT_SEC = 2000;
 export const BINANCE_EXCHANGE_URL = 'https://api.binance.com/api/v3/exchangeInfo';
 export const PRIMARY_NOTIFICATION_SEC = 5000;
 export const SECONDARY_NOTIFICATION_SEC = 2000;
+export const VALID_WEBHOOK_STARTSWITH = 'https://discordapp.com/api/webhooks/';
+export const DISCORD_FOOTER_TEXT = 'Sent from https://coinbit.pages.dev/';

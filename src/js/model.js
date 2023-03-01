@@ -1,5 +1,5 @@
 import { WEBSOCKET_URL, WEBSOCKET_RECONNECT_SEC, WEBSOCKET_INITIAL_WAIT_SEC } from './config.js';
-import { BINANCE_EXCHANGE_URL } from './config.js';
+import { BINANCE_EXCHANGE_URL, DISCORD_FOOTER_TEXT } from './config.js';
 
 import { addToLocalStorage, getFromLocalStorage, updateLocalStorage, removeFromLocalStorage } from './helpers.js';
 
@@ -44,7 +44,7 @@ function updateState() {
     state.pendingAlerts = getFromLocalStorage('pendingAlerts') || [];
     state.triggeredAlerts = getFromLocalStorage('triggeredAlerts') || [];
     state.discordWebhookUrl = getFromLocalStorage('discordWebhookUrl') || "";
-    state.sendDiscordAlerts = getFromLocalStorage('watchlist') || false;
+    state.sendDiscordAlerts = getFromLocalStorage('sendDiscordAlerts') || false;
     state.notifications = getFromLocalStorage('notifications') || [];
 }
 
@@ -127,6 +127,55 @@ export function deleteAllPrimaryNotification() {
     removeFromLocalStorage('notifications');
 
     updateState();
+}
+
+// Settings
+export function setDiscordAlerts(value) {
+    addToLocalStorage('sendDiscordAlerts', value);
+
+    updateState();
+}
+
+export function setWebhookUrl(url) {
+    addToLocalStorage('discordWebhookUrl', url);
+
+    updateState();
+}
+
+export function sendDiscordAlert(alert, notfCallback) {
+    const webhookURL = state.discordWebhookUrl;
+    const discordEnabled = state.sendDiscordAlerts;
+
+    if (discordEnabled && typeof (webhookURL) === 'string' && webhookURL !== "") {
+        const payload = {
+            embeds: [
+                {
+                    type: "rich",
+                    title: alert.title,
+                    description: alert.description,
+                    color: 0xf0ba09,
+                    fields: [
+                        {
+                            name: "\u200B",
+                            value: `${alert.symbol} ${alert.condition} ${alert.price}`
+                        }
+                    ],
+                    footer: {
+                        text: DISCORD_FOOTER_TEXT
+                    }
+                }
+            ]
+        };
+
+        fetch(webhookURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        }).catch(error => notfCallback(`Error: ${error}`, 'ri-error-warning-line'));
+    }
+    else {
+        notfCallback('Please enter valid discord webhook URL.', 'ri-error-warning-line');
+    }
 }
 
 // Websocket

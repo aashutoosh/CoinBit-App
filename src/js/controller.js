@@ -6,8 +6,11 @@ import watchlistView from './views/watchlistView.js';
 import alertModalView from './views/alertModalView.js';
 import alertSectionView from './views/alertSectionView.js';
 import primaryNotificationView from './views/primaryNotificationView.js';
+import settingsView from './views/settingsView.js';
 import { showSecondaryNotification } from './views/secondaryNotificationView.js';
 import { getCurrentTime } from './helpers.js';
+
+import { VALID_WEBHOOK_STARTSWITH } from './config.js';
 
 // SearchResults
 const showSearchResults = async function () {
@@ -129,6 +132,39 @@ const toggleAlertBell = function () {
     notificationWindowView.render();
 }
 
+// Settings
+const setDiscordAlerts = function (value) {
+    model.setDiscordAlerts(value);
+}
+
+const setWebhookUrl = function (webhookUrl) {
+    webhookUrl = webhookUrl.trim();
+
+    const isValidWebhookUrl = webhookUrl.startsWith(VALID_WEBHOOK_STARTSWITH);
+    if (!isValidWebhookUrl && !(webhookUrl === '')) {
+        showSecondaryNotification('Please enter a valid Discord webhook URL.', 'ri-error-warning-line');
+        return '';
+    }
+
+    model.setWebhookUrl(webhookUrl);
+
+    showSecondaryNotification('Webhook URL saved!', 'ri-checkbox-circle-line');
+
+    return webhookUrl;
+}
+
+const updateSettingsData = function () {
+    const webhookUrl = model.state.discordWebhookUrl;
+    const discordChecked = model.state.sendDiscordAlerts;
+    settingsView.updateData(webhookUrl, discordChecked);
+
+    settingsView.updateInitialSettings();
+}
+
+const sendDiscordAlert = function (alertObj) {
+    model.sendDiscordAlert(alertObj, showSecondaryNotification);
+}
+
 // Websocket
 const initializeWebsocket = function (symbolsArray) {
     model.websocket.init(symbolsArray, websocketDataHandler, showSecondaryNotification);
@@ -188,6 +224,7 @@ const init = function () {
     updateAlertsView();
     showNotificationWindow();
     initializeWebsocket(model.state.uniquelyAddedSymbols);
+    updateSettingsData();
 
     headerView.activeNavSection();
 
@@ -209,6 +246,9 @@ const init = function () {
     alertSectionView.addButtonHandler(alertsAction);
     alertSectionView.switchTableTypeHandler(updateAlertsView);
     alertSectionView.addCreateAlertButtonHandler(createNewAlertModal);
+
+    settingsView.addDiscordCheckboxHandler(setDiscordAlerts);
+    settingsView.addSaveButtonHandler(setWebhookUrl);
 };
 
 init();
