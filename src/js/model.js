@@ -12,7 +12,20 @@ export const state = {
     discordWebhookUrl: "",
     sendDiscordAlerts: false,
     notifications: [],
+    theme: 'dark',
 };
+
+export function changeTheme(themeType) {
+    const currentTheme = getFromLocalStorage('theme');
+    if (currentTheme) {
+        updateLocalStorage('theme', themeType);
+    }
+    else {
+        addToLocalStorage('theme', themeType)
+    }
+
+    updateState();
+}
 
 export async function fetchAllSymbols() {
     try {
@@ -46,6 +59,7 @@ function updateState() {
     state.discordWebhookUrl = getFromLocalStorage('discordWebhookUrl') || "";
     state.sendDiscordAlerts = getFromLocalStorage('sendDiscordAlerts') || false;
     state.notifications = getFromLocalStorage('notifications') || [];
+    state.theme = getFromLocalStorage('theme') || 'dark';
 }
 
 export function removeFromPendingAlerts(alertObject) {

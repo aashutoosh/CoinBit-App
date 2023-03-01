@@ -403,7 +403,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     z-index: var(--z-watchlist);
-    border-right: 1px solid var(--background-300);
+    box-shadow: var(--box-shadow-100);
 
     &__items {}
 

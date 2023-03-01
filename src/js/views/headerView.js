@@ -6,17 +6,39 @@ class HeaderView {
     _navLinks = document.getElementById('nav__links');
     _allNavLinks = document.querySelectorAll('.nav__link');
 
-    addThemeToggle() {
+    _setDarkMode() {
+        this._html.dataset.theme = 'dark';
+        this._moonIcon.classList.remove('active');
+        this._sunIcon.classList.add('active');
+    }
+
+    _setLightMode() {
+        this._html.dataset.theme = 'light';
+        this._sunIcon.classList.remove('active');
+        this._moonIcon.classList.add('active');
+    }
+
+    changeTheme(themeType) {
+        const currentTheme = this._html.getAttribute('data-theme');
+        if (currentTheme !== themeType) {
+            if (currentTheme === 'light') {
+                this._setDarkMode();
+            }
+            else if ((currentTheme === 'dark')) {
+                this._setLightMode();
+            }
+        }
+    }
+
+    addThemeToggleHandler(handler) {
         this._themeIcons.addEventListener('click', () => {
             if (this._html.getAttribute('data-theme') === 'light') {
-                this._html.dataset.theme = 'dark';
-                this._moonIcon.classList.remove('active');
-                this._sunIcon.classList.add('active');
+                this._setDarkMode();
+                handler('dark');
             }
             else if ((this._html.getAttribute('data-theme') === 'dark')) {
-                this._html.dataset.theme = 'light';
-                this._sunIcon.classList.remove('active');
-                this._moonIcon.classList.add('active');
+                this._setLightMode();
+                handler('light');
             }
         });
     }

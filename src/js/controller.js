@@ -12,6 +12,17 @@ import { getCurrentTime } from './helpers.js';
 
 import { VALID_WEBHOOK_STARTSWITH } from './config.js';
 
+
+// header
+const themeToggle = function (themeType) {
+    model.changeTheme(themeType);
+}
+
+const initializeTheme = function () {
+    const currentTheme = model.state.theme;
+    headerView.changeTheme(currentTheme);
+}
+
 // SearchResults
 const showSearchResults = async function () {
     if (model.state.exchangeSymbols.length === 0) await fetchAllSymbols();
@@ -260,6 +271,7 @@ const checkForAlerts = function (data) {
 }
 
 const init = function () {
+    initializeTheme();
     model.updateUniqueSymbols();
     initializeWatchlist();
     updateAlertsView();
@@ -268,7 +280,7 @@ const init = function () {
     updateSettingsData();
 
     headerView.activeNavSection();
-    headerView.addThemeToggle();
+    headerView.addThemeToggleHandler(themeToggle);
 
     notificationWindowView.addHideWindowHandler();
     notificationWindowView.addClearWindowHandler(clearNotificationWindow);
