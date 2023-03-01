@@ -293,5 +293,3 @@ const init = function () {
 };
 
 init();
-
-// showPrimaryNotification('ffgsv', 'sfnvidnvd')

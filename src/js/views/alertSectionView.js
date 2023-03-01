@@ -50,7 +50,7 @@ class AlertSectionView {
         </tr>`
         }
 
-        const markup = allAlerts.reverse().map(alert => newRow(alert)).join('');
+        const markup = allAlerts.map(alert => newRow(alert)).join('');
         return markup
     }
 

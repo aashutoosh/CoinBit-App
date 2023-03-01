@@ -64,7 +64,7 @@ export function addToTriggeredAlerts(alertObject) {
         addToLocalStorage('triggeredAlerts', [alertObject]);
     }
     else {
-        updateLocalStorage('triggeredAlerts', [...allTriggeredAlerts, alertObject]);
+        updateLocalStorage('triggeredAlerts', [alertObject, ...allTriggeredAlerts]);
     }
 
     updateState();
@@ -91,7 +91,7 @@ export function addNewAlert(alertObject) {
         addToLocalStorage('pendingAlerts', [alertObject]);
     }
     else {
-        updateLocalStorage('pendingAlerts', [...pendingAlerts, alertObject]);
+        updateLocalStorage('pendingAlerts', [alertObject, ...pendingAlerts]);
     }
 
     updateState();
