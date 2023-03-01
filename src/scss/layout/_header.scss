@@ -2,8 +2,8 @@ header {
     position: sticky;
     top: 0;
     z-index: var(--z-header);
-    background-color: var(--dark-500);
-    box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.4);
+    background-color: var(--background-500);
+    box-shadow: var(--box-shadow-header);
 }
 
 .nav {
@@ -24,6 +24,10 @@ header {
 
         &--icon {
             margin-right: 0.5rem;
+
+            path:nth-child(2) {
+                fill: var(--primary-100);
+            }
         }
 
         &--title {
@@ -44,32 +48,68 @@ header {
 
     &__link {
         font-size: var(--small-font-size);
+        padding-right: 1rem;
+        border-right: 1px solid var(--background-300);
         transition: all 0.3s;
 
         &:hover {
-            color: var(--yellow-100);
+            color: var(--primary-100);
         }
 
         &:last-child {
             border-right: none;
+            padding-right: 0;
         }
     }
 
-    &__link {
-        padding-right: 1rem;
-        border-right: 1px solid var(--dark-300);
+    &__theme {
+        position: relative;
+        width: 16px;
+        padding: 1rem;
+
+        .icon {
+            position: absolute;
+            left: 0;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        .icon-moon {
+            transform: translateY(2rem);
+            opacity: 0;
+        }
+
+        .icon-sun {
+            transform: translateY(-2rem);
+            opacity: 0;
+        }
+
+        .icon-sun.active,
+        .icon-moon.active {
+            transform: translateY(0);
+        }
+
+        .active {
+            opacity: 1;
+            pointer-events: initial;
+        }
+    }
+
+    &__icons {
+        display: flex;
+        gap: 1rem;
     }
 
     &__notification {
         position: relative;
-        fill: var(--light-100);
         padding: 1rem 0;
+        fill: var(--textLight-100);
         cursor: pointer;
 
         // Animate just svg when hover or when tapped on phone
         &:hover svg,
         &:active svg {
-            fill: var(--yellow-100);
+            fill: var(--primary-100);
             animation: ring 4s .2s ease-in-out;
             transform-origin: 50% 4px;
         }
@@ -84,7 +124,7 @@ header {
             background-color: red;
             border-radius: 50%;
             box-sizing: content-box;
-            border: 3px solid var(--dark-500);
+            border: 3px solid var(--background-500);
             display: none;
         }
 
@@ -93,7 +133,21 @@ header {
         }
     }
 
+    &__theme {
+        position: relative;
+        fill: var(--textLight-100);
+        padding: 1rem 0;
+        cursor: pointer;
+
+        &:hover svg,
+        &:active svg {
+            fill: var(--primary-100);
+            // animation: ring 4s .2s ease-in-out;
+            // transform-origin: 50% 4px;
+        }
+    }
+
     .active {
-        color: var(--yellow-100);
+        color: var(--primary-100);
     }
 }

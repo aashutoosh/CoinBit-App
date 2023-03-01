@@ -268,6 +268,7 @@ const init = function () {
     updateSettingsData();
 
     headerView.activeNavSection();
+    headerView.addThemeToggle();
 
     notificationWindowView.addHideWindowHandler();
     notificationWindowView.addClearWindowHandler(clearNotificationWindow);

@@ -2,7 +2,8 @@
     display: flex;
     position: relative;
     align-items: flex-start;
-    background-color: var(--dark-500);
+    background-color: var(--background-500);
+    box-shadow: var(--box-shadow-100);
 }
 
 .notifications {
@@ -20,8 +21,8 @@
         gap: 1rem;
         padding: 1rem;
         border-radius: 0.5rem;
-        box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
-        background-color: var(--dark-300);
+        box-shadow: var(--box-shadow-500);
+        background-color: var(--background-300);
         opacity: 0;
         transform: translateX(100%);
         transition: all 0.3s ease-out;
@@ -39,7 +40,7 @@
         &__icon {
             font-size: 1.5rem;
             padding: 0.5rem;
-            background-color: rgb(101, 101, 101);
+            background-color: var(--textDark-900);
             border-radius: 0.5rem;
             align-self: flex-start;
         }
@@ -53,7 +54,7 @@
 
             &--description {
                 font-size: 0.8rem;
-                color: var(--light-300);
+                color: var(--textLight-300);
             }
         }
 
@@ -68,6 +69,7 @@
 
             &:hover {
                 background-color: rgb(101, 101, 101);
+                color: #fff;
             }
         }
     }
@@ -84,7 +86,8 @@
     right: 50%;
     z-index: var(--z-modal);
     transform: translateX(50%);
-    background-color: var(--dark-300);
+    background-color: var(--background-300);
+    border: 1px solid var(--background-100);
     padding: 0.5rem 1.5rem;
     border-radius: 5rem;
 
@@ -102,11 +105,11 @@
     top: 50%;
     left: 50%;
     width: 40rem;
-    background-color: var(--dark-300);
+    background-color: var(--background-300);
     padding: 2rem;
     border-radius: 0.5rem;
     transform: translate(-50%, -50%);
-    box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: var(--box-shadow-500);
     z-index: var(--z-modal);
     transition: all 0.2s ease;
     opacity: 0;
@@ -137,6 +140,7 @@
 
         &:hover {
             background-color: rgb(101, 101, 101);
+            color: #fff;
         }
     }
 
@@ -154,7 +158,7 @@
                 top: 1rem;
                 left: 1rem;
                 font-size: 0.9rem;
-                color: var(--light-300);
+                color: var(--textLight-300);
                 transition: all 0.2s ease;
                 pointer-events: none;
             }
@@ -184,8 +188,8 @@
                     font-size: 0.8rem;
                     top: -0.5rem;
                     left: 0;
-                    color: var(--yellow-100);
-                    background-color: var(--dark-300);
+                    color: var(--primary-100);
+                    background-color: var(--background-300);
                     padding-right: 0.5rem;
                     padding-bottom: 0.25rem;
                     font-weight: 500;
@@ -198,15 +202,15 @@
             align-self: flex-start;
             border-radius: 4px;
             border: none;
-            background-color: var(--yellow-300);
+            background-color: var(--primary-300);
             font-weight: 500;
-            color: var(--dark-500);
+            color: var(--background-500);
             cursor: pointer;
             transition: all 0.2s ease;
 
             &:hover {
-                background-color: var(--yellow-100);
-                box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75);
+                background-color: var(--primary-100);
+                box-shadow: var(--box-shadow-300);
             }
         }
 
@@ -215,7 +219,7 @@
             background-color: inherit;
             color: inherit;
             height: 100%;
-            border: 1px solid var(--dark-100);
+            border: 1px solid var(--background-100);
             width: 100%;
             border-radius: 4px;
             font-weight: 300;
@@ -230,8 +234,8 @@
                 font-size: 0.8rem;
                 top: -0.5rem;
                 left: 0;
-                color: var(--yellow-100);
-                background-color: var(--dark-300);
+                color: var(--primary-100);
+                background-color: var(--background-300);
                 padding-right: 0.5rem;
                 padding-bottom: 0.25rem;
                 font-weight: 500;
@@ -241,14 +245,14 @@
         .select {
             padding: 0.75rem 0.8rem;
             background-color: inherit;
-            color: var(--light-300);
+            color: var(--textLight-300);
             width: 100%;
-            border: 1px solid var(--dark-100);
+            border: 1px solid var(--background-100);
             border-radius: 4px;
             font-size: 0.9rem;
 
             option {
-                background-color: var(--dark-100);
+                background-color: var(--background-100);
             }
 
             &:active,
@@ -264,11 +268,11 @@
     top: -0.5rem;
     right: 1rem;
     width: 26rem;
-    color: var(--light-100);
+    color: var(--textLight-100);
     z-index: var(--z-modal);
-    background-color: var(--dark-300);
+    background-color: var(--background-300);
     border-radius: 0.5rem;
-    box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: var(--box-shadow-300);
     padding: 1.5rem;
     opacity: 0;
     pointer-events: none;
@@ -277,7 +281,7 @@
     transform-origin: top right;
 
     &__empty {
-        color: var(--light-300);
+        color: var(--textLight-300);
         display: none;
 
         &.show {
@@ -324,12 +328,12 @@
             display: flex;
             width: 100%;
             padding: 1rem 1rem;
-            border-bottom: 1px solid var(--dark-100);
+            border-bottom: 1px solid var(--background-100);
             transition: all 0.2s ease;
             cursor: default;
 
             &:hover {
-                background-color: var(--dark-500);
+                background-color: var(--background-500);
                 border-radius: 0.5rem;
             }
 
@@ -339,7 +343,7 @@
 
             &__time {
                 font-size: 0.8rem;
-                color: var(--grey-100);
+                color: var(--textDark-100);
                 flex: 1;
             }
 
@@ -357,14 +361,14 @@
             &__title {
                 font-size: 1rem;
                 padding-right: 1.5rem;
-                color: var(--light-100);
+                color: var(--textLight-100);
                 font-weight: 500;
                 word-break: break-word;
             }
 
             &__desc {
                 font-size: 0.8rem;
-                color: var(--light-300);
+                color: var(--textLight-300);
                 line-height: 1.5;
             }
 
@@ -377,7 +381,7 @@
                 transition: all 0.2s;
                 padding-left: 0.5rem;
                 padding-bottom: 0.5rem;
-                color: var(--light-100);
+                color: var(--textLight-100);
                 opacity: 0;
 
                 &:hover {
@@ -395,11 +399,11 @@
     flex-direction: column;
     height: calc(100vh - var(--header-height));
     width: var(--left-width);
-    background-color: var(--dark-500);
+    background-color: var(--background-500);
     overflow-x: hidden;
     overflow-y: auto;
     z-index: var(--z-watchlist);
-    box-shadow: 1px 0 5px 0 #0d0d0d;
+    border-right: 1px solid var(--background-300);
 
     &__items {}
 
@@ -408,13 +412,13 @@
         align-items: center;
         padding: 1rem;
         height: calc(var(--header-height));
-        border-bottom: 1px solid var(--dark-300);
+        border-bottom: 1px solid var(--background-300);
         transition: all 0.2s;
-        color: var(--grey-500);
+        color: var(--textDark-500);
 
 
         &:hover {
-            background-color: var(--dark-300);
+            background-color: var(--background-300);
         }
 
         &:hover .symbol__action {
@@ -430,7 +434,7 @@
         align-items: center;
         padding: 1rem;
         height: var(--header-height);
-        border-bottom: 1px solid var(--dark-300);
+        border-bottom: 1px solid var(--background-300);
         z-index: inherit;
 
         span {
@@ -461,7 +465,7 @@
         position: relative;
 
         &__name {
-            color: var(--light-300);
+            color: var(--textLight-300);
             font-size: 1rem;
             font-weight: 500;
         }
@@ -505,9 +509,13 @@
             .button__item {
                 margin: 0.8rem 0;
                 margin-right: 1rem;
-                color: var(--light-100);
+                color: var(--textLight-100);
                 padding: 0.3rem 0.6rem;
                 font-size: 0.9rem;
+
+                &:hover {
+                    color: #fff;
+                }
             }
         }
     }
@@ -522,32 +530,38 @@
     &__item {
         padding: 0 1rem;
         font-size: var(--small-font-size);
-        border-bottom: 1px solid var(--dark-300);
+        border-bottom: 1px solid var(--background-300);
         transition: all 0.2s;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
         &:last-child {
-            border-bottom: 4px solid var(--dark-300);
+            border-bottom: 4px solid var(--background-300);
         }
 
         .coinname {
             padding: 0.6rem 0;
+            color: var(--textLight-100);
         }
 
         &:hover {
-            background-color: var(--dark-300);
+            background-color: var(--background-300);
         }
 
         .button__item {
             display: none;
+
+            &:hover {
+                color: #fff;
+            }
         }
 
         .active {
             display: initial;
             border: 1px solid var(--green-300);
             background-color: var(--green-300);
+            color: #fff;
         }
 
         &:hover .button__item {
@@ -569,19 +583,19 @@
     padding: 0 1.5rem;
     z-index: 1;
     width: calc(var(--container-width) - var(--left-width));
-    box-shadow: 1px 0 5px 0 #0d0d0d;
+    // box-shadow: var(--box-shadow-100);
 
     .heading {
         display: flex;
         width: 100%;
         justify-content: space-between;
         align-items: baseline;
-        border-bottom: 1px solid var(--dark-300);
+        border-bottom: 1px solid var(--background-300);
 
         &__window {
             display: flex;
             gap: 1.5rem;
-            color: var(--light-900);
+            color: var(--textLight-900);
         }
     }
 
@@ -599,7 +613,7 @@
         transform-origin: center;
 
         &:hover {
-            color: var(--yellow-100);
+            color: var(--primary-100);
             font-weight: 500;
 
             i {
@@ -608,8 +622,8 @@
         }
 
         &.active {
-            color: var(--yellow-100);
-            border-bottom: 3px solid var(--yellow-100);
+            color: var(--primary-100);
+            border-bottom: 3px solid var(--primary-100);
             font-weight: 500;
 
             i {
@@ -624,8 +638,8 @@
     }
 
     &__create--button {
-        background-color: var(--yellow-100);
-        color: var(--dark-500);
+        background-color: var(--primary-100);
+        color: var(--background-500);
         padding: 0.4rem 0.6rem;
         border-radius: 4px;
         font-size: .8rem;
@@ -634,7 +648,7 @@
         cursor: pointer;
 
         &:hover {
-            background-color: var(--yellow-300);
+            background-color: var(--primary-300);
         }
     }
 
@@ -646,8 +660,8 @@
             font-size: 0.9rem;
             padding: 1rem 0.75rem;
             text-align: left;
-            border-bottom: 1px solid var(--dark-300);
-            color: var(--light-300);
+            border-bottom: 1px solid var(--background-300);
+            color: var(--textLight-300);
 
             // Symbol
             &:nth-child(3) {
@@ -669,8 +683,8 @@
         td {
             padding: 0.5rem 0.75rem;
             text-align: left;
-            border-bottom: 1px solid var(--dark-300);
-            color: var(--light-300);
+            border-bottom: 1px solid var(--background-300);
+            color: var(--textLight-300);
             transition: all 0.2s;
 
             // Checkbox
@@ -682,7 +696,7 @@
                     .description {
                         font-size: 0.8rem;
                         padding-top: 0.5rem;
-                        color: var(--grey-500);
+                        color: var(--textDark-500);
                     }
                 }
             }
@@ -698,7 +712,7 @@
 
                     i {
                         font-size: 1.2rem;
-                        color: var(--light-300);
+                        color: var(--textLight-300);
                         cursor: pointer;
                         padding: 1rem 0.25rem;
                         transition: all 0.3s;
@@ -733,15 +747,15 @@
         }
 
         tr:hover td {
-            background-color: var(--dark-300);
-            color: var(--yellow-100);
+            background-color: var(--background-300);
+            color: var(--primary-100);
 
             &:nth-child(2) {
                 .control__buttons {
                     opacity: 1;
 
                     i {
-                        color: var(--light-300);
+                        color: var(--textLight-300);
                         scale: 1;
                     }
 
@@ -749,7 +763,7 @@
                         transform: translateX(-0.4rem);
 
                         &:hover {
-                            color: var(--yellow-100);
+                            color: var(--primary-100);
                         }
                     }
 
@@ -770,7 +784,7 @@
             margin: 0 auto;
             width: 14px;
             height: 14px;
-            accent-color: var(--yellow-100);
+            accent-color: var(--primary-100);
         }
     }
 }
