@@ -465,6 +465,7 @@ function getAllUniqueSymbols() {
     return allUniqueSymbols;
 }
 
+// done
 function checkForAlerts(coinData) {
     function conditionMatched(currentAlert) {
         showAlertNotification(currentAlert.title, currentAlert.description, 'ri-notification-4-line');

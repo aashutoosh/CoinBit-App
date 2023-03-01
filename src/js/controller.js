@@ -174,7 +174,7 @@ const websocketDataHandler = function (data) {
     if ('stream' in data) {
         watchlistView.updateWatchlistItemData(data);
         alertModalView.updateModalSymbolPrice(data);
-        // checkForAlerts(data);
+        checkForAlerts(data);
     }
 }
 
@@ -216,6 +216,47 @@ const showPrimaryNotification = function (title, description, icon = 'ri-timer-f
     notificationWindowView.showNotificationLight();
 
     model.savePrimaryNotification(notfObject);
+}
+
+const checkForAlerts = function (data) {
+    function conditionMatched(alertObj) {
+        showPrimaryNotification(alertObj.title, alertObj.description, 'ri-notification-4-line');
+
+        // Send to discord
+        sendDiscordAlert(alertObj);
+
+        // Remove from pending alerts
+        model.removeFromPendingAlerts(alertObj);
+
+        // and move to triggered alerts
+        model.addToTriggeredAlerts(alertObj);
+
+        updateAlertsView();
+    }
+
+    const symbol = data.data.s;
+    const currentPrice = Number(data.data.c);
+    const allPendingAlerts = model.state.pendingAlerts;
+    const pendingAlerts = allPendingAlerts.filter(alert => alert.symbol === symbol);
+
+    pendingAlerts.forEach(alert => {
+        const condition = alert.condition;
+        if (condition === '>=' && currentPrice >= alert.price) {
+            conditionMatched(alert);
+        }
+        else if (condition === '<=' && currentPrice <= alert.price) {
+            conditionMatched(alert);
+        }
+        else if (condition === '>' && currentPrice > alert.price) {
+            conditionMatched(alert);
+        }
+        else if (condition === '<' && currentPrice < alert.price) {
+            conditionMatched(alert);
+        }
+        else if (condition === '==' && currentPrice === alert.price) {
+            conditionMatched(alert);
+        }
+    });
 }
 
 const init = function () {

@@ -48,6 +48,28 @@ function updateState() {
     state.notifications = getFromLocalStorage('notifications') || [];
 }
 
+export function removeFromPendingAlerts(alertObject) {
+    const allPendingAlerts = state.pendingAlerts
+    const filteredAlerts = allPendingAlerts.filter(alert => alert.createdon !== alertObject.createdon);
+
+    updateLocalStorage('pendingAlerts', filteredAlerts);
+
+    updateState();
+}
+
+export function addToTriggeredAlerts(alertObject) {
+    const allTriggeredAlerts = state.triggeredAlerts;
+
+    if (allTriggeredAlerts.length === 0) {
+        addToLocalStorage('triggeredAlerts', [alertObject]);
+    }
+    else {
+        updateLocalStorage('triggeredAlerts', [...allTriggeredAlerts, alertObject]);
+    }
+
+    updateState();
+}
+
 // Watchlist
 export function addToWatchlist(symbol) {
     const initialWatchlist = state.watchlist;
