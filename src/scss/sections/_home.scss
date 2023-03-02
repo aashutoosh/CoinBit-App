@@ -307,9 +307,6 @@
     transform-origin: top right;
 
     @media screen and (max-width: 575px) {
-        transform: translate(-50%, -50%);
-        top: 50%;
-        left: 50%;
         width: calc(100vw - 2rem);
     }
 
