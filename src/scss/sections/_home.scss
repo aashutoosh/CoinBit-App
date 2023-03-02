@@ -16,6 +16,11 @@
     width: 20rem;
     z-index: var(--z-watchlist);
 
+    @media screen and (max-width: 575px) {
+        width: calc(100vw - 2rem);
+        right: 0;
+    }
+
     .notification {
         display: flex;
         gap: 1rem;
@@ -43,6 +48,7 @@
             background-color: var(--textDark-900);
             border-radius: 0.5rem;
             align-self: flex-start;
+            color: #fff;
         }
 
         &__text {
@@ -91,6 +97,10 @@
     padding: 0.5rem 1.5rem;
     border-radius: 5rem;
 
+    @media screen and (max-width: 575px) {
+        width: max-content;
+    }
+
     &.show {
         animation: slideIn 0.3s ease-in-out;
     }
@@ -116,6 +126,10 @@
     pointer-events: none;
     scale: 0;
 
+    @media screen and (max-width: 767px) {
+        width: calc(100vw - 2rem);
+    }
+
     &.show {
         opacity: 1;
         pointer-events: initial;
@@ -126,6 +140,10 @@
         font-size: 1.1rem;
         font-weight: 500;
         padding-bottom: 2rem;
+
+        @media screen and (max-width: 575px) {
+            gap: 1.5rem;
+        }
     }
 
     &__close {
@@ -149,6 +167,10 @@
         flex-direction: column;
         padding-top: 3rem;
         gap: 1.5rem;
+
+        @media screen and (max-width: 575px) {
+            gap: 1.2rem;
+        }
 
         &--fields {
             position: relative;
@@ -174,11 +196,15 @@
             }
         }
 
-
         .fields {
             display: flex;
             justify-content: space-between;
             gap: 2rem;
+
+            @media screen and (max-width: 575px) {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
 
             .createalert__form--fields {
                 height: 100%;
@@ -280,6 +306,13 @@
     scale: 0;
     transform-origin: top right;
 
+    @media screen and (max-width: 575px) {
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        width: calc(100vw - 2rem);
+    }
+
     &__empty {
         color: var(--textLight-300);
         display: none;
@@ -345,6 +378,8 @@
                 font-size: 0.8rem;
                 color: var(--textDark-100);
                 flex: 1;
+                min-width: 3.5rem;
+                margin-right: 1rem;
             }
 
             &:last-child {
@@ -398,12 +433,21 @@
     top: var(--header-height);
     flex-direction: column;
     height: calc(100vh - var(--header-height));
-    width: var(--left-width);
+    min-width: var(--left-width);
     background-color: var(--background-500);
     overflow-x: hidden;
     overflow-y: auto;
     z-index: var(--z-watchlist);
     box-shadow: var(--box-shadow-100);
+
+    @media screen and (max-width: 767px) {
+        display: none;
+        width: 100%;
+    }
+
+    @media screen and (max-width: 575px) {
+        height: calc(100vh - 2 * var(--header-height));
+    }
 
     &__items {}
 
@@ -580,10 +624,6 @@
 
 .alerts {
     display: none;
-    padding: 0 1.5rem;
-    z-index: 1;
-    width: calc(var(--container-width) - var(--left-width));
-    // box-shadow: var(--box-shadow-100);
 
     .heading {
         display: flex;
@@ -592,10 +632,18 @@
         align-items: baseline;
         border-bottom: 1px solid var(--border);
 
+        @media screen and (max-width: 767px) {
+            width: 100%;
+        }
+
         &__window {
             display: flex;
             gap: 1.5rem;
             color: var(--textLight-900);
+
+            @media screen and (max-width: 575px) {
+                gap: 1rem;
+            }
         }
     }
 
@@ -647,8 +695,30 @@
         transition: all 0.2s ease-in-out;
         cursor: pointer;
 
+        &.text {
+            @media screen and (max-width: 350px) {
+                display: none;
+            }
+        }
+
+        &.icon {
+            @media screen and (min-width: 350px) {
+                display: none;
+            }
+        }
+
         &:hover {
             background-color: var(--primary-300);
+        }
+    }
+
+    .table__container {
+        width: 100%;
+        height: calc(100vh - 2 * var(--header-height));
+        overflow: auto;
+
+        @media screen and (max-width: 575px) {
+            height: calc(100vh - 3 * var(--header-height));
         }
     }
 
@@ -687,11 +757,12 @@
             color: var(--textLight-300);
             transition: all 0.2s;
 
-            // Checkbox
+            // Name
             &:nth-child(1) {
                 .textContent {
                     display: flex;
                     flex-direction: column;
+                    min-width: 8rem;
 
                     .description {
                         font-size: 0.8rem;

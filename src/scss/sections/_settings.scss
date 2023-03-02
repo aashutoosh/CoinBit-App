@@ -1,8 +1,6 @@
 .settings {
     display: none;
-    padding: 0 1.5rem;
-    z-index: 1;
-    width: calc(var(--container-width) - var(--left-width));
+    overflow-y: scroll;
 
     &__title {
         height: var(--header-height);
@@ -39,6 +37,10 @@
     &__label {
         display: inline-block;
         width: 15rem;
+
+        @media screen and (max-width: 991px) {
+            width: 12rem;
+        }
     }
 
     input[type="checkbox"] {
@@ -83,6 +85,12 @@
     pointer-events: none;
     transition: all 0.2s ease;
 
+    @media screen and (max-width: 575px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
     &.show {
         opacity: 1;
         pointer-events: initial;
@@ -91,6 +99,10 @@
     &__label {
         display: inline-block;
         width: 15rem;
+
+        @media screen and (max-width: 991px) {
+            width: 12rem;
+        }
     }
 
     &__input {
@@ -129,5 +141,9 @@
         font-size: 0.9rem;
         padding-left: 1.5rem;
         border-bottom: 1px solid var(--border);
+
+        @media screen and (max-width: 991px) {
+            width: 12rem;
+        }
     }
 }

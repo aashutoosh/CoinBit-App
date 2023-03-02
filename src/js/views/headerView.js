@@ -4,6 +4,7 @@ class HeaderView {
     _moonIcon = document.querySelector('.nav__theme .icon-moon');
     _sunIcon = document.querySelector('.nav__theme .icon-sun');
     _navLinks = document.getElementById('nav__links');
+    _linkContainer = document.querySelector('.links__container');
     _allNavLinks = document.querySelectorAll('.nav__link');
 
     _setDarkMode() {
@@ -44,14 +45,14 @@ class HeaderView {
     }
 
     activeNavSection() {
-        this._navLinks.addEventListener('click', event => {
-            // Only perform this when its clicked on a tags
-            if (event.target.tagName === 'A') {
+        this._linkContainer.addEventListener('click', event => {
+            if (event.target.closest('li.nav__link')) {
                 this._allNavLinks.forEach(link => link.classList.remove('active'));
-                event.target.parentElement.classList.add('active')
 
-                const clickedLinkText = event.target.textContent.toLowerCase();
+                const listElement = event.target.closest('.nav__link');
+                listElement.classList.add('active');
 
+                const clickedLinkText = listElement.querySelector('a span').textContent.toLowerCase();
                 // Removes showSection from all sections
                 document.querySelectorAll('section').forEach(section => {
                     section.classList.remove('showSection');
@@ -59,7 +60,7 @@ class HeaderView {
 
                 // Add showSection class to respective section
                 document.querySelector(`.${clickedLinkText}`).classList.add('showSection');
-            };
+            }
         });
     }
 }

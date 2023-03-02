@@ -25,16 +25,22 @@
                             d="M23 12v2c0 3.314-4.925 6-11 6-5.967 0-10.824-2.591-10.995-5.823L1 14v-2c0 3.314 4.925 6 11 6s11-2.686 11-6zM12 4c6.075 0 11 2.686 11 6s-4.925 6-11 6-11-2.686-11-6 4.925-6 11-6z"
                             fill="rgba(240,185,11,1)" />
                     </svg>
-                    <span class="nav__logo--title">CoinBit App</span>
+                    <span class="nav__logo--title">CoinBit</span>
                 </a>
             </div>
 
 
             <ul class="nav__links" id="nav__links">
-                <li class="nav__link active"><a href="#">Alerts</a></li>
-                <li class="nav__link"><a href="#settings">Settings</a></li>
-                <li class="nav__link"><a href="#about">About</a></li>
-                <li class="nav__link"><a href="#contact">Contact</a></li>
+                <ul class="links__container">
+                    <li class="nav__link nav__link--watchlist"><a href="#watchlist"><span>Watchlist</span><i
+                                class="ri-apps-2-line"></i></a></li>
+                    <li class="nav__link nav__link--alerts active"><a href="#"><span>Alerts</span><i
+                                class="ri-alarm-line"></i></a></li>
+                    <li class="nav__link nav__link--settings"><a href="#settings"><span>Settings</span><i
+                                class="ri-settings-3-line"></i></a></li>
+                    <li class="nav__link nav__link--about"><a href="#about"><span>About</span><i
+                                class="ri-user-line"></i></a></li>
+                </ul>
                 <li class="nav__link nav__icons">
                     <div class="nav__theme">
                         <!-- Moon Icon -->
@@ -128,7 +134,7 @@
             <span class="bellwindow__empty show">Empty!</span>
         </div>
 
-        <section class="watchlist" id="watchlist">
+        <section class="watchlist leftside" id="watchlist">
             <div class="watchlist__search">
                 <span>
                     <svg class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14">
@@ -147,32 +153,34 @@
             </ul>
         </section>
 
-        <section class="alerts showSection" id="alerts">
+        <section class="alerts rightside showSection" id="alerts">
             <div class="heading">
                 <div class="heading__window">
                     <span class="alerts__title alerts__title--pending active"><i class="ri-eye-line"></i>Pending</span>
                     <span class="alerts__title alerts__title--triggered"><i
                             class="ri-eye-close-line"></i>Triggered</span>
                 </div>
-                <div class="alerts__create--button">Create Alert</div>
+                <div class="alerts__create--button text">Create Alert</div>
+                <div class="alerts__create--button icon"><i class="ri-add-line"></i></div>
             </div>
-
-            <table class="alerts__table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th></th>
-                        <th>Symbol</th>
-                        <th>Condition</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody class="alerts__table--tbody">
-                </tbody>
-            </table>
+            <div class="table__container">
+                <table class="alerts__table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                            <th>Symbol</th>
+                            <th>Condition</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody class="alerts__table--tbody">
+                    </tbody>
+                </table>
+            </div>
         </section>
 
-        <section class="settings" id="settings">
+        <section class="settings rightside" id="settings">
             <div class="heading">
                 <span class="settings__title"><i class="ri-settings-3-line"></i></i>Settings</span>
             </div>
@@ -192,10 +200,10 @@
                 </div>
             </div>
         </section>
-        <section class="about" id="about">
+        <section class="about rightside" id="about">
             <h2>about</h2>
         </section>
-        <section class="contact" id="contact">
+        <section class="contact rightside" id="contact">
             <h2>contact</h2>
         </section>
     </main>

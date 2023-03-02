@@ -1,5 +1,6 @@
 class AlertSectionView {
-    _createAlertButton = document.querySelector('.alerts__create--button');
+    _createAlertButton = document.querySelector('.alerts__create--button.text');
+    _createAlertIcon = document.querySelector('.alerts__create--button.icon');
     _alertsTable = document.querySelector('.alerts__table--tbody');
     _alertsHeading = document.querySelector('.heading__window');
     _alertsPendingTitle = document.querySelector('.alerts__title--pending');
@@ -95,7 +96,8 @@ class AlertSectionView {
     }
 
     addCreateAlertButtonHandler(handler) {
-        this._createAlertButton.addEventListener('click', handler)
+        this._createAlertButton.addEventListener('click', handler);
+        this._createAlertIcon.addEventListener('click', handler);
     }
 }
 
