@@ -21,6 +21,9 @@
     --background-500: #181818;
     --background-900: #111111;
 
+    --modal: var(--background-300);
+    --border: #212121;
+
     --box-shadow-header: 0px 4px 6px -1px rgba(0, 0, 0, 0.4);
     --box-shadow-100: 1px 0 5px 0 #0d0d0d;
     --box-shadow-300: 1px 1px 4px 0px rgba(0, 0, 0, 0.75);
@@ -73,8 +76,8 @@
 }
 
 html[data-theme='light'] {
-    --green-100: rgb(0, 139, 12);
-    --green-300: rgb(0, 78, 30);
+    --green-100: rgb(0, 159, 13);
+    --green-300: rgb(0, 126, 48);
     --red-100: rgb(255, 0, 34);
     --red-300: rgb(192, 16, 39);
     --primary-100: #0257C7;
@@ -89,10 +92,13 @@ html[data-theme='light'] {
     --textDark-500: #7A7A7A;
     --textDark-900: #A7B0B6;
 
-    --background-100: #bbbbbb;
-    --background-300: #eeeeee;
-    --background-500: #f8f8f8;
+    --background-100: #d6d6d6;
+    --background-300: #efefef;
+    --background-500: #ffffff;
     --background-900: #EAECEF;
+
+    --modal: #fafafa;
+    --border: #ececec;
 
     --box-shadow-header: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
     --box-shadow-100: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;

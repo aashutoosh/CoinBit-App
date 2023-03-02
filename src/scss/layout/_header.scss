@@ -49,7 +49,7 @@ header {
     &__link {
         font-size: var(--small-font-size);
         padding-right: 1rem;
-        border-right: 1px solid var(--background-300);
+        border-right: 1px solid var(--border);
         transition: all 0.3s;
 
         &:hover {

@@ -105,7 +105,7 @@
     top: 50%;
     left: 50%;
     width: 40rem;
-    background-color: var(--background-300);
+    background-color: var(--modal);
     padding: 2rem;
     border-radius: 0.5rem;
     transform: translate(-50%, -50%);
@@ -189,7 +189,7 @@
                     top: -0.5rem;
                     left: 0;
                     color: var(--primary-100);
-                    background-color: var(--background-300);
+                    background-color: var(--modal);
                     padding-right: 0.5rem;
                     padding-bottom: 0.25rem;
                     font-weight: 500;
@@ -235,7 +235,7 @@
                 top: -0.5rem;
                 left: 0;
                 color: var(--primary-100);
-                background-color: var(--background-300);
+                background-color: var(--modal);
                 padding-right: 0.5rem;
                 padding-bottom: 0.25rem;
                 font-weight: 500;
@@ -270,7 +270,7 @@
     width: 26rem;
     color: var(--textLight-100);
     z-index: var(--z-modal);
-    background-color: var(--background-300);
+    background-color: var(--modal);
     border-radius: 0.5rem;
     box-shadow: var(--box-shadow-300);
     padding: 1.5rem;
@@ -328,7 +328,7 @@
             display: flex;
             width: 100%;
             padding: 1rem 1rem;
-            border-bottom: 1px solid var(--background-100);
+            border-bottom: 1px solid var(--border);
             transition: all 0.2s ease;
             cursor: default;
 
@@ -412,7 +412,7 @@
         align-items: center;
         padding: 1rem;
         height: calc(var(--header-height));
-        border-bottom: 1px solid var(--background-300);
+        border-bottom: 1px solid var(--border);
         transition: all 0.2s;
         color: var(--textDark-500);
 
@@ -434,7 +434,7 @@
         align-items: center;
         padding: 1rem;
         height: var(--header-height);
-        border-bottom: 1px solid var(--background-300);
+        border-bottom: 1px solid var(--border);
         z-index: inherit;
 
         span {
@@ -530,14 +530,14 @@
     &__item {
         padding: 0 1rem;
         font-size: var(--small-font-size);
-        border-bottom: 1px solid var(--background-300);
+        border-bottom: 1px solid var(--border);
         transition: all 0.2s;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
         &:last-child {
-            border-bottom: 4px solid var(--background-300);
+            border-bottom: 4px solid var(--border);
         }
 
         .coinname {
@@ -590,7 +590,7 @@
         width: 100%;
         justify-content: space-between;
         align-items: baseline;
-        border-bottom: 1px solid var(--background-300);
+        border-bottom: 1px solid var(--border);
 
         &__window {
             display: flex;
@@ -660,7 +660,7 @@
             font-size: 0.9rem;
             padding: 1rem 0.75rem;
             text-align: left;
-            border-bottom: 1px solid var(--background-300);
+            border-bottom: 1px solid var(--border);
             color: var(--textLight-300);
 
             // Symbol
@@ -683,7 +683,7 @@
         td {
             padding: 0.5rem 0.75rem;
             text-align: left;
-            border-bottom: 1px solid var(--background-300);
+            border-bottom: 1px solid var(--border);
             color: var(--textLight-300);
             transition: all 0.2s;
 
