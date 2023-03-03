@@ -46,10 +46,10 @@ class HeaderView {
 
     activeNavSection() {
         this._linkContainer.addEventListener('click', event => {
-            if (event.target.closest('li.nav__link')) {
+            const listElement = event.target.closest('.nav__link');
+            if (listElement) {
                 this._allNavLinks.forEach(link => link.classList.remove('active'));
 
-                const listElement = event.target.closest('.nav__link');
                 listElement.classList.add('active');
 
                 const clickedLinkText = listElement.querySelector('a span').textContent.toLowerCase();
