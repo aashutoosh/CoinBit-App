@@ -45,14 +45,47 @@ class AlertSectionView {
                     <i class="control__buttons--delete ri-close-line"></i>
                 </div>
             </td>
-            <td>${alert.symbol}</td>
-            <td><span>${alert.condition}</span></td>
+            <td>
+                <span class="symbol">${alert.symbol}</span>
+                ${pendingAlertsType ? `<span class="ltp green">0.00</span>` : ''}
+            </td>
+            <td>
+                <span>${alert.condition}</span>
+            </td>
             <td>${alert.price}</td>
         </tr>`
         }
 
         const markup = allAlerts.map(alert => newRow(alert)).join('');
         return markup
+    }
+
+    updateAlertsLtpData(data) {
+        const pendingAlertsType = this._isPendingAlertType();
+        if (!pendingAlertsType) return;
+
+        const symbol = data.data.s;
+        const price = Number(data.data.c);
+
+        // Find list item with a matching symbol and update its last traded price.
+        const listItems = this._alertsTable.querySelectorAll('tr');
+        for (let i = 0; i < listItems.length; i++) {
+            const listItem = listItems[i];
+
+            if (listItem.querySelector('.symbol').textContent === symbol) {
+                const priceElem = listItem.querySelector('.ltp');
+
+                const prevPrice = Number(priceElem.textContent)
+
+                // Update the price and price change.
+                priceElem.textContent = price;
+
+                // Add the green or red class to the price element.
+                priceElem.classList.remove('green', 'red');
+                if (price > prevPrice) priceElem.classList.add('green');
+                else priceElem.classList.add('red');
+            }
+        }
     }
 
     switchTableTypeHandler(handler) {

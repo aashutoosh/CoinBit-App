@@ -1784,6 +1784,9 @@ body {
 .alerts__table td:nth-child(3) {
   width: 4rem;
 }
+.alerts__table td:nth-child(3) .ltp {
+  font-size: 0.7rem;
+}
 .alerts__table td:nth-child(4) {
   width: 4rem;
   text-align: center;

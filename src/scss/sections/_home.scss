@@ -830,6 +830,10 @@
             // Symbol
             &:nth-child(3) {
                 width: 4rem;
+
+                .ltp {
+                    font-size: 0.7rem;
+                }
             }
 
             // Condition

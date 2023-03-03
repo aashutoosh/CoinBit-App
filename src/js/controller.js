@@ -185,6 +185,7 @@ const websocketDataHandler = function (data) {
     if ('stream' in data) {
         watchlistView.updateWatchlistItemData(data);
         alertModalView.updateModalSymbolPrice(data);
+        alertSectionView.updateAlertsLtpData(data);
         checkForAlerts(data);
     }
 }
