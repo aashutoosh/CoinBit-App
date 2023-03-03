@@ -829,10 +829,13 @@
 
             // Symbol
             &:nth-child(3) {
-                width: 4rem;
+                width: 6rem;
+                vertical-align: middle;
 
                 .ltp {
+                    display: block;
                     font-size: 0.7rem;
+                    padding-top: 0.5rem;
                 }
             }
 

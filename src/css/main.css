@@ -757,7 +757,7 @@ header {
   gap: 0.3rem;
 }
 .nav .links__container .nav__link a i {
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 @media screen and (min-width: 575px) {
   .nav .links__container .nav__link a i {
@@ -1782,10 +1782,13 @@ body {
           transform: translateX(-0.4rem);
 }
 .alerts__table td:nth-child(3) {
-  width: 4rem;
+  width: 6rem;
+  vertical-align: middle;
 }
 .alerts__table td:nth-child(3) .ltp {
+  display: block;
   font-size: 0.7rem;
+  padding-top: 0.5rem;
 }
 .alerts__table td:nth-child(4) {
   width: 4rem;
