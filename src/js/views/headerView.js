@@ -53,13 +53,13 @@ class HeaderView {
                 listElement.classList.add('active');
 
                 const clickedLinkText = listElement.querySelector('a span').textContent.toLowerCase();
-                // Removes showSection from all sections
+                // Removes showsection from all sections
                 document.querySelectorAll('section').forEach(section => {
-                    section.classList.remove('showSection');
+                    section.classList.remove('showsection');
                 });
 
-                // Add showSection class to respective section
-                document.querySelector(`.${clickedLinkText}`).classList.add('showSection');
+                // Add showsection class to respective section
+                document.querySelector(`.${clickedLinkText}`).classList.add('showsection');
             }
         });
     }

@@ -1,7 +1,7 @@
 import { PRIMARY_NOTIFICATION_SEC } from "../config.js";
 
 class PrimaryNotificationView {
-    _primaryElement = document.getElementById('notifications');
+    _primaryElement = document.getElementById('primary__notifications');
 
     _hide(childNode) {
         childNode.classList.add('hide');

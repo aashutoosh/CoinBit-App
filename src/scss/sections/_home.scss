@@ -6,7 +6,7 @@
     box-shadow: var(--box-shadow-100);
 }
 
-.notifications {
+.primary__notifications {
     position: fixed;
     bottom: 5rem;
     right: 10rem;
@@ -81,7 +81,7 @@
     }
 }
 
-.notifications2 {
+.secondary__notification {
     position: fixed;
     display: flex;
     align-items: center;
@@ -110,7 +110,7 @@
     }
 }
 
-.createalert {
+.alertmodal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -139,7 +139,6 @@
     &__title {
         font-size: 1.1rem;
         font-weight: 500;
-        padding-bottom: 2rem;
 
         @media screen and (max-width: 575px) {
             gap: 1.5rem;
@@ -165,7 +164,7 @@
     &__form {
         display: flex;
         flex-direction: column;
-        padding-top: 3rem;
+        padding-top: 2rem;
         gap: 1.5rem;
 
         @media screen and (max-width: 575px) {
@@ -206,7 +205,7 @@
                 gap: 1.2rem;
             }
 
-            .createalert__form--fields {
+            .alertmodal__form--fields {
                 height: 100%;
                 width: 100%;
 
@@ -289,7 +288,7 @@
     }
 }
 
-.bellwindow {
+.notificationlist {
     position: absolute;
     top: -0.5rem;
     right: 1rem;

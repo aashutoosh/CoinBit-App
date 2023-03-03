@@ -1,8 +1,8 @@
 class NotificationWindowView {
-    _bellwindow = document.querySelector('.bellwindow');
-    _bellwindowClearall = document.querySelector('.bellwindow__clearall');
-    _bellwindowContainer = document.querySelector('.bellwindow__container');
-    _bellwindowEmpty = document.querySelector('.bellwindow__empty');
+    _notificationlist = document.querySelector('.notificationlist');
+    _notificationlistClearall = document.querySelector('.notificationlist__clearall');
+    _notificationlistContainer = document.querySelector('.notificationlist__container');
+    _notificationlistEmpty = document.querySelector('.notificationlist__empty');
     _alertBell = document.querySelector('.nav__notification');
     _notificationLight = document.querySelector('.nav__notification--light');
     _allNotifications;
@@ -12,25 +12,25 @@ class NotificationWindowView {
     }
 
     _showEmptyText() {
-        this._bellwindowEmpty.classList.remove('show');
-        this._bellwindowEmpty.classList.add('show');
+        this._notificationlistEmpty.classList.remove('show');
+        this._notificationlistEmpty.classList.add('show');
     }
 
     _hideEmptyText() {
-        this._bellwindowEmpty.classList.remove('show');
+        this._notificationlistEmpty.classList.remove('show');
     }
 
     showWindow() {
-        this._bellwindow.classList.remove('show');
-        this._bellwindow.classList.add('show');
+        this._notificationlist.classList.remove('show');
+        this._notificationlist.classList.add('show');
     }
 
     hideWindow() {
-        this._bellwindow.classList.remove('show');
+        this._notificationlist.classList.remove('show');
     }
 
     _clearWindow() {
-        this._bellwindowContainer.innerHTML = '';
+        this._notificationlistContainer.innerHTML = '';
 
         // Shows empty text
         this._showEmptyText();
@@ -62,18 +62,18 @@ class NotificationWindowView {
 
     render() {
         if (this._allNotifications.length === 0) {
-            this._bellwindowContainer.innerHTML = '';
+            this._notificationlistContainer.innerHTML = '';
             this._showEmptyText();
         }
         else {
             const markup = this._generateMarkup();
-            this._bellwindowContainer.innerHTML = markup;
+            this._notificationlistContainer.innerHTML = markup;
             this._hideEmptyText();
         }
     }
 
     addClearWindowHandler(handler) {
-        this._bellwindowClearall.addEventListener('click', () => {
+        this._notificationlistClearall.addEventListener('click', () => {
             this._clearWindow();
 
             handler();
@@ -82,18 +82,18 @@ class NotificationWindowView {
 
     addAlertBellHandler(handler) {
         this._alertBell.addEventListener('click', () => {
-            this._bellwindow.classList.toggle('show');
+            this._notificationlist.classList.toggle('show');
             this.hideNotificationLight();
 
             handler();
 
             // Always scroll to top to show latest notification
-            this._bellwindowContainer.scrollTop = 0;
+            this._notificationlistContainer.scrollTop = 0;
         });
     }
 
     addNotificationRemoveHandler(handler) {
-        this._bellwindow.addEventListener('click', event => {
+        this._notificationlist.addEventListener('click', event => {
             if (event.target.classList.contains('notification__button--close')) {
                 const parentElement = event.target.parentElement;
                 const dataKey = Number(parentElement.getAttribute('data-key'));
@@ -109,7 +109,7 @@ class NotificationWindowView {
 
     addHideWindowHandler() {
         document.addEventListener('click', (event) => {
-            if (!this._alertBell.contains(event.target) && !this._bellwindow.contains(event.target)) {
+            if (!this._alertBell.contains(event.target) && !this._notificationlist.contains(event.target)) {
                 this.hideWindow();
             };
         });

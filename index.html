@@ -28,8 +28,6 @@
                     <span class="nav__logo--title">CoinBit</span>
                 </a>
             </div>
-
-
             <ul class="nav__links" id="nav__links">
                 <ul class="links__container">
                     <li class="nav__link nav__link--watchlist"><a href="#watchlist"><span>Watchlist</span><i
@@ -41,7 +39,7 @@
                     <li class="nav__link nav__link--about"><a href="#about"><span>About</span><i
                                 class="ri-user-line"></i></a></li>
                 </ul>
-                <li class="nav__link nav__icons">
+                <li class="nav__icons">
                     <div class="nav__theme">
                         <!-- Moon Icon -->
                         <svg class="icon icon-moon active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -72,66 +70,88 @@
         </nav>
     </header>
 
-    <div class="notifications" id="notifications"></div>
+    <div class="primary__notifications" id="primary__notifications">
+        <!-- It will be added dynamically using JS -->
+        <!-- <div class="notification">
+            <i class="notification__icon ${icon}"></i>
+            <div class="notification__text">
+              <p class="notification__text--title">${title}</p>
+              <p class="notification__text--description">${description}</p>
+            </div>
+            <i class="notification__close ri-close-line"></i>
+        </div> -->
+    </div>
 
-    <!-- notifications2 element will be added in the HTML dynamically using JS -->
-    <!-- <div class="notifications2 show" id="notifications2">
+    <!-- secondary__notification element will be added dynamically using JS -->
+    <!-- <div class="secondary__notification show" id="secondary__notification">
         <i class="${icon}"></i>
         <span class="message">${message}</span>
     </div> -->
 
-    <div class="createalert" id="createalert">
-        <span class="createalert__title">Create Alert</span>
-        <i class="createalert__close ri-close-line"></i>
+    <section class="alertmodal" id="alertmodal">
+        <h2 class="alertmodal__title">Create Alert</h2>
+        <i class="alertmodal__close ri-close-line"></i>
 
-        <form class="createalert__form" data-key="">
-            <div class="createalert__form--fields">
-                <input type="text" class="input title" name="title" required>
-                <span class="label createalert__form--title">Title</span>
+        <form class="alertmodal__form" data-key="" autocomplete="off">
+            <div class="alertmodal__form--fields">
+                <input type="text" class="input title" name="title" id="title" required>
+                <label for="title" class="label alertmodal__form--title">Title</label>
             </div>
 
-            <div class="createalert__form--fields">
-                <input type="text" class="input description" name="description" required>
-                <span class="label createalert__form--desc">Description</span>
+            <div class="alertmodal__form--fields">
+                <input type="text" class="input description" name="description" id="description" required>
+                <label for="description" class="label alertmodal__form--desc">Description</label>
             </div>
 
             <div class="fields">
-                <div class="createalert__form--fields">
+                <div class="alertmodal__form--fields">
                     <select name="symbol" class="select symbol" id="modalSymbolSelect">
                     </select>
-                    <span class="label createalert__form--symbol">Symbol</span>
-                    <span id="modalSymbolPrice" class="green createalert__form--price">1542.65</span>
+                    <!-- <option value="${symbol}">${symbol}</option> -->
+                    <!-- <option value="${symbol}" selected>${symbol}</option> -->
+                    <label for="modalSymbolSelect" class="label alertmodal__form--symbol">Symbol</label>
+                    <span id="modalSymbolPrice" class="green alertmodal__form--price">1542.65</span>
                 </div>
 
-                <div class="createalert__form--fields">
-                    <select name="condition" class="select condition">
+                <div class="alertmodal__form--fields">
+                    <select name="condition" class="select condition" id="condition">
                         <option value=">=">Greater than or equal to (>=)</option>
                         <option value="<=">Less than or equal to (<=) </option>
                         <option value="<">Less than (<) </option>
                         <option value=">">Greater than (>)</option>
                         <option value="==">Equal to (==)</option>
                     </select>
-                    <span class="label createalert__form--condition">Condition</span>
+                    <label for="condition" class="label alertmodal__form--condition">Condition</label>
                 </div>
             </div>
 
-            <div class="createalert__form--fields">
-                <input type="number" min="0" step="any" class="input price" name="price" required>
-                <span class="label createalert__form--price">Alert Price</span>
+            <div class="alertmodal__form--fields">
+                <input type="number" min="0" step="any" class="input price" name="price" id="price" required>
+                <label for="price" class="label alertmodal__form--price">Alert Price</label>
             </div>
 
-            <button class="createalert__form--submit" type="submit">Create</button>
+            <button class="alertmodal__form--submit" type="submit">Create</button>
         </form>
-    </div>
+    </section>
 
     <main class="main container">
-        <div class="bellwindow" id="bellwindow">
-            <span class="bellwindow__title">Notification <span class="bellwindow__clearall">Clear all</span></span>
+        <div class="notificationlist" id="notificationlist">
+            <span class="notificationlist__title">Notification <span class="notificationlist__clearall">Clear
+                    all</span></span>
 
-            <ul class="bellwindow__container">
+            <ul class="notificationlist__container">
+                <!-- It will be added dynamically using JS -->
+                <!-- <li class="notification" data-key=${notf.key}>
+                    <span class="notification__time">${notf.time}</span>
+                    <div class="notification__container">
+                        <span class="notification__title">${notf.title}</span>
+                        <span class="notification__desc">${notf.description}</span>
+                    </div>
+                    <i class="notification__button--close ri-close-line"></i>
+                </li> -->
             </ul>
 
-            <span class="bellwindow__empty show">Empty!</span>
+            <span class="notificationlist__empty show">Empty!</span>
         </div>
 
         <section class="watchlist leftside" id="watchlist">
@@ -148,20 +168,39 @@
                     placeholder="Search crypto pairs like btcusdt, ethbtc">
             </div>
             <ul class="searchresults">
+                <!-- It will be added dynamically using JS -->
+                <!-- <li class="searchresults__item">
+                    <span class="coinname">${symbol}</span>
+                    <i class="button__item button__item--green ri-check-line active"></i>
+                </li> -->
             </ul>
             <ul class="watchlist__items">
+                <!-- It will be added dynamically using JS -->
+                <!-- <li class="watchlist__item symbol ">
+                    <span class="symbol__name">${symbol}</span>
+                    <div class="symbol__price">
+                        <span class="symbol__price--latest">0.00</span>
+                        <div>
+                            <span class="symbol__price--24change">(+0.00%)</span>
+                            <i class="symbol__price--direction ri-arrow-up-s-fill"></i>
+                        </div>
+                    </div>
+                    <div class="symbol__action">
+                        <i class="createNewAlert button__item button__item--green ri-alarm-line"></i>
+                        <i class="delete button__item button__item--red ri-delete-bin-6-line"></i>
+                    </div>
+                </li> -->
             </ul>
         </section>
 
-        <section class="alerts rightside showSection" id="alerts">
+        <section class="alerts rightside showsection" id="alerts">
             <div class="heading">
                 <div class="heading__window">
-                    <span class="alerts__title alerts__title--pending active"><i class="ri-eye-line"></i>Pending</span>
-                    <span class="alerts__title alerts__title--triggered"><i
-                            class="ri-eye-close-line"></i>Triggered</span>
+                    <h2 class="alerts__title alerts__title--pending active"><i class="ri-eye-line"></i>Pending</h2>
+                    <h2 class="alerts__title alerts__title--triggered"><i class="ri-eye-close-line"></i>Triggered</h2>
                 </div>
-                <div class="alerts__create--button text">Create Alert</div>
-                <div class="alerts__create--button icon"><i class="ri-add-line"></i></div>
+                <button class="alerts__create--button text">Create Alert</button>
+                <button class="alerts__create--button icon"><i class="ri-add-line"></i></button>
             </div>
             <div class="table__container">
                 <table class="alerts__table">
@@ -182,7 +221,7 @@
 
         <section class="settings rightside" id="settings">
             <div class="heading">
-                <span class="settings__title"><i class="ri-settings-3-line"></i></i>Settings</span>
+                <h2 class="settings__title"><i class="ri-settings-3-line"></i></i>Settings</h2>
             </div>
 
             <div class="settings__container">
@@ -195,14 +234,16 @@
                     <div class="webhook__input">
                         <input type="text" name="webhookURL" id="webhookURL">
                         <i class="ri-link-m"></i>
-                        <div class="save__url">Save</div>
+                        <button class="save__url">Save</button>
                     </div>
                 </div>
             </div>
         </section>
+
         <section class="about rightside" id="about">
             <h2>about</h2>
         </section>
+
         <section class="contact rightside" id="contact">
             <h2>contact</h2>
         </section>
