@@ -428,11 +428,9 @@
     position: sticky;
     top: var(--header-height);
     flex-direction: column;
-    height: calc(100vh - var(--header-height));
+    height: calc(100svh - var(--header-height));
     min-width: var(--left-width);
     background-color: var(--background-500);
-    overflow-x: hidden;
-    overflow-y: auto;
     z-index: var(--z-watchlist);
     box-shadow: var(--box-shadow-100);
 
@@ -441,11 +439,18 @@
         width: 100%;
     }
 
-    @media screen and (max-width: 575px) {
-        height: calc(100vh - 2 * var(--header-height));
-    }
+    &__items {
+        overflow-y: auto;
+        height: calc(100svh - 2 * var(--header-height));
 
-    &__items {}
+        @media screen and (max-width: 767px) {
+            height: calc(100svh - 2 * var(--header-height));
+        }
+
+        @media screen and (max-width: 575px) {
+            height: calc(100svh - 3 * var(--header-height));
+        }
+    }
 
     &__item {
         display: flex;
@@ -562,10 +567,14 @@
 }
 
 .searchresults {
-    position: sticky;
-    background-color: inherit;
+    position: absolute;
+    background-color: var(--search-result);
     top: var(--header-height);
     z-index: inherit;
+    border-bottom: 1px solid var(--background-300);
+    overflow-y: auto;
+    max-height: 50%;
+    width: 100%;
 
     &__item {
         padding: 0 1rem;
@@ -710,11 +719,11 @@
 
     .table__container {
         width: 100%;
-        height: calc(100vh - 2 * var(--header-height));
+        height: calc(100svh - 2 * var(--header-height));
         overflow: auto;
 
         @media screen and (max-width: 575px) {
-            height: calc(100vh - 3 * var(--header-height));
+            height: calc(100svh - 3 * var(--header-height));
         }
     }
 
