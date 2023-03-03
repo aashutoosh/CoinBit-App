@@ -50,6 +50,7 @@ class NotificationWindowView {
             return `<li class="notification" data-key=${notf.key}>
             <span class="notification__time">${notf.time}</span>
             <div class="notification__container">
+                <span class="notification__condition">${notf.condition}</span>
                 <span class="notification__title">${notf.title}</span>
                 <span class="notification__desc">${notf.description}</span>
             </div>

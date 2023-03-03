@@ -11,13 +11,14 @@ class PrimaryNotificationView {
         }, 300);
     }
 
-    _generateNotification(title, description, icon) {
+    _generateNotification(title, description, condition, icon) {
         const notification = document.createElement('div');
         notification.innerHTML = `
         <i class="notification__icon ${icon}"></i>
         <div class="notification__text">
-          <p class="notification__text--title">${title}</p>
-          <p class="notification__text--description">${description}</p>
+            <p class="notification__text--condition">${condition}</p>
+            <p class="notification__text--title">${title}</p>
+            <p class="notification__text--description">${description}</p>
         </div>
         <i class="notification__close ri-close-line"></i>`;
         notification.classList.add('notification');
@@ -25,8 +26,8 @@ class PrimaryNotificationView {
         return notification;
     }
 
-    render(title, description, icon) {
-        const childNode = this._generateNotification(title, description, icon);
+    render(title, description, condition, icon) {
+        const childNode = this._generateNotification(title, description, condition, icon);
         this._primaryElement.appendChild(childNode);
 
         setTimeout(() => {

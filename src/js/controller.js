@@ -213,14 +213,15 @@ const websocketUnsubscribe = function (symbol) {
 }
 
 // Primary Notification
-const showPrimaryNotification = function (title, description, icon = 'ri-timer-flash-line') {
-    primaryNotificationView.render(title, description, icon);
+const showPrimaryNotification = function (title, description, condition, icon = 'ri-timer-flash-line') {
+    primaryNotificationView.render(title, description, condition, icon);
 
     const notfObject = {
         key: Date.now(),
         time: getCurrentTime(),
         title: title,
         description: description,
+        condition: condition,
     };
 
     // Activate Notification bell
@@ -231,7 +232,8 @@ const showPrimaryNotification = function (title, description, icon = 'ri-timer-f
 
 const checkForAlerts = function (data) {
     function conditionMatched(alertObj) {
-        showPrimaryNotification(alertObj.title, alertObj.description, 'ri-notification-4-line');
+        const condition = `${alertObj.symbol} ${alertObj.condition} ${alertObj.price}`
+        showPrimaryNotification(alertObj.title, alertObj.description, condition, 'ri-notification-4-line');
 
         // Send to discord
         sendDiscordAlert(alertObj);

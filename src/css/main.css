@@ -922,10 +922,15 @@ body {
   width: 20rem;
   z-index: var(--z-watchlist);
 }
+@media screen and (max-width: 767px) {
+  .primary__notifications {
+    right: 5rem;
+  }
+}
 @media screen and (max-width: 575px) {
   .primary__notifications {
-    width: calc(100vw - 2rem);
-    right: 0;
+    width: 90%;
+    right: 1rem;
   }
 }
 .primary__notifications .notification {
@@ -967,10 +972,17 @@ body {
   margin-right: 1rem;
 }
 .primary__notifications .notification__text--title {
-  padding-bottom: 0.5rem;
+  font-weight: 500;
 }
 .primary__notifications .notification__text--description {
   font-size: 0.8rem;
+  color: var(--textLight-300);
+  padding-top: 0.3rem;
+}
+.primary__notifications .notification__text--condition {
+  font-size: 1rem;
+  font-weight: 700;
+  padding-bottom: 0.8rem;
   color: var(--textLight-300);
 }
 .primary__notifications .notification__close {
@@ -1324,8 +1336,16 @@ body {
       -ms-flex: 4;
           flex: 4;
 }
-.notificationlist__container .notification__title {
+.notificationlist__container .notification__condition {
   font-size: 1rem;
+  padding-right: 1.5rem;
+  padding-bottom: 0.5rem;
+  color: var(--textLight-100);
+  font-weight: 500;
+  word-break: break-word;
+}
+.notificationlist__container .notification__title {
+  font-size: 0.8rem;
   padding-right: 1.5rem;
   color: var(--textLight-100);
   font-weight: 500;
@@ -1334,7 +1354,6 @@ body {
 .notificationlist__container .notification__desc {
   font-size: 0.8rem;
   color: var(--textLight-300);
-  line-height: 1.5;
 }
 .notificationlist__container .notification__button--close {
   position: absolute;
