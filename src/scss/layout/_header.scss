@@ -49,6 +49,7 @@ header {
         display: flex;
         align-items: center;
         gap: 1rem;
+        color: var(--textLight-300);
 
         .nav__link {
             padding-right: 1rem;
@@ -151,7 +152,7 @@ header {
     &__notification {
         position: relative;
         padding: 1rem 0;
-        fill: var(--textLight-100);
+        fill: var(--textLight-300);
         cursor: pointer;
 
         // Animate just svg when hover or when tapped on phone
@@ -183,15 +184,13 @@ header {
 
     &__theme {
         position: relative;
-        fill: var(--textLight-100);
         padding: 1rem 0;
         cursor: pointer;
+        fill: var(--textLight-300);
 
         &:hover svg,
         &:active svg {
             fill: var(--primary-100);
-            // animation: ring 4s .2s ease-in-out;
-            // transform-origin: 50% 4px;
         }
     }
 

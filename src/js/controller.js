@@ -25,7 +25,7 @@ const initializeTheme = function () {
 
 // SearchResults
 const showSearchResults = async function () {
-    if (model.state.exchangeSymbols.length === 0) await fetchAllSymbols();
+    if (model.state.exchangeSymbols.length === 0) await model.fetchAllSymbols();
 
     searchResultsView.updateData(model.state.exchangeSymbols, model.state.watchlist);
     searchResultsView.render();
@@ -37,14 +37,27 @@ const hideSearchResults = function () {
 
 // Watchlist
 const initializeWatchlist = function () {
-    watchlistView.updateData(model.state.watchlist);
+    const initialWatchlist = model.state.watchlist;
+    const pendingAlerts = model.state.pendingAlerts;
+
+    if (pendingAlerts.length === 0) {
+        if (initialWatchlist.length === 0) {
+            alertSectionView.showEmptyText();
+        }
+        else {
+            alertSectionView.hideEmptyText();
+        }
+    }
+    else {
+        alertSectionView.hideEmptyText();
+    }
+
+    watchlistView.updateData(initialWatchlist);
     watchlistView.render();
 }
 
 const addToWatchlist = function (symbol, event) {
-    const initialWatchlist = model.state.watchlist;
-
-    if (!initialWatchlist.includes(symbol)) {
+    if (!model.state.watchlist.includes(symbol)) {
         // Order of execution matters here as before adding symbol in state 
         // its important to check if symbol is not present in uniquelyAddedSymbols list 
         // and then subscribe to websocket stream
@@ -57,6 +70,7 @@ const addToWatchlist = function (symbol, event) {
 
         // 2. Symbol is added in watchlist state
         model.addToWatchlist(symbol);
+        alertSectionView.hideEmptyText();
 
         // 3. At last added in view
         watchlistView.addToWatchlist(symbol);
@@ -70,6 +84,12 @@ const removeFromWatchlist = function (symbol) {
 
     // 0. Symbol is removed from watchlist state
     model.removeFromWatchlist(symbol);
+
+    const initialWatchlist = model.state.watchlist;
+    const pendingAlerts = model.state.pendingAlerts;
+    if (initialWatchlist.length === 0 && pendingAlerts.length === 0) {
+        alertSectionView.showEmptyText();
+    }
 
     // 1. Remove from websocket stream if not found
     websocketUnsubscribe(symbol)
@@ -105,6 +125,12 @@ const submitNewAlert = function (alertObject, dataKey) {
 
 // Alerts Section
 const updateAlertsView = function () {
+    const initialWatchlist = model.state.watchlist;
+    const pendingAlerts = model.state.pendingAlerts;
+
+    if (initialWatchlist.length === 0 && pendingAlerts.length === 0) alertSectionView.showEmptyText();
+    else alertSectionView.hideEmptyText();
+
     alertSectionView.updateData(model.state.pendingAlerts, model.state.triggeredAlerts);
     alertSectionView.render();
 }

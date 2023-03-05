@@ -5,18 +5,32 @@ class AlertSectionView {
     _alertsHeading = document.querySelector('.heading__window');
     _alertsPendingTitle = document.querySelector('.alerts__title--pending');
     _alertsTriggeredTitle = document.querySelector('.alerts__title--triggered');
+    _alertsEmpty = document.querySelector('.alerts__empty');
     _allPendingAlerts;
     _allTriggeredAlerts;
 
     updateData(allPendingAlerts, allTriggeredAlerts) {
         this._allPendingAlerts = allPendingAlerts;
         this._allTriggeredAlerts = allTriggeredAlerts;
-
     }
 
     render() {
         const markup = this._generateMarkup();
         this._alertsTable.innerHTML = markup;
+    }
+
+    showEmptyText() {
+        if (this._isPendingAlertType()) {
+            this._alertsEmpty.classList.remove('show');
+            this._alertsEmpty.classList.add('show');
+        }
+        else {
+            this.hideEmptyText();
+        }
+    }
+
+    hideEmptyText() {
+        this._alertsEmpty.classList.remove('show');
     }
 
     _isPendingAlertType() {
@@ -90,7 +104,7 @@ class AlertSectionView {
 
     switchTableTypeHandler(handler) {
         this._alertsHeading.addEventListener('click', event => {
-            const targetClassList = event.target.classList
+            const targetClassList = event.target.classList;
 
             if (targetClassList.contains('alerts__title--pending') && !targetClassList.contains('active')) {
                 this._alertsTriggeredTitle.classList.remove('active')

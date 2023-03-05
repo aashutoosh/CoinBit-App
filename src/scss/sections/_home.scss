@@ -454,7 +454,8 @@
     min-width: var(--left-width);
     background-color: var(--background-500);
     z-index: var(--z-watchlist);
-    box-shadow: var(--box-shadow-100);
+    box-shadow: var(--box-shadow-300);
+    clip-path: inset(0px -4px 0px 0px); // To show shadow only on right side
 
     @media screen and (max-width: 767px) {
         display: none;
@@ -486,6 +487,10 @@
 
         &:hover {
             background-color: var(--background-300);
+        }
+
+        &:hover .symbol__name {
+            color: var(--primary-100);
         }
 
         &:hover .symbol__action {
@@ -741,11 +746,11 @@
 
     .table__container {
         width: 100%;
-        height: calc(100svh - 2 * var(--header-height));
+        max-height: calc(100svh - 2 * var(--header-height));
         overflow: auto;
 
         @media screen and (max-width: 575px) {
-            height: calc(100svh - 3 * var(--header-height));
+            max-height: calc(100svh - 3 * var(--header-height));
         }
     }
 
@@ -890,6 +895,23 @@
             width: 14px;
             height: 14px;
             accent-color: var(--primary-100);
+        }
+    }
+
+    &__empty {
+        display: none;
+        justify-content: center;
+        width: 100%;
+        margin-top: 3rem;
+        font-size: 0.9rem;
+        color: var(--textLight-500);
+
+        i {
+            padding-right: 0.3rem;
+        }
+
+        &.show {
+            display: flex;
         }
     }
 }

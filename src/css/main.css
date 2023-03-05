@@ -738,6 +738,7 @@ header {
       -ms-flex-align: center;
           align-items: center;
   gap: 1rem;
+  color: var(--textLight-300);
 }
 .nav .links__container .nav__link {
   padding-right: 1rem;
@@ -843,7 +844,7 @@ header {
 .nav__notification {
   position: relative;
   padding: 1rem 0;
-  fill: var(--textLight-100);
+  fill: var(--textLight-300);
   cursor: pointer;
 }
 .nav__notification:hover svg, .nav__notification:active svg {
@@ -872,9 +873,9 @@ header {
 }
 .nav__theme {
   position: relative;
-  fill: var(--textLight-100);
   padding: 1rem 0;
   cursor: pointer;
+  fill: var(--textLight-300);
 }
 .nav__theme:hover svg, .nav__theme:active svg {
   fill: var(--primary-100);
@@ -1386,8 +1387,10 @@ body {
   min-width: var(--left-width);
   background-color: var(--background-500);
   z-index: var(--z-watchlist);
-  -webkit-box-shadow: var(--box-shadow-100);
-          box-shadow: var(--box-shadow-100);
+  -webkit-box-shadow: var(--box-shadow-300);
+          box-shadow: var(--box-shadow-300);
+  -webkit-clip-path: inset(0px -4px 0px 0px);
+          clip-path: inset(0px -4px 0px 0px);
 }
 @media screen and (max-width: 767px) {
   .watchlist {
@@ -1425,6 +1428,9 @@ body {
 }
 .watchlist__item:hover {
   background-color: var(--background-300);
+}
+.watchlist__item:hover .symbol__name {
+  color: var(--primary-100);
 }
 .watchlist__item:hover .symbol__action {
   display: -webkit-box;
@@ -1701,12 +1707,12 @@ body {
 }
 .alerts .table__container {
   width: 100%;
-  height: calc(100svh - 2 * var(--header-height));
+  max-height: calc(100svh - 2 * var(--header-height));
   overflow: auto;
 }
 @media screen and (max-width: 575px) {
   .alerts .table__container {
-    height: calc(100svh - 3 * var(--header-height));
+    max-height: calc(100svh - 3 * var(--header-height));
   }
 }
 .alerts__table {
@@ -1829,6 +1835,24 @@ body {
   width: 14px;
   height: 14px;
   accent-color: var(--primary-100);
+}
+.alerts__empty {
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: var(--textLight-500);
+}
+.alerts__empty i {
+  padding-right: 0.3rem;
+}
+.alerts__empty.show {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .settings {
@@ -2023,6 +2047,7 @@ body {
   .rightside {
     width: 100%;
     padding: 0 1rem;
+    height: calc(100svh - var(--header-height));
   }
 }
 @media screen and (max-width: 575px) {
