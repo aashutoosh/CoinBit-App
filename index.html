@@ -269,12 +269,26 @@
                     <input type="checkbox" id="discord__checkbox" class="discord__checkbox">
                 </div>
                 <div class="webhook">
-                    <label class="webhook__label" for="webhookURL">Discord Webhook URL</label>
+                    <label class="webhook__label" for="webhookURL"><span>Discord Webhook URL</span> <i
+                            class="ri-question-line"></i>
+                        <div class="tooltip">
+                            <span>How to get Discord Webhook Url ?</span>
+                            <ul>
+                                <li>1. Open channel settings.</li>
+                                <li>2. Go to Integrations.</li>
+                                <li>3. Select Webhooks.</li>
+                                <li>4. Create a new webhook.</li>
+                                <li>5. Copy unique URL.</li>
+                            </ul>
+                        </div>
+                    </label>
                     <div class="webhook__input">
                         <input type="text" name="webhookURL" id="webhookURL">
                         <i class="ri-link-m"></i>
                         <button class="save__url">Save</button>
+
                     </div>
+
                 </div>
             </div>
         </section>
