@@ -1291,7 +1291,7 @@ body {
       -ms-flex-align: start;
           align-items: flex-start;
   max-height: 20rem;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .notificationlist__container .notification {
   position: relative;
@@ -1857,42 +1857,7 @@ body {
 
 .settings {
   display: none;
-  overflow-y: scroll;
-}
-.settings__title {
-  height: var(--header-height);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-size: 1rem;
-  width: 6rem;
-  font-weight: 500;
-  border-bottom: 3px solid transparent;
-  -webkit-transition: all 0.1s;
-  transition: all 0.1s;
-  -webkit-transform-origin: center;
-          transform-origin: center;
-}
-.settings__title i {
-  padding-right: 0.65rem;
-}
-.settings__container {
-  padding: 3rem 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  gap: 1rem;
-  border-top: 1px solid var(--border);
-  font-size: 1rem;
-  font-weight: 500;
-  border-bottom: 1px solid var(--border);
+  overflow-y: auto;
 }
 
 .discord {
@@ -2031,6 +1996,66 @@ body {
 
 .about {
   display: none;
+  overflow-y: auto;
+}
+.about a {
+  color: var(--primary-100);
+}
+.about a:hover {
+  text-decoration: underline;
+}
+
+.intro,
+.disclaimer,
+.features,
+.technology,
+.github {
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  color: var(--textLight-300);
+  padding: 0 1rem;
+}
+.intro p,
+.disclaimer p,
+.features p,
+.technology p,
+.github p {
+  line-height: 1.5;
+}
+.intro__heading,
+.intro h3,
+.disclaimer__heading,
+.disclaimer h3,
+.features__heading,
+.features h3,
+.technology__heading,
+.technology h3,
+.github__heading,
+.github h3 {
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: var(--textLight-100);
+}
+.intro ul li,
+.disclaimer ul li,
+.features ul li,
+.technology ul li,
+.github ul li {
+  margin-left: 1.5rem;
+  line-height: 1.5;
+}
+
+.github {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 0.25rem;
+}
+.github__icon {
+  font-size: 1.5rem;
 }
 
 .showsection {
@@ -2053,5 +2078,48 @@ body {
 @media screen and (max-width: 575px) {
   .rightside {
     height: calc(100svh - 2 * var(--header-height));
+  }
+}
+
+.rightside__title {
+  height: var(--header-height);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1rem;
+  width: 6rem;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+}
+.rightside__title i {
+  padding-right: 0.65rem;
+}
+.rightside__container {
+  padding: 3rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 1rem;
+  font-weight: 500;
+  width: 100%;
+  max-height: calc(100svh - 2 * var(--header-height));
+  overflow: auto;
+}
+@media screen and (max-width: 575px) {
+  .rightside__container {
+    max-height: calc(100svh - 3 * var(--header-height));
   }
 }
