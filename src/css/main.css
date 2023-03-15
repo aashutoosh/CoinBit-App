@@ -1971,6 +1971,7 @@ body {
   opacity: 1;
 }
 .webhook .tooltip {
+  pointer-events: none;
   opacity: 0;
   position: fixed;
   top: 8.8rem;
