@@ -109,13 +109,14 @@ class AlertSectionView {
             if (targetClassList.contains('alerts__title--pending') && !targetClassList.contains('active')) {
                 this._alertsTriggeredTitle.classList.remove('active')
                 this._alertsPendingTitle.classList.add('active');
+                handler();
             }
             else if (targetClassList.contains('alerts__title--triggered') && !targetClassList.contains('active')) {
                 this._alertsPendingTitle.classList.remove('active');
                 this._alertsTriggeredTitle.classList.add('active');
+                handler();
             }
 
-            handler();
         });
     }
 

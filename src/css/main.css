@@ -1672,6 +1672,7 @@ body {
 }
 .alerts__title:hover i {
   padding-right: 0.65rem;
+  pointer-events: none;
 }
 .alerts__title.active {
   color: var(--primary-100);
