@@ -144,9 +144,10 @@ const alertsAction = function (buttonType, pendingAlertType, alertObj) {
         model.deleteAlert(alertObj, pendingAlertType);
         const alertType = pendingAlertType ? 'Pending' : 'Triggered';
         showSecondaryNotification(`${alertType} alert deleted!`, 'ri-delete-bin-6-line');
+
+        updateAlertsView();
     }
 
-    updateAlertsView();
 }
 
 // Notification Window
