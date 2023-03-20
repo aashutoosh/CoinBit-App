@@ -24,7 +24,7 @@ class SettingsView {
         // small delay is added so its fully loaded in dom
         setTimeout(() => {
             this._discordCheckbox.dispatchEvent(new Event('change'));
-        }, 300)
+        }, 300);
     }
 
     addDiscordCheckboxHandler(handler) {
@@ -45,7 +45,7 @@ class SettingsView {
         this._saveUrlButton.addEventListener('click', () => {
             const savedUrl = handler(this._webhookUrlInput.value);
             if (savedUrl) {
-                this.updateData(savedUrl)
+                this.updateData(savedUrl);
                 this.showWebhookURL();
             }
         });

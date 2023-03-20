@@ -30,7 +30,7 @@ class WatchlistView {
                 const changeElem = listItem.querySelector('.symbol__price--24change');
                 const directionElem = listItem.querySelector('.symbol__price--direction');
 
-                const prevPrice = Number(priceElem.textContent)
+                const prevPrice = Number(priceElem.textContent);
 
                 // Update the price and price change.
                 priceElem.textContent = price;
@@ -62,7 +62,7 @@ class WatchlistView {
         // Used event delegation here
         this._watchlistItems.addEventListener('click', (event) => {
             if (event.target.classList.contains('delete')) {
-                const listElement = event.target.closest('.watchlist__item')
+                const listElement = event.target.closest('.watchlist__item');
                 const symbol = listElement.querySelector('.symbol__name').textContent;
 
                 // Remove element from DOM
@@ -89,7 +89,7 @@ class WatchlistView {
     }
 
     _generateMarkup(symbols = this._watchlistSymbols) {
-        if (symbols.length === 0) return ''
+        if (symbols.length === 0) return '';
 
         const markup = symbols.map((symbol) => {
             return `<li class="watchlist__item symbol ">
@@ -105,7 +105,7 @@ class WatchlistView {
                 <i class="createNewAlert button__item button__item--green ri-alarm-line"></i>
                 <i class="delete button__item button__item--red ri-delete-bin-6-line"></i>
             </div>
-        </li>`
+        </li>`;
         }).join('');
 
         return markup;

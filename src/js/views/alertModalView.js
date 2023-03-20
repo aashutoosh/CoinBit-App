@@ -102,7 +102,7 @@ class AlertModalView {
             };
 
             handler(alertObject, dataKey);
-        })
+        });
     }
 }
 

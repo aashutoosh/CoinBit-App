@@ -45,7 +45,7 @@ class SearchResultsView {
 
                 handler(coinName, event);
             }
-        })
+        });
     }
 
     _clearSearchInput() {
@@ -62,13 +62,13 @@ class SearchResultsView {
                     return `<li class="searchresults__item">
                     <span class="coinname">${symbol}</span>
                     <i class="button__item button__item--green ri-check-line active"></i>
-                </li>`
+                </li>`;
                 }
                 else {
                     return `<li class="searchresults__item">
                     <span class="coinname">${symbol}</span>
                     <i class="button__item button__item--green ri-add-line"></i>
-                </li>`
+                </li>`;
                 }
             }
         ).join('');

@@ -21,7 +21,7 @@ export function changeTheme(themeType) {
         updateLocalStorage('theme', themeType);
     }
     else {
-        addToLocalStorage('theme', themeType)
+        addToLocalStorage('theme', themeType);
     }
 
     updateState();
@@ -63,7 +63,7 @@ function updateState() {
 }
 
 export function removeFromPendingAlerts(alertObject) {
-    const allPendingAlerts = state.pendingAlerts
+    const allPendingAlerts = state.pendingAlerts;
     const filteredAlerts = allPendingAlerts.filter(alert => alert.createdon !== alertObject.createdon);
 
     updateLocalStorage('pendingAlerts', filteredAlerts);
@@ -141,10 +141,10 @@ export function savePrimaryNotification(notfObject) {
     const allNotifications = state.notifications;
 
     if (allNotifications.length === 0) {
-        addToLocalStorage('notifications', [notfObject])
+        addToLocalStorage('notifications', [notfObject]);
     }
     else {
-        updateLocalStorage('notifications', [notfObject, ...allNotifications])
+        updateLocalStorage('notifications', [notfObject, ...allNotifications]);
     }
 
     updateState();
@@ -154,7 +154,7 @@ export function deletePrimaryNotification(dataKey) {
     const allNotifications = state.notifications;
     const filteredNotf = allNotifications.filter((notf) => notf.key !== dataKey);
 
-    updateLocalStorage('notifications', filteredNotf)
+    updateLocalStorage('notifications', filteredNotf);
 
     updateState();
 }
@@ -211,12 +211,12 @@ export function sendDiscordAlert(alert, notfCallback) {
                     body: JSON.stringify(payload)
                 }).then(response => {
                     if (response.status === 405) {
-                        notfCallback(`Discord Webhook URL not valid`, 'ri-error-warning-line')
+                        notfCallback(`Discord Webhook URL not valid`, 'ri-error-warning-line');
                     }
                 }).catch(error => notfCallback(`Error: ${error}`, 'ri-error-warning-line'));
             }
             catch (error) {
-                notfCallback(`Error: ${error.message}`, 'ri-error-warning-line')
+                notfCallback(`Error: ${error.message}`, 'ri-error-warning-line');
             }
         }
         else {
@@ -277,7 +277,7 @@ class wsConnect {
             id: Date.now(),
             method: "SUBSCRIBE",
             params: [symbol.toLowerCase() + '@ticker']
-        }
+        };
 
         if (this.ws.readyState === WebSocket.OPEN) {
             this.ws.send(JSON.stringify(symbolObject));
@@ -297,7 +297,7 @@ class wsConnect {
             id: Date.now(),
             method: "UNSUBSCRIBE",
             params: [symbol.toLowerCase() + '@ticker']
-        }
+        };
 
         if (this.ws.readyState === WebSocket.OPEN) {
             this.ws.send(JSON.stringify(symbolObject));

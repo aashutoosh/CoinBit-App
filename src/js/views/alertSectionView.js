@@ -67,11 +67,11 @@ class AlertSectionView {
                 <span>${alert.condition}</span>
             </td>
             <td>${alert.price}</td>
-        </tr>`
-        }
+        </tr>`;
+        };
 
         const markup = allAlerts.map(alert => newRow(alert)).join('');
-        return markup
+        return markup;
     }
 
     updateAlertsLtpData(data) {
@@ -89,7 +89,7 @@ class AlertSectionView {
             if (listItem.querySelector('.symbol').textContent === symbol) {
                 const priceElem = listItem.querySelector('.ltp');
 
-                const prevPrice = Number(priceElem.textContent)
+                const prevPrice = Number(priceElem.textContent);
 
                 // Update the price and price change.
                 priceElem.textContent = price;
@@ -107,7 +107,7 @@ class AlertSectionView {
             const targetClassList = event.target.classList;
 
             if (targetClassList.contains('alerts__title--pending') && !targetClassList.contains('active')) {
-                this._alertsTriggeredTitle.classList.remove('active')
+                this._alertsTriggeredTitle.classList.remove('active');
                 this._alertsPendingTitle.classList.add('active');
                 handler();
             }
@@ -140,7 +140,7 @@ class AlertSectionView {
             else if (deleteElement) {
                 handler('delete', pendingAlertsType, filteredAlertObject);
             }
-        })
+        });
     }
 
     addCreateAlertButtonHandler(handler) {

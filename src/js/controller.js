@@ -16,12 +16,12 @@ import { VALID_WEBHOOK_STARTSWITH } from './config.js';
 // header
 const themeToggle = function (themeType) {
     model.changeTheme(themeType);
-}
+};
 
 const initializeTheme = function () {
     const currentTheme = model.state.theme;
     headerView.changeTheme(currentTheme);
-}
+};
 
 // SearchResults
 const showSearchResults = async function () {
@@ -29,11 +29,11 @@ const showSearchResults = async function () {
 
     searchResultsView.updateData(model.state.exchangeSymbols, model.state.watchlist);
     searchResultsView.render();
-}
+};
 
 const hideSearchResults = function () {
     searchResultsView.render();
-}
+};
 
 // Watchlist
 const initializeWatchlist = function () {
@@ -54,7 +54,7 @@ const initializeWatchlist = function () {
 
     watchlistView.updateData(initialWatchlist);
     watchlistView.render();
-}
+};
 
 const addToWatchlist = function (symbol, event) {
     if (!model.state.watchlist.includes(symbol)) {
@@ -75,7 +75,7 @@ const addToWatchlist = function (symbol, event) {
         // 3. At last added in view
         watchlistView.addToWatchlist(symbol);
     }
-}
+};
 
 const removeFromWatchlist = function (symbol) {
     // Order of execution matters here as first symbol needs to be deleted from watchlist state
@@ -92,19 +92,19 @@ const removeFromWatchlist = function (symbol) {
     }
 
     // 1. Remove from websocket stream if not found
-    websocketUnsubscribe(symbol)
-}
+    websocketUnsubscribe(symbol);
+};
 
 // Alert Modal
 const createNewAlertModal = function (symbol = '') {
     alertModalView.updateData(model.state.uniquelyAddedSymbols);
     alertModalView.create(symbol);
-}
+};
 
 const editAlertModal = function (alert) {
     alertModalView.updateData(model.state.uniquelyAddedSymbols);
     alertModalView.update(alert);
-}
+};
 
 const submitNewAlert = function (alertObject, dataKey) {
     if (!dataKey) {
@@ -121,7 +121,7 @@ const submitNewAlert = function (alertObject, dataKey) {
     alertModalView.close();
 
     updateAlertsView();
-}
+};
 
 // Alerts Section
 const updateAlertsView = function () {
@@ -133,7 +133,7 @@ const updateAlertsView = function () {
 
     alertSectionView.updateData(model.state.pendingAlerts, model.state.triggeredAlerts);
     alertSectionView.render();
-}
+};
 
 const alertsAction = function (buttonType, pendingAlertType, alertObj) {
     // If type is pending then only can edit alert
@@ -148,32 +148,32 @@ const alertsAction = function (buttonType, pendingAlertType, alertObj) {
         updateAlertsView();
     }
 
-}
+};
 
 // Notification Window
 const showNotificationWindow = function () {
     notificationWindowView.updateData(model.state.notifications);
     notificationWindowView.render();
-}
+};
 
 const removeNotification = function (dataKey) {
-    model.deletePrimaryNotification(dataKey)
+    model.deletePrimaryNotification(dataKey);
     showNotificationWindow();
-}
+};
 
 const clearNotificationWindow = function () {
-    model.deleteAllPrimaryNotification()
-}
+    model.deleteAllPrimaryNotification();
+};
 
 const toggleAlertBell = function () {
     notificationWindowView.updateData(model.state.notifications);
     notificationWindowView.render();
-}
+};
 
 // Settings
 const setDiscordAlerts = function (value) {
     model.setDiscordAlerts(value);
-}
+};
 
 const setWebhookUrl = function (webhookUrl) {
     webhookUrl = webhookUrl.trim();
@@ -189,7 +189,7 @@ const setWebhookUrl = function (webhookUrl) {
     showSecondaryNotification('Webhook URL saved!', 'ri-checkbox-circle-line');
 
     return webhookUrl;
-}
+};
 
 const updateSettingsData = function () {
     const webhookUrl = model.state.discordWebhookUrl;
@@ -197,16 +197,16 @@ const updateSettingsData = function () {
     settingsView.updateData(webhookUrl, discordChecked);
 
     settingsView.updateInitialSettings();
-}
+};
 
 const sendDiscordAlert = function (alertObj) {
     model.sendDiscordAlert(alertObj, showSecondaryNotification);
-}
+};
 
 // Websocket
 const initializeWebsocket = function (symbolsArray) {
     model.websocket.init(symbolsArray, websocketDataHandler, showSecondaryNotification);
-}
+};
 
 const websocketDataHandler = function (data) {
     if ('stream' in data) {
@@ -215,7 +215,7 @@ const websocketDataHandler = function (data) {
         alertSectionView.updateAlertsLtpData(data);
         checkForAlerts(data);
     }
-}
+};
 
 const websocketSubscribe = function (symbol) {
     const uniquelyAddedSymbols = model.state.uniquelyAddedSymbols;
@@ -228,7 +228,7 @@ const websocketSubscribe = function (symbol) {
     else {
         initializeWebsocket([symbol]);
     }
-}
+};
 
 const websocketUnsubscribe = function (symbol) {
     const uniquelyAddedSymbols = model.state.uniquelyAddedSymbols;
@@ -238,7 +238,7 @@ const websocketUnsubscribe = function (symbol) {
             model.websocket.unsubscribeSymbol(symbol);
         }
     }
-}
+};
 
 // Primary Notification
 const showPrimaryNotification = function (title, description, condition, icon = 'ri-timer-flash-line') {
@@ -256,11 +256,11 @@ const showPrimaryNotification = function (title, description, condition, icon = 
     notificationWindowView.showNotificationLight();
 
     model.savePrimaryNotification(notfObject);
-}
+};
 
 const checkForAlerts = function (data) {
     function conditionMatched(alertObj) {
-        const condition = `${alertObj.symbol} ${alertObj.condition} ${alertObj.price}`
+        const condition = `${alertObj.symbol} ${alertObj.condition} ${alertObj.price}`;
         showPrimaryNotification(alertObj.title, alertObj.description, condition, 'ri-notification-4-line');
 
         // Send to discord
@@ -298,7 +298,7 @@ const checkForAlerts = function (data) {
             conditionMatched(alert);
         }
     });
-}
+};
 
 const init = function () {
     initializeTheme();
