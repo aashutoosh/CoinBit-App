@@ -926,7 +926,7 @@ body {
           flex-direction: column;
   gap: 1rem;
   width: 20rem;
-  z-index: var(--z-watchlist);
+  z-index: var(--z-modal);
 }
 @media screen and (max-width: 767px) {
   .primary__notifications {
