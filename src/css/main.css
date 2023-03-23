@@ -1427,8 +1427,8 @@ body {
   padding: 1rem;
   height: calc(var(--header-height));
   border-bottom: 1px solid var(--border);
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  -webkit-transition: background-color 0.2s;
+  transition: background-color 0.2s;
   color: var(--textDark-500);
 }
 .watchlist__item:hover {
@@ -1747,8 +1747,8 @@ body {
   text-align: left;
   border-bottom: 1px solid var(--border);
   color: var(--textLight-300);
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  -webkit-transition: background-color 0.2s;
+  transition: background-color 0.2s;
 }
 .alerts__table td:nth-child(1) .textContent {
   display: -webkit-box;

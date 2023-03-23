@@ -481,7 +481,7 @@
         padding: 1rem;
         height: calc(var(--header-height));
         border-bottom: 1px solid var(--border);
-        transition: all 0.2s;
+        transition: background-color 0.2s;
         color: var(--textDark-500);
 
 
@@ -788,7 +788,7 @@
             text-align: left;
             border-bottom: 1px solid var(--border);
             color: var(--textLight-300);
-            transition: all 0.2s;
+            transition: background-color 0.2s;
 
             // Name
             &:nth-child(1) {
