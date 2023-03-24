@@ -1982,8 +1982,6 @@ body {
   background-color: var(--background-100);
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  -webkit-box-shadow: var(--box-shadow-300);
-          box-shadow: var(--box-shadow-300);
   width: 18rem;
   z-index: var(--z-modal);
   -webkit-transition: all 0.3s;
